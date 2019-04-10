@@ -1,6 +1,7 @@
 #include "scene_level1.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
+#include "../components/cmp_weapon_system.h"
 #include "../game.h"
 #include <LevelSystem.h>
 #include <iostream>
@@ -13,7 +14,7 @@ static shared_ptr<Entity> player;
 
 void Level1Scene::Load() {
   cout << " Scene 1 Load" << endl;
-  ls::loadLevelFile("res/levels/house_level_1.txt", 40.0f);
+  ls::loadLevelFile("res/levels/level_1.txt", 40.0f);
 
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
@@ -28,6 +29,7 @@ void Level1Scene::Load() {
     s->getShape().setOrigin(10.f, 15.f);
 
     player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
+	player->addComponent<WeaponSystemComponent>();
   }
 
   // Add physics colliders to level tiles.
@@ -58,9 +60,27 @@ void Level1Scene::UnLoad() {
 
 void Level1Scene::Update(const double& dt) {
 
-  if (ls::getTileAt(player->getPosition()) == ls::END) {
+  if (ls::getTileAt(player->getPosition()) == ls::END && Keyboard::isKeyPressed(Keyboard::E)) {
     Engine::ChangeScene((Scene*)&level2);
   }
+  auto ws = player->GetCompatibleComponent<WeaponSystemComponent>();
+  if (ws.at(0)->getWeapon() == 1)
+  {
+	  auto p = player->GetCompatibleComponent<ShapeComponent>().at(0);
+	  p->getShape().setFillColor(Color::Blue);
+  }
+  if (ws.at(0)->getWeapon() == 2)
+  {
+	  auto p = player->GetCompatibleComponent<ShapeComponent>().at(0);
+	  p->getShape().setFillColor(Color::Green);
+  }
+  if (ws.at(0)->getWeapon() == 3)
+  {
+	  auto p = player->GetCompatibleComponent<ShapeComponent>().at(0);
+	  p->getShape().setFillColor(Color::Yellow);
+  }
+  
+
   Scene::Update(dt);
 }
 
