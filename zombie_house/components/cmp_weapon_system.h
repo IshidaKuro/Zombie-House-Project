@@ -5,11 +5,14 @@ class WeaponSystemComponent : public Component
 {
 protected:
 	bool has_pistol = true;
-	bool has_smg = false;
+	bool has_smg = true;
 	bool has_shotgun = false;
 	bool has_ar = false;
 
 	int weapon;
+	
+	float fire_rate;
+	void fire() const;
 
 public:
 	//1 pistol, 2 smg, 3 shotgun, 4 ar

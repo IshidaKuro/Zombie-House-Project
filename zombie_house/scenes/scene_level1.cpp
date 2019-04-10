@@ -63,24 +63,6 @@ void Level1Scene::Update(const double& dt) {
   if (ls::getTileAt(player->getPosition()) == ls::END && Keyboard::isKeyPressed(Keyboard::E)) {
     Engine::ChangeScene((Scene*)&level2);
   }
-  auto ws = player->GetCompatibleComponent<WeaponSystemComponent>();
-  if (ws.at(0)->getWeapon() == 1)
-  {
-	  auto p = player->GetCompatibleComponent<ShapeComponent>().at(0);
-	  p->getShape().setFillColor(Color::Blue);
-  }
-  if (ws.at(0)->getWeapon() == 2)
-  {
-	  auto p = player->GetCompatibleComponent<ShapeComponent>().at(0);
-	  p->getShape().setFillColor(Color::Green);
-  }
-  if (ws.at(0)->getWeapon() == 3)
-  {
-	  auto p = player->GetCompatibleComponent<ShapeComponent>().at(0);
-	  p->getShape().setFillColor(Color::Yellow);
-  }
-  
-
   Scene::Update(dt);
 }
 
