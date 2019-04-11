@@ -23,6 +23,13 @@ void Level1Scene::Load() {
   {
     player = makeEntity();
     player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+
+	//shared_ptr<Texture> ss;
+	//if (!ss->loadFromFile("res/sprites/1.png")) {
+	//	cerr << "Failed to load spritesheet!" << std::endl;
+	//}
+	//auto sp = player->addComponent<SpriteComponent>();
+	//sp->setTexure(ss);
     auto s = player->addComponent<ShapeComponent>();
     s->setShape<sf::RectangleShape>(Vector2f(20.f, 30.f));
     s->getShape().setFillColor(Color::Magenta);

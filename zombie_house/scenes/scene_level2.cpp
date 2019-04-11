@@ -5,12 +5,14 @@
 #include "../components/cmp_physics.h"
 #include "../components/cmp_player_physics.h"
 #include "../game.h"
+#include "../components/cmp_weapon_system.h"
 #include <LevelSystem.h>
 #include <iostream>
 using namespace std;
 using namespace sf;
 
 static shared_ptr<Entity> player;
+
 void Level2Scene::Load() {
   cout << "Scene 2 Load" << endl;
   ls::loadLevelFile("res/levels/level_2.txt", 40.0f);
@@ -26,11 +28,12 @@ void Level2Scene::Load() {
 	s->setShape<sf::RectangleShape>(Vector2f(20.f, 30.f));
 	s->getShape().setFillColor(Color::Magenta);
 	s->getShape().setOrigin(10.f, 15.f);
-
+	player->addComponent<WeaponSystemComponent>();
 	player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
     // *********************************
     player->addTag("player");
     //player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
+	
   }
 
   // Create Enemy
@@ -45,7 +48,7 @@ void Level2Scene::Load() {
 	auto sEnemy = enemy->addComponent<ShapeComponent>();
 	sEnemy->setShape<sf::CircleShape>(16.0f);
 	sEnemy->getShape().setFillColor(Color::Red);
-
+	enemy->addTag("enemy");
     // Add EnemyAIComponent
 	enemy->addComponent<EnemyAIComponent>();
     // *********************************

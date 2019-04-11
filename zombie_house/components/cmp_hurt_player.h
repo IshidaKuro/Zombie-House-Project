@@ -1,6 +1,6 @@
 #pragma once
 #include "cmp_physics.h"
-#include <ecm.h>
+#include <ecm.h>_
 
 class HurtComponent : public Component {
 protected:

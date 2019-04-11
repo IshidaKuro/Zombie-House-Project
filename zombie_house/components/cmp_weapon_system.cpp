@@ -3,6 +3,7 @@
 #include "cmp_bullet.h"
 #include "engine.h"
 #include <SFML/Graphics/CircleShape.hpp>
+#include "cmp_hurt_enemy.h"
 
 using namespace std;
 using namespace sf;
@@ -13,7 +14,7 @@ void WeaponSystemComponent::fire() const
 	{
 		auto bullet = _parent->scene->makeEntity();
 		bullet->setPosition(_parent->getPosition());
-		//bullet->addComponent<HurtComponent>();
+		bullet->addComponent<HurtEnemyComponent>();
 		bullet->addComponent<BulletComponent>();
 		auto s = bullet->addComponent<ShapeComponent>();
 
@@ -91,7 +92,7 @@ void WeaponSystemComponent::update(double dt)
 	select_weapon();
 	
 	fire_rate -= dt;
-	if (fire_rate <= 0.f) {
+	if (fire_rate < 0.f) {
 		fire();
 		fire_rate = temp;
 	}
