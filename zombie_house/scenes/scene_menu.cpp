@@ -12,7 +12,7 @@ void MenuScene::Load() {
   {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
-        "Platformer\nPress Space to Start");
+        "Zombie House\nPress Space to Start");
   }
   setLoaded(true);
 }

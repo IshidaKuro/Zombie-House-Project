@@ -5,11 +5,18 @@
 #include <LevelSystem.h>
 #include <iostream>
 #include <thread>
+#include <list>
 
 using namespace std;
 using namespace sf;
 
 static shared_ptr<Entity> player;
+
+
+list<Entity> zombies;
+
+
+int numberOfZombies = 3;
 
 void Level1Scene::Load() {
   cout << " Scene 1 Load" << endl;
@@ -28,6 +35,15 @@ void Level1Scene::Load() {
     s->getShape().setOrigin(10.f, 15.f);
 
     player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
+  }
+
+  //create some zombies
+  {
+	  for (int i = 0; i < numberOfZombies; i++)
+	  {
+		  
+	  }
+  
   }
 
   // Add physics colliders to level tiles.
