@@ -136,10 +136,13 @@ void WeaponSystemComponent::update(double dt)
 {
 	select_weapon();
 	
-	fire_rate -= dt;
-	if (fire_rate < 0.f) {
-		fire();
-		fire_rate = temp;
+	if(weapon == 1 || weapon == 2 || weapon == 3)
+	{ 
+		fire_rate -= dt;
+		if (fire_rate < 0.f) {
+			fire();
+			fire_rate = temp;
+		}
 	}
 }
 
