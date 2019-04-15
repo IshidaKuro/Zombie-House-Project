@@ -7,7 +7,7 @@ using namespace sf;
 void HurtEnemyComponent::update(double dt) {
   if (auto pl = _enemy.lock()) 
   {
-	  if (length(pl->getPosition() - _parent->getPosition()) < 25.0 && hp != 0) {
+	  if (length(pl->getPosition() - _parent->getPosition()) < 25.0) {
 		  pl->setForDelete();
 		  _parent->setForDelete();
 	  }
