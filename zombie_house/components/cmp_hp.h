@@ -9,6 +9,8 @@ protected:
 public:
   void update(double dt) override;
   void render() override {}
-  explicit HPComponent(Entity* p, int hp = 3);
+  int getHP();
+  void setHP(int in);
+  explicit HPComponent(Entity* p, int hp = 10);
   HPComponent() = delete;
 };

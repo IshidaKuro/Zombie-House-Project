@@ -10,20 +10,33 @@ void HurtEnemyComponent::update(double dt) {
 
   if (auto pl = _enemy.lock()) 
   {
-	  //auto health = pl->GetCompatibleComponent<HPComponent>().at(0);
 	  if (length(pl->getPosition() - _parent->getPosition()) < 25.0) 
 	  {
+		  setHP(getHP() - 1);
+		  if (getHP() <= 0)
+		  {
+			  pl->setForDelete();
+			  // _parent->setForDelete();
+			  cout << "Kill enemy";
+		  }
 		  _parent->setForDelete();
 		  //cout << "HP: " << hp;
 
-		pl->setForDelete();
-		// _parent->setForDelete();
-		cout << "KIll enemy";
-		  
-		  
-
 	  }
   }
+}
+
+int HurtEnemyComponent::getHP()
+{
+	auto en = _enemy.lock();
+	int hp = en->GetCompatibleComponent<HPComponent>().at(0)->getHP();
+	return hp;
+}
+
+void HurtEnemyComponent::setHP(int in)
+{
+	auto en = _enemy.lock();
+	en->GetCompatibleComponent<HPComponent>().at(0)->setHP(in);
 }
 
 HurtEnemyComponent::HurtEnemyComponent(Entity* p)

@@ -6,7 +6,7 @@ class WeaponSystemComponent : public Component
 protected:
 	bool has_pistol = true;
 	bool has_smg = true;
-	bool has_shotgun = false;
+	bool has_shotgun = true;
 	bool has_ar = false;
 
 	int weapon;

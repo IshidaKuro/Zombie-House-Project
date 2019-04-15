@@ -6,6 +6,7 @@
 #include "../components/cmp_player_physics.h"
 #include "../game.h"
 #include "../components/cmp_weapon_system.h"
+#include "../components/cmp_hp.h"
 #include <LevelSystem.h>
 #include <iostream>
 using namespace std;
@@ -44,6 +45,7 @@ void Level2Scene::Load() {
     // *********************************
     // Add HurtComponent
 	enemy->addComponent<HurtComponent>();
+	enemy->addComponent<HPComponent>();
     // Add ShapeComponent, Red 16.f Circle
 	auto sEnemy = enemy->addComponent<ShapeComponent>();
 	sEnemy->setShape<sf::CircleShape>(16.0f);
