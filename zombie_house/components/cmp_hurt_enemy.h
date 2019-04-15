@@ -5,7 +5,6 @@
 class HurtEnemyComponent : public Component {
 protected:
   std::weak_ptr<Entity> _enemy;
-
 public:
   void update(double dt) override;
   void render() override {}

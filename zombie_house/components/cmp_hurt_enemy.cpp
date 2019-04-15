@@ -1,15 +1,27 @@
 #include "cmp_hurt_enemy.h"
+#include "cmp_hp.h"
 #include <engine.h>
 
 using namespace std;
 using namespace sf;
 
 void HurtEnemyComponent::update(double dt) {
+	//cout << "HP : " << hp;
+
   if (auto pl = _enemy.lock()) 
   {
-	  if (length(pl->getPosition() - _parent->getPosition()) < 25.0) {
-		  pl->setForDelete();
+	  //auto health = pl->GetCompatibleComponent<HPComponent>().at(0);
+	  if (length(pl->getPosition() - _parent->getPosition()) < 25.0) 
+	  {
 		  _parent->setForDelete();
+		  //cout << "HP: " << hp;
+
+		pl->setForDelete();
+		// _parent->setForDelete();
+		cout << "KIll enemy";
+		  
+		  
+
 	  }
   }
 }

@@ -53,24 +53,24 @@ void PlayerPhysicsComponent::update(double dt) {
     dampen({0.9f, 1.0f});
   }
 
-  // Handle Jump
-  //if (Keyboard::isKeyPressed(Keyboard::Up)) {
-  //  _grounded = isGrounded();
-  //  if (_grounded) {
-   //   setVelocity(Vector2f(getVelocity().x, 0.f));
-  //    teleport(Vector2f(pos.x, pos.y - 2.0f));
-  //    impulse(Vector2f(0, -6.f));
-  //  }
- // }
+   //Handle Jump
+   if (Keyboard::isKeyPressed(Keyboard::Up)) {
+    _grounded = isGrounded();
+    if (_grounded) {
+      setVelocity(Vector2f(getVelocity().x, 0.f));
+      teleport(Vector2f(pos.x, pos.y - 2.0f));
+      impulse(Vector2f(0, -6.f));
+    }
+  }
 
   //Are we in air?
-  //if (!_grounded) {
-    // Check to see if we have landed yet
-  //  _grounded = isGrounded();
-    // disable friction while jumping
- //   setFriction(0.f);
- // } else {
-  //  setFriction(0.1f);
+ if (!_grounded) {
+     //Check to see if we have landed yet
+    _grounded = isGrounded();
+     //disable friction while jumping
+    setFriction(0.f);
+  } else {
+    setFriction(0.1f);
   }
 
   // Clamp velocity.
