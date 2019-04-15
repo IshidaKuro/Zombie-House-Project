@@ -47,24 +47,14 @@ void Level2Scene::Load() {
     // Add ShapeComponent, Red 16.f Circle
 	auto sEnemy = enemy->addComponent<ShapeComponent>();
 	sEnemy->setShape<sf::CircleShape>(16.0f);
-	sEnemy->getShape().setFillColor(Color::Red);
+	sEnemy->getShape().setFillColor(Color::Green);
 	enemy->addTag("enemy");
     // Add EnemyAIComponent
 	enemy->addComponent<EnemyAIComponent>();
     // *********************************
   }
 
-  // Create Turret
-  {
-    auto turret = makeEntity();
-    turret->setPosition(ls::getTilePosition(ls::findTiles('t')[0]) +
-                        Vector2f(20, 0));
-    auto s = turret->addComponent<ShapeComponent>();
-    s->setShape<sf::CircleShape>(16.f, 3);
-    s->getShape().setFillColor(Color::Red);
-    s->getShape().setOrigin(16.f, 16.f);
-    turret->addComponent<EnemyTurretComponent>();
-  }
+
 
   // Add physics colliders to level tiles.
   {
@@ -93,6 +83,7 @@ void Level2Scene::UnLoad() {
 
 void Level2Scene::Update(const double& dt) {
   Scene::Update(dt);
+
   const auto pp = player->getPosition();
   if (ls::getTileAt(pp) == ls::END) {
     Engine::ChangeScene((Scene*)&level3);

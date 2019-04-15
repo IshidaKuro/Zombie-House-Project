@@ -88,7 +88,7 @@ PlayerPhysicsComponent::PlayerPhysicsComponent(Entity* p,
   _size = sv2_to_bv2(size, true);
   _maxVelocity = Vector2f(200.f, 400.f);
   _groundspeed = 30.f;
-  _grounded = false;
+  _grounded = true;
   _body->SetSleepingAllowed(false);
   _body->SetFixedRotation(true);
   //Bullet items have higher-res collision detection
