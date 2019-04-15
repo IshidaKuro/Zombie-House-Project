@@ -11,5 +11,10 @@ int HPComponent::getHP()
 	return hp;
 }
 
+void HPComponent::setHP(int in)
+{
+	hp = in;
+}
+
 HPComponent::HPComponent(Entity* p, int hp)
     : Component(p), hp(hp) {}

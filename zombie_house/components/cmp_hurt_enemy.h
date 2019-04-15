@@ -9,6 +9,7 @@ public:
   void update(double dt) override;
   void render() override {}
   int getHP();
+  void setHP(int in);
   explicit HurtEnemyComponent(Entity* p);
   HurtEnemyComponent() = delete;
 };

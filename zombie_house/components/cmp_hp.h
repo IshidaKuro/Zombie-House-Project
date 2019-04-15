@@ -10,6 +10,7 @@ public:
   void update(double dt) override;
   void render() override {}
   int getHP();
-  explicit HPComponent(Entity* p, int hp = 3);
+  void setHP(int in);
+  explicit HPComponent(Entity* p, int hp = 10);
   HPComponent() = delete;
 };

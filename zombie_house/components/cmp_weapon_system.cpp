@@ -12,19 +12,64 @@ void WeaponSystemComponent::fire() const
 {
 	if (Keyboard::isKeyPressed(Keyboard::Space))
 	{
-		auto bullet = _parent->scene->makeEntity();
-		bullet->setPosition(_parent->getPosition());
-		bullet->addComponent<HurtEnemyComponent>();
-		bullet->addComponent<BulletComponent>();
-		auto s = bullet->addComponent<ShapeComponent>();
+		if (weapon == 3)
+		{
+			auto bullet = _parent->scene->makeEntity();
+			bullet->setPosition(_parent->getPosition());
+			bullet->addComponent<HurtEnemyComponent>();
+			bullet->addComponent<BulletComponent>();
+			auto b1 = bullet->addComponent<ShapeComponent>();
+			b1->setShape<sf::CircleShape>(3.f);
+			b1->getShape().setFillColor(Color::Red);
+			b1->getShape().setOrigin(8.f, 8.f);
+			auto p = bullet->addComponent<PhysicsComponent>(true, Vector2f(3.f, 0.f));
+			p->setRestitution(.4f);
+			p->setFriction(.005f);
+			p->impulse(sf::rotate(Vector2f(20.f, 0.f), -_parent->getRotation()));
 
-		s->setShape<sf::CircleShape>(3.f);
-		s->getShape().setFillColor(Color::Red);
-		s->getShape().setOrigin(8.f, 8.f);
-		auto p = bullet->addComponent<PhysicsComponent>(true, Vector2f(3.f, 0.f));
-		p->setRestitution(.4f);
-		p->setFriction(.005f);
-		p->impulse(sf::rotate(Vector2f(10.f, 0.f), -_parent->getRotation()));
+			auto bullet2 = _parent->scene->makeEntity();
+			bullet2->setPosition(_parent->getPosition());
+			bullet2->addComponent<HurtEnemyComponent>();
+			bullet2->addComponent<BulletComponent>();
+			auto b2 = bullet2->addComponent<ShapeComponent>();
+			b2->setShape<sf::CircleShape>(3.f);
+			b2->getShape().setFillColor(Color::Yellow);
+			b2->getShape().setOrigin(8.f, 8.f);
+			auto p2 = bullet2->addComponent<PhysicsComponent>(true, Vector2f(30.f, 0.f));
+			p2->setRestitution(.4f);
+			p2->setFriction(.005f);
+			p2->impulse(sf::rotate(Vector2f(20.f, 0.f), -_parent->getRotation()));
+
+
+			auto bullet3 = _parent->scene->makeEntity();
+			bullet3->setPosition(_parent->getPosition());
+			bullet3->addComponent<HurtEnemyComponent>();
+			bullet3->addComponent<BulletComponent>();
+			auto b3 = bullet3->addComponent<ShapeComponent>();
+			b3->setShape<sf::CircleShape>(3.f);
+			b3->getShape().setFillColor(Color::Blue);
+			b3->getShape().setOrigin(8.f, 8.f);
+			auto p3 = bullet3->addComponent<PhysicsComponent>(true, Vector2f(80.f, 0.f));
+			p3->setRestitution(.4f);
+			p3->setFriction(.005f);
+			p3->impulse(sf::rotate(Vector2f(20.f, 0.f), -_parent->getRotation()));
+		}
+		else
+		{
+			auto bullet = _parent->scene->makeEntity();
+			bullet->setPosition(_parent->getPosition());
+			bullet->addComponent<HurtEnemyComponent>();
+			bullet->addComponent<BulletComponent>();
+			auto s = bullet->addComponent<ShapeComponent>();
+
+			s->setShape<sf::CircleShape>(3.f);
+			s->getShape().setFillColor(Color::Red);
+			s->getShape().setOrigin(8.f, 8.f);
+			auto p = bullet->addComponent<PhysicsComponent>(true, Vector2f(3.f, 0.f));
+			p->setRestitution(.4f);
+			p->setFriction(.005f);
+			p->impulse(sf::rotate(Vector2f(10.f, 0.f), -_parent->getRotation()));
+		}
 	}
 }
 
@@ -81,7 +126,7 @@ void WeaponSystemComponent::select_weapon()
 	{
 		p.at(0)->getShape().setFillColor(Color::Yellow);
 		weapon = 3;
-		fire_rate = 2.0f;
+		fire_rate = 1.0f;
 		temp = fire_rate;
 		std::cout << "Weapon: 3";
 	}
