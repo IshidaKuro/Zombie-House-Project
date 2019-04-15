@@ -1,6 +1,7 @@
 #include "scene_level1.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
+#include "../components/cmp_weapon_system.h"
 #include "../game.h"
 #include <LevelSystem.h>
 #include <iostream>
@@ -20,7 +21,7 @@ int numberOfZombies = 3;
 
 void Level1Scene::Load() {
   cout << " Scene 1 Load" << endl;
-  ls::loadLevelFile("res/levels/house_level_1.txt", 40.0f);
+  ls::loadLevelFile("res/levels/level_1.txt", 40.0f);
 
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
@@ -29,12 +30,20 @@ void Level1Scene::Load() {
   {
     player = makeEntity();
     player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+
+	//shared_ptr<Texture> ss;
+	//if (!ss->loadFromFile("res/sprites/1.png")) {
+	//	cerr << "Failed to load spritesheet!" << std::endl;
+	//}
+	//auto sp = player->addComponent<SpriteComponent>();
+	//sp->setTexure(ss);
     auto s = player->addComponent<ShapeComponent>();
     s->setShape<sf::RectangleShape>(Vector2f(20.f, 30.f));
     s->getShape().setFillColor(Color::Magenta);
     s->getShape().setOrigin(10.f, 15.f);
 
     player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
+	player->addComponent<WeaponSystemComponent>();
   }
 
   //create some zombies
@@ -74,9 +83,10 @@ void Level1Scene::UnLoad() {
 
 void Level1Scene::Update(const double& dt) {
 
-  if (ls::getTileAt(player->getPosition()) == ls::END) {
+  if (ls::getTileAt(player->getPosition()) == ls::END && Keyboard::isKeyPressed(Keyboard::E)) {
     Engine::ChangeScene((Scene*)&level2);
   }
+
   Scene::Update(dt);
 }
 

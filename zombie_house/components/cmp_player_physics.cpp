@@ -53,8 +53,8 @@ void PlayerPhysicsComponent::update(double dt) {
     dampen({0.9f, 1.0f});
   }
 
-  // Handle Jump
-  if (Keyboard::isKeyPressed(Keyboard::Up)) {
+   //Handle Jump
+   if (Keyboard::isKeyPressed(Keyboard::Up)) {
     _grounded = isGrounded();
     if (_grounded) {
       setVelocity(Vector2f(getVelocity().x, 0.f));
@@ -64,10 +64,10 @@ void PlayerPhysicsComponent::update(double dt) {
   }
 
   //Are we in air?
-  if (!_grounded) {
-    // Check to see if we have landed yet
+ if (!_grounded) {
+     //Check to see if we have landed yet
     _grounded = isGrounded();
-    // disable friction while jumping
+     //disable friction while jumping
     setFriction(0.f);
   } else {
     setFriction(0.1f);
