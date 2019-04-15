@@ -70,11 +70,7 @@ void Level1Scene::Update(const double& dt) {
   if (ls::getTileAt(player->getPosition()) == ls::END && Keyboard::isKeyPressed(Keyboard::E)) {
     Engine::ChangeScene((Scene*)&level2);
   }
-  if (ls::getTileAt(player->getPosition()) == ls::WAYPOINT && Keyboard::isKeyPressed(Keyboard::E))
-  {
-	  cout << "At door";
-	 // player->setPosition(player->getPosition() + Vector2f(0.0f, -118.0f));
-  }
+
   Scene::Update(dt);
 }
 
