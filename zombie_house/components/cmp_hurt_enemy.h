@@ -8,6 +8,7 @@ protected:
 public:
   void update(double dt) override;
   void render() override {}
+  int getHP();
   explicit HurtEnemyComponent(Entity* p);
   HurtEnemyComponent() = delete;
 };
