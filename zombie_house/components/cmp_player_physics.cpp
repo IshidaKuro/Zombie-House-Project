@@ -1,5 +1,6 @@
 #include "cmp_player_physics.h"
 #include "system_physics.h"
+#include "cmp_controls.h"
 #include <LevelSystem.h>
 #include <SFML/Window/Keyboard.hpp>
 
@@ -38,10 +39,10 @@ void PlayerPhysicsComponent::update(double dt) {
     teleport(ls::getTilePosition(ls::findTiles(ls::START)[0]));
   }
 
-  if (Keyboard::isKeyPressed(Keyboard::Left) ||
-      Keyboard::isKeyPressed(Keyboard::Right)) {
+  if (Keyboard::isKeyPressed(m_keys["Left"].key_pressed) ||
+	  Keyboard::isKeyPressed(m_keys["Right"].key_pressed)) {
     // Moving Either Left or Right
-    if (Keyboard::isKeyPressed(Keyboard::Right)) {
+    if (Keyboard::isKeyPressed(m_keys["Right"].key_pressed)) {
       if (getVelocity().x < _maxVelocity.x)
         impulse({(float)(dt * _groundspeed), 0});
     } else {

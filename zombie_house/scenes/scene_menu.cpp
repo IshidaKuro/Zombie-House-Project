@@ -13,7 +13,7 @@ void MenuScene::Load() {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
 
-        "Platformer\nPress Space to Start\nPress F1 to enter fullscreen");
+        "Platformer\nPress Space to Start\nPress F1 to enter fullscreen\nPress C to remap controls");
 
   }
   setLoaded(true);
@@ -24,6 +24,10 @@ void MenuScene::Update(const double& dt) {
 
   if (sf::Keyboard::isKeyPressed(Keyboard::Space)) {
     Engine::ChangeScene(&level2);
+  }
+  if (sf::Keyboard::isKeyPressed(Keyboard::C))
+  {
+	  Engine::ChangeScene(&controls);
   }
 
   Scene::Update(dt);

@@ -4,13 +4,14 @@
 #include "engine.h"
 #include <SFML/Graphics/CircleShape.hpp>
 #include "cmp_hurt_enemy.h"
+#include "../game.h"
 
 using namespace std;
 using namespace sf;
 float temp;
 void WeaponSystemComponent::fire() const
 {
-	if (Keyboard::isKeyPressed(Keyboard::Space))
+	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed))
 	{
 		if (weapon == 3)
 		{
