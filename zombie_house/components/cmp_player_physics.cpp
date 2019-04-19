@@ -3,6 +3,7 @@
 #include "cmp_controls.h"
 #include <LevelSystem.h>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Joystick.hpp>
 
 using namespace std;
 using namespace sf;
@@ -40,9 +41,9 @@ void PlayerPhysicsComponent::update(double dt) {
   }
 
   if (Keyboard::isKeyPressed(m_keys["Left"].key_pressed) ||
-	  Keyboard::isKeyPressed(m_keys["Right"].key_pressed)) {
+	  Keyboard::isKeyPressed(m_keys["Right"].key_pressed) || Joystick::isButtonPressed(0,14) || Joystick::isButtonPressed(0,15)) {
     // Moving Either Left or Right
-    if (Keyboard::isKeyPressed(m_keys["Right"].key_pressed)) {
+    if (Keyboard::isKeyPressed(m_keys["Right"].key_pressed) || Joystick::isButtonPressed(0, 15)) {
       if (getVelocity().x < _maxVelocity.x)
         impulse({(float)(dt * _groundspeed), 0});
     } else {

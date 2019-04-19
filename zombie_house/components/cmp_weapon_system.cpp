@@ -1,5 +1,6 @@
 #include "cmp_weapon_system.h"
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Joystick.hpp>
 #include "cmp_bullet.h"
 #include "engine.h"
 #include <SFML/Graphics/CircleShape.hpp>
@@ -11,7 +12,7 @@ using namespace sf;
 float temp;
 void WeaponSystemComponent::fire() const
 {
-	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed))
+	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0,1))
 	{
 		if (weapon == 3)
 		{
