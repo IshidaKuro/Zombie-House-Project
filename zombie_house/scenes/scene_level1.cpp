@@ -7,6 +7,7 @@
 #include <iostream>
 #include <thread>
 #include <list>
+#include <SFML/Audio/Music.hpp>
 
 using namespace std;
 using namespace sf;
@@ -66,10 +67,12 @@ void Level1Scene::Load() {
       e->addComponent<PhysicsComponent>(false, Vector2f(40.f, 40.f));
     }
   }
-
+  
   //Simulate long loading times
-  std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+  //std::this_thread::sleep_for(std::chrono::milliseconds(3000));
   cout << " Scene 1 Load Done" << endl;
+
+
 
   setLoaded(true);
 }

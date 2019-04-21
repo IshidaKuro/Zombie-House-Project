@@ -9,6 +9,7 @@
 #include "../components/cmp_hp.h"
 #include <LevelSystem.h>
 #include <iostream>
+#include <SFML/Audio/Music.hpp>
 using namespace std;
 using namespace sf;
 

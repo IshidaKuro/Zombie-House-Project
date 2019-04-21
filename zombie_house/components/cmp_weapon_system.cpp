@@ -12,7 +12,7 @@ using namespace sf;
 float temp;
 void WeaponSystemComponent::fire() const
 {
-	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0,1))
+	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Shoot"].key_pressed))
 	{
 		if (weapon == 3)
 		{

@@ -51,6 +51,36 @@ void ControlScene::Update(const double& dt) {
 					Engine::ChangeScene(&menu);
 				}
 			}
+			if (choice_event.type == sf::Event::JoystickButtonPressed)
+			{
+				if (choice_event.joystickButton.button == Joystick::isButtonPressed(0, 14))
+				{
+					if (Engine::GetWindow().waitEvent(in_event))
+					{
+						key.myEventType == Event::JoystickButtonPressed;
+						key.key_pressed == in_event.joystickButton.button;
+						m_keys["Joy_Left"] = key;
+					}
+				}
+				if (choice_event.joystickButton.button == Joystick::isButtonPressed(0, 15))
+				{
+					if (Engine::GetWindow().waitEvent(in_event))
+					{
+						key.myEventType == Event::JoystickButtonPressed;
+						key.key_pressed == in_event.joystickButton.button;
+						m_keys["Joy_Right"] = key;
+					}
+				}
+				if (choice_event.joystickButton.button == Joystick::isButtonPressed(0, 14))
+				{
+					if (Engine::GetWindow().waitEvent(in_event))
+					{
+						key.myEventType == Event::JoystickButtonPressed;
+						key.key_pressed == in_event.joystickButton.button;
+						m_keys["Joy_Shoot"] = key;
+					}
+				}
+			}
 			if (choice_event.type == sf::Event::KeyReleased)
 			{
 				if (choice_event.key.code == sf::Keyboard::Left)
