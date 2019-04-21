@@ -1,16 +1,18 @@
 #include "cmp_weapon_system.h"
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Joystick.hpp>
 #include "cmp_bullet.h"
 #include "engine.h"
 #include <SFML/Graphics/CircleShape.hpp>
 #include "cmp_hurt_enemy.h"
+#include "../game.h"
 
 using namespace std;
 using namespace sf;
 float temp;
 void WeaponSystemComponent::fire() const
 {
-	if (Keyboard::isKeyPressed(Keyboard::Space))
+	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Shoot"].key_pressed))
 	{
 		if (weapon == 3)
 		{
