@@ -17,6 +17,7 @@ protected:
 public:
 	//1 pistol, 2 smg, 3 shotgun, 4 ar
 	int getWeapon();
+	
 	void pickup(int weapon);
 	void select_weapon();
 	void update(double dt) override;
