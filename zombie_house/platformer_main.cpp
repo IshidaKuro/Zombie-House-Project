@@ -12,5 +12,5 @@ ControlScene controls;
 
 
 int main() {
-  Engine::Start(1280, 720, "Platformer",&menu);
+  Engine::Start(1280, 720, "Platformer",&controls);
 }

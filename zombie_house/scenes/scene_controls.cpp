@@ -9,19 +9,26 @@
 
 using namespace std;
 using namespace sf;
-
 std::map<std::string, MyKeys> m_keys;
 bool choose = true;
 void ControlScene::Load() {
+	choose = true;
   cout << "Menu Load \n";
   {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
 
-        "Platformer Control Mapping\nPress Space to Return to Menu\nPress Left to change Left\nRight to change Right\nSpace to change shoot\nEnter to confirm changes\n");
+        "Platformer Control Mapping\nPress Enter at any time to Return to Menu\nPress Left to change Left\nRight to change Right\nSpace to change shoot\n");
 
   }
 
+  MyKeys key;
+  key.key_pressed = Keyboard::Left;
+  m_keys["Left"] = key;
+  key.key_pressed = Keyboard::Right;
+  m_keys["Right"] = key;
+  key.key_pressed = Keyboard::Space;
+  m_keys["Shoot"] = key;
   setLoaded(true);
 }
 
@@ -129,9 +136,7 @@ void ControlScene::Update(const double& dt) {
 		}
 	}
 	
-
-
-	//cout << "Not choosing";
+	cout << "Not choosing";
 	Scene::Update(dt);
 	
 }
