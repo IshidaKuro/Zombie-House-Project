@@ -23,7 +23,7 @@ void MenuScene::Update(const double& dt) {
   // cout << "Menu Update "<<dt<<"\n";
 
   if (sf::Keyboard::isKeyPressed(Keyboard::Space)) {
-    Engine::ChangeScene(&level1);
+    Engine::ChangeScene(&level2);
   }
   if (sf::Keyboard::isKeyPressed(Keyboard::C))
   {

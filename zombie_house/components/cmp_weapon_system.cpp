@@ -1,6 +1,8 @@
 #include "cmp_weapon_system.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Joystick.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include "cmp_bullet.h"
 #include "engine.h"
 #include <SFML/Graphics/CircleShape.hpp>
@@ -10,6 +12,8 @@
 using namespace std;
 using namespace sf;
 float temp;
+sf::SoundBuffer buffer2;
+sf::Sound sound2;
 void WeaponSystemComponent::fire() const
 {
 	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Shoot"].key_pressed))
@@ -55,8 +59,20 @@ void WeaponSystemComponent::fire() const
 			p3->setRestitution(.4f);
 			p3->setFriction(.005f);
 			p3->impulse(sf::rotate(Vector2f(20.f, 0.f), -_parent->getRotation()));
+
+			//play sound
+			if (!buffer2.loadFromFile("res/sounds/shotgun.wav"))
+			{
+				cout << "Error loading zombie sound";
+			}
+			else
+			{
+				cout << "Play sound";
+				sound2.setBuffer(buffer2);
+				sound2.play();
+			}
 		}
-		else
+		else if (weapon == 1)
 		{
 			auto bullet = _parent->scene->makeEntity();
 			bullet->setPosition(_parent->getPosition());
@@ -71,6 +87,46 @@ void WeaponSystemComponent::fire() const
 			p->setRestitution(.4f);
 			p->setFriction(.005f);
 			p->impulse(sf::rotate(Vector2f(10.f, 0.f), -_parent->getRotation()));
+
+			//play sound
+			if (!buffer2.loadFromFile("res/sounds/pistol.wav"))
+			{
+				cout << "Error loading zombie sound";
+			}
+			else
+			{
+				cout << "Play sound";
+				sound2.setBuffer(buffer2);
+				sound2.play();
+			}
+		}
+		else if (weapon == 2)
+		{
+			auto bullet = _parent->scene->makeEntity();
+			bullet->setPosition(_parent->getPosition());
+			bullet->addComponent<HurtEnemyComponent>();
+			bullet->addComponent<BulletComponent>();
+			auto s = bullet->addComponent<ShapeComponent>();
+
+			s->setShape<sf::CircleShape>(3.f);
+			s->getShape().setFillColor(Color::Red);
+			s->getShape().setOrigin(8.f, 8.f);
+			auto p = bullet->addComponent<PhysicsComponent>(true, Vector2f(3.f, 0.f));
+			p->setRestitution(.4f);
+			p->setFriction(.005f);
+			p->impulse(sf::rotate(Vector2f(10.f, 0.f), -_parent->getRotation()));
+
+			//play sound
+			if (!buffer2.loadFromFile("res/sounds/smg.wav"))
+			{
+				cout << "Error loading zombie sound";
+			}
+			else
+			{
+				cout << "Play sound";
+				sound2.setBuffer(buffer2);
+				sound2.play();
+			}
 		}
 	}
 }

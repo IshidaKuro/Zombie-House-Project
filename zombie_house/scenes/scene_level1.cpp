@@ -67,6 +67,16 @@ void Level1Scene::Load() {
       e->addComponent<PhysicsComponent>(false, Vector2f(40.f, 40.f));
     }
   }
+
+  Music music;
+  if (!music.openFromFile("res/sounds/background.wav"))
+  {
+	  cout << "Error loading music";
+  }
+  else
+  {
+	  music.play();
+  }
   
   //Simulate long loading times
   //std::this_thread::sleep_for(std::chrono::milliseconds(3000));

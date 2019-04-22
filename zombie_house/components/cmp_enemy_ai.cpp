@@ -1,11 +1,17 @@
 #include "cmp_enemy_ai.h"
-#include<engine.h>
+#include <engine.h>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 
 using namespace std;
 using namespace sf;
 
 bool pathing = false;
 int random;
+sf::SoundBuffer buffer;
+sf::Sound sound;
+float wait = 0.02f;
+
 void EnemyAIComponent::update(double dt) {
 
 	
@@ -16,22 +22,40 @@ void EnemyAIComponent::update(double dt) {
 			{
 				_direction = Vector2f(0, 0); // make the zombie stand still
 				pathing = false; // set pathing to false again
+
 			}
-			
 			else
 			{
+
 				if (!pathing)
 				{
-					
 	
 					//generate a random number between 1 and 200
 					random = rand() % 199 + 1;
 					//if the result is 1, then path towards the player
 					if (random == 1)
 					{
+
+						//play sound
+						if (!buffer.loadFromFile("res/sounds/zombie_moan.wav"))
+						{
+							cout << "Error loading zombie sound";
+						}
+						else
+						{
+							wait -= dt;
+							if (wait <= 0.f)
+							{
+								cout << "Play sound";
+								sound.setBuffer(buffer);
+								sound.play();
+								wait = 0.02f;
+							}
+						}
+
 						//path towards the player
 						pathing == true;
-	
+
 						//find which direction to move
 						if (_parent->getPosition().x - pl->getPosition().x < 0)
 							_direction = Vector2f(1.0f, 0);
@@ -46,7 +70,7 @@ void EnemyAIComponent::update(double dt) {
 		}
 	//move in that direction 
 
-	move(_direction * (float)(dt * _speed));
+	//move(_direction * (float)(dt * _speed));
 	ActorMovementComponent::update(dt);
 }
 
