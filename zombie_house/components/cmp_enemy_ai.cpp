@@ -70,7 +70,7 @@ void EnemyAIComponent::update(double dt) {
 		}
 	//move in that direction 
 
-	//move(_direction * (float)(dt * _speed));
+	move(_direction * (float)(dt * _speed));
 	ActorMovementComponent::update(dt);
 }
 
