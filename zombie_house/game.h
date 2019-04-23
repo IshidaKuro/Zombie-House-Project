@@ -9,6 +9,7 @@
 #include <map>
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/Keyboard.hpp"
+#include <array>
 
 
 
@@ -26,3 +27,4 @@ extern struct MyKeys
 };
 extern std::map<std::string, MyKeys> m_keys;
 extern bool ctrl_change;
+extern std::weak_ptr<Entity> _enemy[10];
