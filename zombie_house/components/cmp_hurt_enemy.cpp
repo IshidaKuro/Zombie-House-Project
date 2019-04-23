@@ -1,6 +1,7 @@
 #include "cmp_hurt_enemy.h"
 #include "cmp_hp.h"
 #include <engine.h>
+#include "../game.h"
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 
@@ -12,10 +13,9 @@ sf::Sound sound3;
 
 void HurtEnemyComponent::update(double dt) {
 	//cout << "HP : " << hp;
-	for (int i = 0; i < _parent->scene->ents.find("enemy").size(); i++)
-	{
-		
-		if (auto pl = _enemy[i].lock())
+	for (int i = 0; i < _enemies.size(); i++)
+	{	
+		if (auto pl = _enemies[i].en.lock())
 		{
 			if (length(pl->getPosition() - _parent->getPosition()) < 25.0)
 			{
@@ -37,7 +37,9 @@ void HurtEnemyComponent::update(double dt) {
 				setHP(getHP() - 1);
 				if (getHP() <= 0)
 				{
+  					
 					pl->setForDelete();
+					_enemies.erase(i);
 					// _parent->setForDelete();
 					cout << "Kill enemy";
 					if (!buffer3.loadFromFile("res/sounds/zombie_dead.wav"))
@@ -63,9 +65,10 @@ void HurtEnemyComponent::update(double dt) {
 
 int HurtEnemyComponent::getHP()
 {
-	for (int i = 0; i < _parent->scene->ents.find("enemy").size(); i++)
+	for (int i = 0; i < _enemies.size(); i++)
 	{
-		auto en = _enemy[i].lock();
+		_enemy = _enemies[i].en;
+		auto en = _enemies[i].en.lock();
 		int hp = en->GetCompatibleComponent<HPComponent>().at(0)->getHP();
 		return hp;
 	}
@@ -73,21 +76,18 @@ int HurtEnemyComponent::getHP()
 
 void HurtEnemyComponent::getEnemies()
 {
-	for (int i = 0; i < _parent->scene->ents.find("enemy").size(); i++)
-	{
-		_enemy[i] = _parent->scene->ents.find("enemy")[i];
-	}
+
 }
 
 void HurtEnemyComponent::setHP(int in)
 {
-	for (int i = 0; i < _parent->scene->ents.find("enemy").size(); i++)
+	for (int i = 0; i < _enemies.size(); i++)
 	{
-		auto en = _enemy[i].lock();
+		auto en = _enemies[i].en.lock();
 		en->GetCompatibleComponent<HPComponent>().at(0)->setHP(in);
 	}
 }
 
 HurtEnemyComponent::HurtEnemyComponent(Entity* p)
-	: Component(p) {
+	: Component(p){
 }

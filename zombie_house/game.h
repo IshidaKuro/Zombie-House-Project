@@ -9,7 +9,7 @@
 #include <map>
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/Keyboard.hpp"
-#include <array>
+#include <set>
 
 extern MenuScene menu;
 extern Level1Scene level1;
@@ -23,6 +23,11 @@ extern struct MyKeys
 	sf::Keyboard::Key key_pressed;
 	sf::Mouse::Button myMouseButton;
 };
+
+extern struct Enemies
+{
+	std::weak_ptr<Entity> en;
+};
 extern std::map<std::string, MyKeys> m_keys;
 extern bool ctrl_change;
-extern std::weak_ptr<Entity> _enemy[10];
+extern std::map<std::int8_t, Enemies> _enemies;

@@ -75,6 +75,7 @@ void WeaponSystemComponent::fire() const
 		else if (weapon == 1)
 		{
 			auto bullet = _parent->scene->makeEntity();
+			bullet->addTag("bullet");
 			bullet->setPosition(_parent->getPosition());
 			bullet->addComponent<HurtEnemyComponent>();
 			bullet->addComponent<BulletComponent>();

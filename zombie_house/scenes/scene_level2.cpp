@@ -20,10 +20,6 @@ void Level2Scene::Load() {
   ls::loadLevelFile("res/levels/level_2.txt", 40.0f);
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
-  for (int i = 0; i < ents.find("enemy").size(); i++)
-  {
-	  _enemy[i] = ents.find("enemy")[i];
-  }
   // Create player
   {
     // *********************************
@@ -63,7 +59,7 @@ void Level2Scene::Load() {
   {
 	  auto enemy2 = makeEntity();
 	  enemy2->setPosition(ls::getTilePosition(ls::findTiles(ls::ENEMY)[0]) +
-		  Vector2f(50, -24));
+		  Vector2f(0, 24));
 	  // *********************************
 	  // Add HurtComponent
 	  enemy2->addComponent<HurtComponent>();
@@ -91,7 +87,12 @@ void Level2Scene::Load() {
 	  }
     // *********************************
   }
-
+  for (int i = 0; i < ents.find("enemy").size(); i++)
+  {
+	  Enemies ens;
+	  ens.en = ents.find("enemy").at(i);
+	  _enemies[i] = ens;
+  }
   cout << " Scene 2 Load Done" << endl;
   setLoaded(true);
 }

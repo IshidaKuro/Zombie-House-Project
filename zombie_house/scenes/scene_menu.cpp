@@ -14,13 +14,10 @@ using namespace std;
 using namespace sf;
 static shared_ptr<Entity> player;
 std::map<std::string, MyKeys> m_keys;
-std::weak_ptr<Entity> _enemy[10];
+std::map<std::int8_t, Enemies> _enemies;
 void MenuScene::Load() {
   cout << "Menu Load \n";
-  for (int i = 0; i < ents.find("enemy").size(); i++)
-  {
-	  _enemy[i] = ents.find("enemy")[i];
-  }
+
   {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
@@ -77,7 +74,12 @@ void MenuScene::Load() {
 	  }
   }
 
-
+  for (int i = 0; i < ents.find("enemy").size(); i++)
+  {
+	  Enemies ens;
+	  ens.en = ents.find("enemy").at(i);
+	  _enemies[i] = ens;
+  }
 
   setLoaded(true);
 }
