@@ -20,7 +20,10 @@ void Level2Scene::Load() {
   ls::loadLevelFile("res/levels/level_2.txt", 40.0f);
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
-
+  for (int i = 0; i < ents.find("enemy").size(); i++)
+  {
+	  _enemy[i] = ents.find("enemy")[i];
+  }
   // Create player
   {
     // *********************************
@@ -57,7 +60,23 @@ void Level2Scene::Load() {
     // *********************************
   }
 
-
+  {
+	  auto enemy2 = makeEntity();
+	  enemy2->setPosition(ls::getTilePosition(ls::findTiles(ls::ENEMY)[0]) +
+		  Vector2f(50, -24));
+	  // *********************************
+	  // Add HurtComponent
+	  enemy2->addComponent<HurtComponent>();
+	  enemy2->addComponent<HPComponent>();
+	  // Add ShapeComponent, Red 16.f Circle
+	  auto sEnemy2 = enemy2->addComponent<ShapeComponent>();
+	  sEnemy2->setShape<sf::CircleShape>(16.0f);
+	  sEnemy2->getShape().setFillColor(Color::Green);
+	  enemy2->addTag("enemy");
+	  // Add EnemyAIComponent
+	  enemy2->addComponent<EnemyAIComponent>();
+	  // *********************************
+  }
 
   // Add physics colliders to level tiles.
   {
