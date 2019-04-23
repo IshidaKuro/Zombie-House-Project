@@ -5,7 +5,7 @@
 
 class HurtEnemyComponent : public Component {
 protected:
-	std::weak_ptr<Entity> _enemy[10];
+	std::weak_ptr<Entity> _enemy;
 
 
 public:
