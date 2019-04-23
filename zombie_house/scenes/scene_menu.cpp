@@ -13,7 +13,7 @@
 using namespace std;
 using namespace sf;
 static shared_ptr<Entity> player;
-
+std::map<std::string, MyKeys> m_keys;
 void MenuScene::Load() {
   cout << "Menu Load \n";
 
@@ -24,7 +24,16 @@ void MenuScene::Load() {
         "Platformer\nInteract (E) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
   }
 
-
+  if (ctrl_change == false)
+  {
+	  MyKeys key;
+	  key.key_pressed = Keyboard::Left;
+	  m_keys["Left"] = key;
+	  key.key_pressed = Keyboard::Right;
+	  m_keys["Right"] = key;
+	  key.key_pressed = Keyboard::Space;
+	  m_keys["Shoot"] = key;
+  }
 
   cout << " Scene 1 Load" << endl;
   ls::loadLevelFile("res/levels/menu.txt", 40.0f);
@@ -76,7 +85,9 @@ void MenuScene::Update(const double& dt) {
 		Engine::ChangeScene((Scene*)&level1);
 	}
 
-
+	if (ls::getTileAt(player->getPosition()) == ls::WAYPOINT && Keyboard::isKeyPressed(Keyboard::E)) {
+		Engine::ChangeScene((Scene*)&controls);
+	}
 
 
   Scene::Update(dt);
