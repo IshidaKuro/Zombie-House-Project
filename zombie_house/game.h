@@ -23,3 +23,4 @@ extern struct MyKeys
 	sf::Mouse::Button myMouseButton;
 };
 extern std::map<std::string, MyKeys> m_keys;
+extern bool ctrl_change;

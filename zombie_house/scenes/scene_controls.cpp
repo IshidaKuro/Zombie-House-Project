@@ -1,6 +1,5 @@
 #include "scene_controls.h"
 #include "../components/cmp_text.h"
-#include "../components/cmp_controls.h"
 #include "../game.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
@@ -10,18 +9,18 @@
 using namespace std;
 using namespace sf;
 
-std::map<std::string, MyKeys> m_keys;
 bool choose = true;
+bool ctrl_change;
 void ControlScene::Load() {
+	choose = true;
   cout << "Menu Load \n";
   {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
 
-        "Platformer Control Mapping\nPress Space to Return to Menu\nPress Left to change Left\nRight to change Right\nSpace to change shoot\nEnter to confirm changes\n");
+        "Platformer Control Mapping\nPress Enter at any time to Return to Menu\nPress Left to change Left\nRight to change Right\nSpace to change shoot\n");
 
   }
-
   setLoaded(true);
 }
 
@@ -48,6 +47,7 @@ void ControlScene::Update(const double& dt) {
 				{
 					//cout << "Up Pressed";
 					choose = false;
+					ctrl_change = true;
 					Engine::ChangeScene(&menu);
 				}
 			}
@@ -129,9 +129,7 @@ void ControlScene::Update(const double& dt) {
 		}
 	}
 	
-
-
-	//cout << "Not choosing";
+	cout << "Not choosing";
 	Scene::Update(dt);
 	
 }
