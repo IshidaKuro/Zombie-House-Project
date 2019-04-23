@@ -14,9 +14,13 @@ using namespace std;
 using namespace sf;
 static shared_ptr<Entity> player;
 std::map<std::string, MyKeys> m_keys;
+std::weak_ptr<Entity> _enemy[10];
 void MenuScene::Load() {
   cout << "Menu Load \n";
-
+  for (int i = 0; i < ents.find("enemy").size(); i++)
+  {
+	  _enemy[i] = ents.find("enemy")[i];
+  }
   {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
@@ -82,13 +86,8 @@ void MenuScene::Update(const double& dt) {
   // cout << "Menu Update "<<dt<<"\n";
 
 	if (ls::getTileAt(player->getPosition()) == ls::END && Keyboard::isKeyPressed(Keyboard::E)) {
-		Engine::ChangeScene((Scene*)&level1);
+		Engine::ChangeScene((Scene*)&level2);
 	}
-
-	if (ls::getTileAt(player->getPosition()) == ls::WAYPOINT && Keyboard::isKeyPressed(Keyboard::E)) {
-		Engine::ChangeScene((Scene*)&controls);
-	}
-
 
   Scene::Update(dt);
 }
