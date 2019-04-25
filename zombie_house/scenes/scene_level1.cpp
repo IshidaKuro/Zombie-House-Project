@@ -14,12 +14,6 @@ using namespace sf;
 
 static shared_ptr<Entity> player;
 
-
-list<Entity> zombies;
-
-
-int numberOfZombies = 3;
-
 void Level1Scene::Load() {
   cout << " Scene 1 Load" << endl;
   ls::loadLevelFile("res/levels/level_1.txt", 40.0f);
@@ -47,15 +41,6 @@ void Level1Scene::Load() {
 	player->addComponent<WeaponSystemComponent>();
   }
 
-  //create some zombies
-  {
-	  for (int i = 0; i < numberOfZombies; i++)
-	  {
-		  
-	  }
-  
-  }
-
   // Add physics colliders to level tiles.
   {
     auto walls = ls::findTiles(ls::WALL);
@@ -81,7 +66,6 @@ void Level1Scene::Load() {
   //Simulate long loading times
   //std::this_thread::sleep_for(std::chrono::milliseconds(3000));
   cout << " Scene 1 Load Done" << endl;
-
 
 
   setLoaded(true);

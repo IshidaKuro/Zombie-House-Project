@@ -4,6 +4,7 @@
 #include "../components/cmp_hurt_player.h"
 #include "../components/cmp_physics.h"
 #include "../components/cmp_player_physics.h"
+#include "../components/cmp_persistence.h"
 #include "../game.h"
 #include "../components/cmp_weapon_system.h"
 #include "../components/cmp_hp.h"
@@ -33,35 +34,16 @@ void Level2Scene::Load() {
 	player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
     // *********************************
     player->addTag("player");
-    //player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
 	
   }
 
-  // Create Enemy
-  {
-    auto enemy = makeEntity();
-    enemy->setPosition(ls::getTilePosition(ls::findTiles(ls::ENEMY)[0]) +
-                       Vector2f(0, 24));
-    // *********************************
-    // Add HurtComponent
-	enemy->addComponent<HurtComponent>();
-	enemy->addComponent<HPComponent>();
-    // Add ShapeComponent, Red 16.f Circle
-	auto sEnemy = enemy->addComponent<ShapeComponent>();
-	sEnemy->setShape<sf::CircleShape>(16.0f);
-	sEnemy->getShape().setFillColor(Color::Green);
-	enemy->addTag("enemy");
-    // Add EnemyAIComponent
-	enemy->addComponent<EnemyAIComponent>();
-    // *********************************
-  }
 
+  auto enemySpawn = ls::findTiles(ls::ENEMY);
+  for (auto e : enemySpawn)
   {
+	  auto pos = ls::getTilePosition(e);
 	  auto enemy2 = makeEntity();
-	  enemy2->setPosition(ls::getTilePosition(ls::findTiles(ls::ENEMY)[0]) +
-		  Vector2f(0, 24));
-	  // *********************************
-	  // Add HurtComponent
+	  enemy2->setPosition(pos);
 	  enemy2->addComponent<HurtComponent>();
 	  enemy2->addComponent<HPComponent>();
 	  // Add ShapeComponent, Red 16.f Circle
@@ -71,9 +53,7 @@ void Level2Scene::Load() {
 	  enemy2->addTag("enemy");
 	  // Add EnemyAIComponent
 	  enemy2->addComponent<EnemyAIComponent>();
-	  // *********************************
   }
-
   // Add physics colliders to level tiles.
   {
     // *********************************
@@ -112,6 +92,14 @@ void Level2Scene::Update(const double& dt) {
     Engine::ChangeScene((Scene*)&level3);
   } else if (!player->isAlive()) {
     Engine::ChangeScene((Scene*)&level2);
+  }
+  if (Keyboard::isKeyPressed(Keyboard::S))
+  {
+	  auto save = makeEntity();
+	  auto s = save->addComponent<SaveFileComponent>();
+	  s->setLevel("Level2");
+	  s->SaveFile();
+	  Engine::ChangeScene(&menu);
   }
 }
 

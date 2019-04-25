@@ -15,6 +15,7 @@ using namespace sf;
 static shared_ptr<Entity> player;
 std::map<std::string, MyKeys> m_keys;
 std::map<std::int8_t, Enemies> _enemies;
+
 void MenuScene::Load() {
   cout << "Menu Load \n";
 

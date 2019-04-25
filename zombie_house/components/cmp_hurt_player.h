@@ -4,7 +4,6 @@
 
 class HurtComponent : public Component {
 protected:
-  void fire() const;
   std::weak_ptr<Entity> _player;
 
 public:
