@@ -39,7 +39,11 @@ void Level2Scene::Load() {
 	player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
     // *********************************
     player->addTag("player");
-	player->addComponent<PickupAmmoComponent>();
+	auto a = player->addComponent<PickupAmmoComponent>();
+	a->setAmmo("pistol", 8);
+	a->setAmmo("smg", 38);
+	a->setAmmo("shotgun", 4);
+	
   }
 
   auto enemySpawn = ls::findTiles(ls::ENEMY);

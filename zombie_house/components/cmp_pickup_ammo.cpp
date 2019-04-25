@@ -28,7 +28,10 @@ void PickupAmmoComponent::update(double dt) {
 					else if (0 < ammoRand && ammoRand <= 12)
 					{
 						//add some pistol ammo to the player's inventory
+
+						setAmmo("pistol", getAmmo("pistol") + rand() % 7 + 3);
 						cout << "pistol ammo collected" << endl;
+						cout <<"Pistol Ammo: "<< getAmmo("pistol");
 					}
 					else if (12 < ammoRand && ammoRand <= 22)
 					{
