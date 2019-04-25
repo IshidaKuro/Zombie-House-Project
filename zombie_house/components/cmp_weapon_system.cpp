@@ -12,10 +12,10 @@
 using namespace std;
 using namespace sf;
 float temp;
-int pistolAmmo = 5;
-int smgAmmo = 5;
-int shotgunAmmo = 5;
-int arAmmo = 5;
+int pistolAmmo = 5000;
+int smgAmmo = 5000;
+int shotgunAmmo = 5000;
+int arAmmo = 5000;
 
 sf::SoundBuffer buffer2;
 sf::Sound sound2;

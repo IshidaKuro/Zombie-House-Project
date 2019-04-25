@@ -15,6 +15,8 @@ using namespace sf;
 static shared_ptr<Entity> player;
 std::map<std::string, MyKeys> m_keys;
 std::map<std::int8_t, Enemies> _enemies;
+std::map<std::int8_t, Ammo> _ammo;
+
 void MenuScene::Load() {
   cout << "Menu Load \n";
 
@@ -79,6 +81,13 @@ void MenuScene::Load() {
 	  Enemies ens;
 	  ens.en = ents.find("enemy").at(i);
 	  _enemies[i] = ens;
+  }
+
+  for (int i = 0; i < ents.find("ammo").size(); i++)
+  {
+	  Ammo amm;
+	  amm.am = ents.find("ammo").at(i);
+	  _ammo[i] = amm;
   }
 
   setLoaded(true);

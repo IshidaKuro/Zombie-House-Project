@@ -1,9 +1,12 @@
+//we need to use this as a template for other levels!!!!
+
 #include "scene_level2.h"
 #include "../components/cmp_enemy_ai.h"
 #include "../components/cmp_enemy_turret.h"
 #include "../components/cmp_hurt_player.h"
 #include "../components/cmp_physics.h"
 #include "../components/cmp_player_physics.h"
+#include "../components/cmp_pickup_ammo.h"
 #include "../game.h"
 #include "../components/cmp_weapon_system.h"
 #include "../components/cmp_hp.h"
@@ -34,7 +37,7 @@ void Level2Scene::Load() {
     // *********************************
     player->addTag("player");
     //player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
-	
+	player->addComponent<PickupAmmoComponent>();
   }
 
   // Create Enemy
@@ -74,6 +77,28 @@ void Level2Scene::Load() {
 	  // *********************************
   }
 
+   //create ammo objects
+  {
+
+	  auto ammoCount = ls::findTiles(ls::AMMO);
+	  for (auto a : ammoCount)
+	  {
+		  auto pos = ls::getTilePosition(a);
+		  auto ammo = makeEntity();
+		  ammo->setPosition(pos + Vector2f(0, 24));
+	  
+
+
+	  auto sAmmo = ammo->addComponent<ShapeComponent>();
+	  sAmmo->setShape<sf::CircleShape>(8.0f);
+	  sAmmo->getShape().setFillColor(Color::White);
+	  ammo->addTag("ammo");
+	  }
+	  // *********************************
+
+  }
+
+
   // Add physics colliders to level tiles.
   {
     // *********************************
@@ -93,6 +118,13 @@ void Level2Scene::Load() {
 	  ens.en = ents.find("enemy").at(i);
 	  _enemies[i] = ens;
   }
+  for (int i = 0; i < ents.find("ammo").size(); i++)
+  {
+	  Ammo amm;
+	  amm.am = ents.find("ammo").at(i);
+	  _ammo[i] = amm;
+  }
+
   cout << " Scene 2 Load Done" << endl;
   setLoaded(true);
 }

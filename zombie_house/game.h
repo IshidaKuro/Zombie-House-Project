@@ -30,6 +30,12 @@ extern struct Enemies
 {
 	std::weak_ptr<Entity> en;
 };
+
+extern struct Ammo
+{
+	std::weak_ptr<Entity> am;
+};
 extern std::map<std::string, MyKeys> m_keys;
 extern bool ctrl_change;
 extern std::map<std::int8_t, Enemies> _enemies;
+extern std::map<std::int8_t, Ammo> _ammo;
