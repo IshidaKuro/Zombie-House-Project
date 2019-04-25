@@ -18,6 +18,7 @@ void PickupAmmoComponent::update(double dt) {
 				if (length(ammo->getPosition() - _parent->getPosition()) < 25.0 && Keyboard::isKeyPressed(Keyboard::E))
 				{
 					ammo->setForDelete();
+					ammoPickupCount++;
 					getAmmo();
 				}
 			}

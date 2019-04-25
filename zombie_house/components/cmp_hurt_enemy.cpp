@@ -37,7 +37,7 @@ void HurtEnemyComponent::update(double dt) {
 				setHP(getHP() - 1);
 				if (getHP() <= 0)
 				{
-  					
+					zombieKillCount++;
 					pl->setForDelete();
 					_enemies.erase(i);
 					// _parent->setForDelete();

@@ -5,8 +5,11 @@ class LoadFileComponent : public Component {
 protected:
 
 public:
-	//LoadFileComponent() = delete;
-	void LoadFile();
+	LoadFileComponent() = delete;
+	void update(double dt) override;
+	void render() override {}
+	
+	std::string LoadFile(std::string fileToRead);
 	explicit LoadFileComponent(Entity* p);
 };
 
@@ -15,10 +18,9 @@ protected:
 	std::string level;
 	std::weak_ptr<Entity> _player;
 public:
-	void setLevel(std::string in);
 	void update(double dt) override;
 	void render() override {}
 	SaveFileComponent() = delete;
-	void SaveFile();
+	void SaveFile(std::string in);
 	explicit SaveFileComponent(Entity* p);
 };

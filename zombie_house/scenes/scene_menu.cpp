@@ -3,6 +3,7 @@
 #include "../components/cmp_physics.h"
 #include "../components/cmp_player_physics.h"
 #include "../game.h"
+#include "../components/cmp_persistence.h"
 #include "../components/cmp_weapon_system.h"
 #include "../components/cmp_hp.h"
 #include <SFML/Window/Keyboard.hpp>
@@ -16,9 +17,36 @@ static shared_ptr<Entity> player;
 std::map<std::string, MyKeys> m_keys;
 std::map<std::int8_t, Enemies> _enemies;
 std::map<std::int8_t, Ammo> _ammo;
+int zombieKillCount;
+int ammoPickupCount;
+string out_level;
 
 void MenuScene::Load() {
   cout << "Menu Load \n";
+  //load file - set game.h kill and ammo counts from file
+
+  auto load = makeEntity();
+  auto l = load->addComponent<LoadFileComponent>();
+  string levelData = l->LoadFile("Menu.dat");
+  //cout << "LOADING DATA: " << out;
+  if (levelData.size() <= 0)
+  {
+	  zombieKillCount = 0;
+	  ammoPickupCount = 0;
+  }
+  else
+  {
+	  zombieKillCount = levelData[0] - '0';
+	  ammoPickupCount = levelData[2] - '0';
+  }
+
+
+  string prev_level = l->LoadFile("ZombieHouseSaveFile.txt");
+  if (prev_level.size() > 0)
+  {
+	   out_level = prev_level[5];
+  }
+
 
   {
     auto txt = makeEntity();
@@ -97,7 +125,22 @@ void MenuScene::Update(const double& dt) {
   // cout << "Menu Update "<<dt<<"\n";
 
 	if (ls::getTileAt(player->getPosition()) == ls::END && Keyboard::isKeyPressed(Keyboard::E)) {
-		Engine::ChangeScene((Scene*)&level2);
+		if (out_level != "")
+		{
+			if (out_level == "2")
+			{
+				Engine::ChangeScene(&level2);
+			}
+			else if(out_level == "3")
+			{
+				Engine::ChangeScene(&level3);
+			}
+			
+		}
+		else
+		{
+			Engine::ChangeScene((Scene*)&level2);
+		}
 	}
 
   Scene::Update(dt);

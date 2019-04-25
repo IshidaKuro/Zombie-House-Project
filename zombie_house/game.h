@@ -39,3 +39,5 @@ extern std::map<std::string, MyKeys> m_keys;
 extern bool ctrl_change;
 extern std::map<std::int8_t, Enemies> _enemies;
 extern std::map<std::int8_t, Ammo> _ammo;
+extern int zombieKillCount;
+extern int ammoPickupCount;

@@ -24,6 +24,23 @@ void Level2Scene::Load() {
   ls::loadLevelFile("res/levels/level_2.txt", 40.0f);
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
+
+  //load file - set game.h kill and ammo counts from file
+  auto load = makeEntity();
+  auto l = load->addComponent<LoadFileComponent>();
+  string levelData = l->LoadFile("Level2.dat");
+  //cout << "LOADING DATA: " << out;
+  if (levelData.size() <= 0)
+  {
+	  zombieKillCount = 0;
+	  ammoPickupCount = 0;
+  }
+  else
+  {
+	  zombieKillCount = levelData[0] - '0';
+	  ammoPickupCount = levelData[2] - '0';
+  }
+
   // Create player
   {
     // *********************************
@@ -39,8 +56,12 @@ void Level2Scene::Load() {
     player->addTag("player");
 	player->addComponent<PickupAmmoComponent>();
   }
-
+  //same as ammo needs done here
   auto enemySpawn = ls::findTiles(ls::ENEMY);
+  for (int e = 0; e < zombieKillCount; e++)
+  {
+	  enemySpawn.pop_back();
+  }
   for (auto e : enemySpawn)
   {
 	  auto pos = ls::getTilePosition(e);
@@ -59,20 +80,22 @@ void Level2Scene::Load() {
 
    //create ammo objects
   {
-
 	  auto ammoCount = ls::findTiles(ls::AMMO);
+	  //remove based on loaded count
+	  for (int c = 0; c < ammoPickupCount; c++)
+	  {
+		  ammoCount.pop_back();
+	  }
+	  
 	  for (auto a : ammoCount)
 	  {
 		  auto pos = ls::getTilePosition(a);
 		  auto ammo = makeEntity();
 		  ammo->setPosition(pos + Vector2f(0, 24));
-	  
-
-
-	  auto sAmmo = ammo->addComponent<ShapeComponent>();
-	  sAmmo->setShape<sf::CircleShape>(8.0f);
-	  sAmmo->getShape().setFillColor(Color::White);
-	  ammo->addTag("ammo");
+		  auto sAmmo = ammo->addComponent<ShapeComponent>();
+		  sAmmo->setShape<sf::CircleShape>(8.0f);
+		  sAmmo->getShape().setFillColor(Color::White);
+		  ammo->addTag("ammo");
 	  }
 	  // *********************************
 
@@ -128,8 +151,7 @@ void Level2Scene::Update(const double& dt) {
   {
 	  auto save = makeEntity();
 	  auto s = save->addComponent<SaveFileComponent>();
-	  s->setLevel("Level2");
-	  s->SaveFile();
+	  s->SaveFile("Level2");
 	  Engine::ChangeScene(&menu);
   }
 }
