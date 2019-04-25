@@ -2,6 +2,7 @@
 #include "../components/cmp_text.h"
 #include "../components/cmp_physics.h"
 #include "../components/cmp_player_physics.h"
+#include "../components/cmp_pickup_ammo.h"
 #include "../game.h"
 #include "../components/cmp_persistence.h"
 #include "../components/cmp_weapon_system.h"
@@ -55,6 +56,7 @@ void MenuScene::Load() {
         "Platformer\nInteract (E) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
   }
 
+  
   if (ctrl_change == false)
   {
 	  MyKeys key;
