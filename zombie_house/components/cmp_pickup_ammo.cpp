@@ -18,7 +18,32 @@ void PickupAmmoComponent::update(double dt) {
 				if (length(ammo->getPosition() - _parent->getPosition()) < 25.0 && Keyboard::isKeyPressed(Keyboard::E))
 				{
 					ammo->setForDelete();
-					getAmmo();
+					ammoRand = rand() % 30 + 1;
+
+					if (ammoRand == 0)
+					{
+						//create a zombie
+						cout << "zombie created" << endl;
+					}
+					else if (0 < ammoRand && ammoRand <= 12)
+					{
+						//add some pistol ammo to the player's inventory
+						cout << "pistol ammo collected" << endl;
+					}
+					else if (12 < ammoRand && ammoRand <= 22)
+					{
+						//add some SMG ammo to the player's inventory
+						cout << "smg ammo collected" << endl;
+					}
+					else if (22 < ammoRand && ammoRand <= 30)
+					{
+						//add some shotgun ammo to the player's inventory
+						cout << "shotgun ammo collected" << endl;
+					}
+					else
+					{
+						cout << "random number generator error " << ammoRand << endl;
+					}
 				}
 			}
 		}
@@ -27,38 +52,21 @@ void PickupAmmoComponent::update(double dt) {
 
 
 
-void PickupAmmoComponent::getAmmo()
+int PickupAmmoComponent::getAmmo(const std::string& type)
 {
 	
-
-	ammoRand = rand() % 30 + 1;
-
-	if (ammoRand == 0)
-	{
-		//create a zombie
-		cout << "zombie created" << endl;
-	}
-	else if (0 < ammoRand && ammoRand <= 12)
-	{
-		//add some pistol ammo to the player's inventory
-		cout << "pistol ammo collected" << endl;
-	}
-	else if (12 < ammoRand && ammoRand <= 22)
-	{
-		//add some SMG ammo to the player's inventory
-		cout << "smg ammo collected" << endl;
-	}
-	else if (22 < ammoRand && ammoRand <= 30)
-	{
-		//add some shotgun ammo to the player's inventory
-		cout << "shotgun ammo collected" << endl;
-	}
-	else
-	{
-		cout << "random number generator error " << ammoRand << endl;
-	}
+	if (type == "pistol") { return pistolAmmo; }
+	if (type == "smg") { return smgAmmo; }
+	if (type == "shotgun") { return shotgunAmmo; }
 }
 
+void PickupAmmoComponent::setAmmo(const std::string& type, int amount)
+{
+	if (type == "pistol") { pistolAmmo = amount; }
+	if (type == "smg") { smgAmmo = amount; }
+	if (type == "shotgun") { shotgunAmmo = amount; }
+
+}
 
 
 PickupAmmoComponent::PickupAmmoComponent(Entity* p)

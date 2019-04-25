@@ -17,6 +17,8 @@
 using namespace std;
 using namespace sf;
 
+
+
 static shared_ptr<Entity> player;
 
 void Level2Scene::Load() {
