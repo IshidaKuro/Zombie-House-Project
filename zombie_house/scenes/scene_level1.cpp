@@ -2,11 +2,17 @@
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_sprite.h"
 #include "../components/cmp_weapon_system.h"
+#include "../components/cmp_pickup_ammo.h"
 #include "../game.h"
 #include <LevelSystem.h>
 #include <iostream>
 #include <thread>
 #include <list>
+#include <SFML/Audio/Music.hpp>
+#include "../components/cmp_enemy_ai.h"
+#include "../components/cmp_hurt_player.h"
+#include "../components/cmp_physics.h"
+#include "../components/cmp_hp.h"
 #include <SFML/Audio/Music.hpp>
 
 using namespace std;
@@ -39,7 +45,24 @@ void Level1Scene::Load() {
 
     player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
 	player->addComponent<WeaponSystemComponent>();
+	player->addComponent<PickupAmmoComponent>();
   }
+
+  //create ammo objects
+  {
+	  auto ammo = makeEntity();
+	  ammo->setPosition(ls::getTilePosition(ls::findTiles(ls::AMMO)[0]) +
+		  Vector2f(0, 24));
+	  // *********************************
+	 
+	  auto sAmmo = ammo->addComponent<ShapeComponent>();
+	  sAmmo->setShape<sf::CircleShape>(8.0f);
+	  sAmmo->getShape().setFillColor(Color::White);
+	  ammo->addTag("ammo");
+	  // *********************************
+  
+  }
+
 
   // Add physics colliders to level tiles.
   {
@@ -53,22 +76,41 @@ void Level1Scene::Load() {
     }
   }
 
-  Music music;
-  if (!music.openFromFile("res/sounds/background.wav"))
+  //add background music
   {
-	  cout << "Error loading music";
+	  Music music;
+	  if (!music.openFromFile("res/sounds/background.wav"))
+	  {
+		  cout << "Error loading music";
+	  }
+	  else
+	  {
+		  music.play();
+	  }
   }
-  else
-  {
-	  music.play();
-  }
-  
+
   //Simulate long loading times
-  //std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+  {
+	  //std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	  //load a loading screen scene?
+  }
+
+  for (int i = 0; i < ents.find("enemy").size(); i++)
+  {
+	  Enemies ens;
+	  ens.en = ents.find("enemy").at(i);
+  	  _enemies[i] = ens;
+  }
+
+  for (int i = 0; i < ents.find("ammo").size(); i++)
+  {
+	  Ammo amm;
+	  amm.am = ents.find("ammo").at(i);
+	  _ammo[i] = amm;
+  }
   cout << " Scene 1 Load Done" << endl;
-
-
   setLoaded(true);
+
 }
 
 void Level1Scene::UnLoad() {
@@ -81,9 +123,10 @@ void Level1Scene::UnLoad() {
 void Level1Scene::Update(const double& dt) {
 
 	if (ls::getTileAt(player->getPosition()) == ls::END && Keyboard::isKeyPressed(Keyboard::E)) {
-    Engine::ChangeScene((Scene*)&level2);
+    Engine::ChangeScene((Scene*)&level1);
   }
 
+	
   Scene::Update(dt);
 }
 
