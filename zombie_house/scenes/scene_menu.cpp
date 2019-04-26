@@ -163,7 +163,7 @@ void MenuScene::Load() {
   {
 	  player = makeEntity();
 	  player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
-
+	 
 	  shared_ptr<Texture> spriteSheet;
 	
 	  spriteSheet = Resources::get<Texture>("player.png");
@@ -208,6 +208,18 @@ void MenuScene::Load() {
 	  _ammo[i] = amm;
   }
 
+  auto door = makeEntity();
+  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]));
+
+  shared_ptr<Texture> spriteSheet;
+
+  spriteSheet = Resources::get<Texture>("door.png");
+
+  auto dSprite = door->addComponent<SpriteComponent>();
+  dSprite->setTexure(spriteSheet);
+  dSprite->getSprite().scale(2.0f, 2.0f);
+  dSprite->getSprite().setOrigin(0.f, -10.f);
+
   setLoaded(true);
 }
 
@@ -233,10 +245,9 @@ void MenuScene::Update(const double& dt) {
 			Engine::ChangeScene((Scene*)&level2);
 		}
 	}
-
-	if (Keyboard::isKeyPressed(Keyboard::C))
+	else if (ls::getTileAt(player->getPosition()) == ls::WAYPOINT && (Keyboard::isKeyPressed(m_keys["Interact"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Interact"].joyButton)))
 	{
-		Engine::ChangeScene(&controls);
+		Engine::ChangeScene((Scene*)(&controls));
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::F1))

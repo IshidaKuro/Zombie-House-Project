@@ -189,6 +189,18 @@ void Level2Scene::Load() {
 	  _ammo[i] = amm;
   }
 
+  auto door = makeEntity();
+  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]));
+
+  shared_ptr<Texture> spriteSheet;
+
+  spriteSheet = Resources::get<Texture>("door.png");
+
+  auto dSprite = door->addComponent<SpriteComponent>();
+  dSprite->setTexure(spriteSheet);
+  dSprite->getSprite().scale(2.0f, 2.0f);
+  //dSprite->getSprite().setOrigin(0.f, 0.f);
+
   cout << " Scene 2 Load Done" << endl;
   setLoaded(true);
 }
