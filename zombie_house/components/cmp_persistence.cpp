@@ -1,4 +1,5 @@
 #include "cmp_persistence.h"
+#include "cmp_pickup_ammo.h"
 #include <iostream>
 #include <fstream>
 #include "engine.h"
@@ -28,9 +29,7 @@ string LoadFileComponent::LoadFile(string fileToRead)
 		cout << "No file";
 	}
 
-	//output = loadFile.get(output, 256);
 	loadFile.close();
-	//loadFile.open("ZombieHouseSaveFile.txt");
 	return output;
 }
 
@@ -46,20 +45,46 @@ void SaveFileComponent::SaveFile(string level)
 {
 	ofstream saveFile;
 	saveFile.open("ZombieHouseSaveFile.txt");
-
-	ofstream levelFile;
-	levelFile.open(level + ".dat");
 	if (saveFile.is_open())
 	{
 		saveFile << level;
 	}
+	saveFile.close();
 
+	ofstream levelFile;
+	levelFile.open("Level" + level + ".dat");
 	if (levelFile.is_open())
 	{
 		levelFile << zombieKillCount << "," << ammoPickupCount;
 	}
+	levelFile.close();
 
-	saveFile.close();
+	ofstream ammoFile;
+	ammoFile.open("ammo.dat");
+	if (ammoFile.is_open())
+	{
+		if (auto pl = _player.lock())
+		{
+			auto ammo = pl->GetCompatibleComponent<PickupAmmoComponent>().at(0);
+			string p_ammo;
+			string smg_ammo;
+			string shotgun_ammo;
+			if (ammo->getAmmo("pistol") < 10)
+			{
+				p_ammo = "0" + ammo->getAmmo("pistol");
+			}
+			if (ammo->getAmmo("smg") < 10)
+			{
+				smg_ammo = "0" + ammo->getAmmo("smg");
+			}
+			if (ammo->getAmmo("smg") < 10)
+			{
+				shotgun_ammo = "0" + ammo->getAmmo("shotgun");
+			}
+			ammoFile << ammo->getAmmo("pistol") << "," << ammo->getAmmo("smg") << "," << ammo->getAmmo("shotgun");
+		}
+	}
+	ammoFile.close();
 }
 
 SaveFileComponent::SaveFileComponent(Entity * p)

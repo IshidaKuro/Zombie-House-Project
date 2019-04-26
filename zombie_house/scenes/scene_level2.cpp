@@ -17,8 +17,6 @@
 using namespace std;
 using namespace sf;
 
-
-
 static shared_ptr<Entity> player;
 
 void Level2Scene::Load() {
@@ -43,6 +41,48 @@ void Level2Scene::Load() {
 	  ammoPickupCount = levelData[2] - '0';
   }
 
+  string ammo = l->LoadFile("ammo.dat");
+  int p_ammo;
+  int smg_ammo;
+  int shotgun_ammo;
+  if (ammo.size() > 0)
+  {
+
+	  if (ammo[0] == 0)
+	  {
+		  p_ammo = ammo[1] - '0';
+	  }
+	  else
+	  {
+		  p_ammo = ammo[0] - '0' + ammo[1] - '0';
+	  }
+
+	  if (ammo[3] == 0)
+	  {
+		  smg_ammo = ammo[4] - '0';
+	  }
+	  else
+	  {
+		  smg_ammo = ammo[3] - '0' + ammo[4] - '0';
+	  }
+
+	  if (ammo[6] == 0)
+	  {
+		  shotgun_ammo = ammo[7] - '0';
+	  }
+	  else
+	  {
+		  shotgun_ammo = ammo[6] - '0' + ammo[7] - '0';
+	  }
+  }
+  else
+  {
+	  p_ammo = 10;
+	  smg_ammo = 20;
+	  shotgun_ammo = 4;
+  }
+  
+
   // Create player
   {
     // *********************************
@@ -57,9 +97,9 @@ void Level2Scene::Load() {
     // *********************************
     player->addTag("player");
 	auto a = player->addComponent<PickupAmmoComponent>();
-	a->setAmmo("pistol", 8);
-	a->setAmmo("smg", 38);
-	a->setAmmo("shotgun", 4);
+	a->setAmmo("pistol", p_ammo);
+	a->setAmmo("smg", smg_ammo);
+	a->setAmmo("shotgun", shotgun_ammo);
 	
   }
   //same as ammo needs done here
@@ -157,7 +197,7 @@ void Level2Scene::Update(const double& dt) {
   {
 	  auto save = makeEntity();
 	  auto s = save->addComponent<SaveFileComponent>();
-	  s->SaveFile("Level2");
+	  s->SaveFile("2");
 	  Engine::ChangeScene(&menu);
   }
 }
