@@ -5,6 +5,7 @@
 #include <SFML/Audio/SoundBuffer.hpp>
 #include "cmp_bullet.h"
 #include "engine.h"
+#include "../components/cmp_pickup_ammo.h"
 #include <SFML/Graphics/CircleShape.hpp>
 #include "cmp_hurt_enemy.h"
 #include "../game.h"
@@ -12,23 +13,22 @@
 using namespace std;
 using namespace sf;
 float temp;
-int pistolAmmo = 5000;
-int smgAmmo = 5000;
-int shotgunAmmo = 5000;
-int arAmmo = 5000;
+
 
 sf::SoundBuffer buffer2;
 sf::Sound sound2;
 void WeaponSystemComponent::fire() const
 {
+	auto playerAmmo = _parent->GetCompatibleComponent<PickupAmmoComponent>().at(0);
+
 	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Shoot"].key_pressed))
 	{
 		if (weapon == 3)
 		{
-			if (shotgunAmmo > 0)
+			if (playerAmmo->getAmmo("shotgun") > 0)
 			{
-				shotgunAmmo--;
-
+				playerAmmo->setAmmo("shotgun", playerAmmo->getAmmo("shotgun")-1);
+				cout<< "Shotgun ammo:" << playerAmmo->getAmmo("shotgun");
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -88,9 +88,10 @@ void WeaponSystemComponent::fire() const
 		}
 		else if (weapon == 1)
 		{
-			if (pistolAmmo > 0)
+			if (playerAmmo->getAmmo("pistol") > 0)
 			{
-				pistolAmmo--;
+				playerAmmo->setAmmo("pistol", playerAmmo->getAmmo("pistol") - 1);
+				cout << "Pistol ammo:" << playerAmmo->getAmmo("pistol");
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -125,9 +126,10 @@ void WeaponSystemComponent::fire() const
 		}
 		else if (weapon == 2)
 		{
-			if (smgAmmo > 0)
-			{
-				smgAmmo--;
+		if (playerAmmo->getAmmo("smg") > 0)
+		{
+			playerAmmo->setAmmo("smg", playerAmmo->getAmmo("smg") - 1);
+			cout << "SMG ammo:" << playerAmmo->getAmmo("smg");
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -207,7 +209,7 @@ void WeaponSystemComponent::select_weapon()
 	{
 		p.at(0)->getShape().setFillColor(Color::Green);
 		weapon = 2;
-		fire_rate = 0.2f;
+		fire_rate = 0.05f;
 		temp = fire_rate;
 		std::cout << "Weapon: 2";
 	}
