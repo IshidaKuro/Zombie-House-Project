@@ -26,6 +26,7 @@ void MenuScene::Load() {
   cout << "Menu Load \n";
   //load file - set game.h kill and ammo counts from file
 
+  
   auto load = makeEntity();
   auto l = load->addComponent<LoadFileComponent>();
   string levelData = l->LoadFile("Menu.dat");
@@ -45,7 +46,7 @@ void MenuScene::Load() {
   string prev_level = l->LoadFile("ZombieHouseSaveFile.txt");
   if (prev_level.size() > 0)
   {
-	   out_level = prev_level[5];
+	   out_level = prev_level[0];
   }
 
   {
@@ -136,6 +137,8 @@ void MenuScene::Update(const double& dt) {
 		{
 			if (out_level == "2")
 			{
+				//auto s2 = save->addComponent<SaveFileComponent>();
+				//s2->SaveFile("0");
 				Engine::ChangeScene(&level2);
 			}
 			else if(out_level == "3")
