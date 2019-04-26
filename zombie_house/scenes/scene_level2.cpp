@@ -42,18 +42,23 @@ void Level2Scene::Load() {
   }
 
   string ammo = l->LoadFile("ammo.dat");
+  string ps_ammo;
   int p_ammo;
+  string ssmg_ammo;
   int smg_ammo;
+  string sshotgun_ammo;
   int shotgun_ammo;
   if (ammo.size() > 0)
   {
+	  
 	  if (ammo[0] == 0)
 	  {
 		  p_ammo = ammo[1] - '0';
 	  }
 	  else
 	  {
-		  p_ammo = ammo[0] - '0' + ammo[1] - '0';
+		  ps_ammo = to_string(ammo[0] - '0') + to_string(ammo[1] - '0');
+		  p_ammo = stoi(ps_ammo);
 	  }
 
 	  if (ammo[3] == 0)
@@ -62,7 +67,8 @@ void Level2Scene::Load() {
 	  }
 	  else
 	  {
-		  smg_ammo = ammo[3] - '0' + ammo[4] - '0';
+		  ssmg_ammo = to_string(ammo[3] - '0') + to_string(ammo[4] - '0');
+		  smg_ammo = stoi(ssmg_ammo);
 	  }
 
 	  if (ammo[6] == 0)
@@ -71,7 +77,8 @@ void Level2Scene::Load() {
 	  }
 	  else
 	  {
-		  shotgun_ammo = ammo[6] - '0' + ammo[7] - '0';
+		  sshotgun_ammo = to_string(ammo[6] - '0') + to_string(ammo[7] - '0');
+		  shotgun_ammo = stoi(sshotgun_ammo);
 	  }
   }
   else

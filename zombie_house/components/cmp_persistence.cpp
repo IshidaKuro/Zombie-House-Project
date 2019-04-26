@@ -72,15 +72,26 @@ void SaveFileComponent::SaveFile(string level)
 			if (ammo->getAmmo("pistol") < 10)
 			{
 				p_ammo = "0" + to_string(ammo->getAmmo("pistol"));
-				
+			}
+			else
+			{
+				p_ammo = to_string(ammo->getAmmo("pistol"));
 			}
 			if (ammo->getAmmo("smg") < 10)
 			{
 				smg_ammo = "0" + to_string(ammo->getAmmo("smg"));
 			}
+			else
+			{
+				smg_ammo = to_string(ammo->getAmmo("smg"));
+			}
 			if (ammo->getAmmo("smg") < 10)
 			{
 				shotgun_ammo = "0" + to_string(ammo->getAmmo("shotgun"));
+			}
+			else
+			{
+				shotgun_ammo = to_string(ammo->getAmmo("shotgun"));
 			}
 			ammoFile << p_ammo << "," << smg_ammo << "," << shotgun_ammo;
 		}
