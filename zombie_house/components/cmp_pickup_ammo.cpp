@@ -39,12 +39,14 @@ void PickupAmmoComponent::update(double dt) {
 					}
 					else if (12 < ammoRand && ammoRand <= 22)
 					{
-						//add some SMG ammo to the player's inventory
+						setAmmo("smg", getAmmo("smg") + rand() % 20 + 5);
+						
+						
 						cout << "smg ammo collected" << endl;
 					}
 					else if (22 < ammoRand && ammoRand <= 30)
 					{
-						//add some shotgun ammo to the player's inventory
+						setAmmo("shotgun", getAmmo("shotgun") + rand() % 4 + 1);
 						cout << "shotgun ammo collected" << endl;
 					}
 					else

@@ -46,7 +46,7 @@ void EnemyAIComponent::update(double dt) {
 							wait -= dt;
 							if (wait <= 0.f)
 							{
-								cout << "Play sound";
+								;
 								sound.setBuffer(buffer);
 								sound.play();
 								wait = 0.02f;

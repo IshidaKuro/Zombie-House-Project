@@ -23,7 +23,7 @@ sf::SoundBuffer buffer2;
 sf::Sound sound2;
 void WeaponSystemComponent::fire() const
 {
-	
+	auto playerAmmo = _parent->GetCompatibleComponent<PickupAmmoComponent>().at(0);
 
 	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Shoot"].key_pressed))
 	{
@@ -32,7 +32,7 @@ void WeaponSystemComponent::fire() const
 			if (shotgunMagazine > 0)
 			{
 				shotgunMagazine--;
-				cout<< "Shotgun ammo in magazine:" << shotgunMagazine <<endl;
+				cout<< "Shotgun ammo :" << shotgunMagazine <<" : "<< playerAmmo->getAmmo("shotgun") <<endl;
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -80,7 +80,7 @@ void WeaponSystemComponent::fire() const
 				}
 				else
 				{
-					cout << "Play sound";
+					;
 					sound2.setBuffer(buffer2);
 					sound2.play();
 				}
@@ -95,7 +95,7 @@ void WeaponSystemComponent::fire() const
 				}
 				else
 				{
-					cout << "Play sound";
+					;
 					sound2.setBuffer(buffer2);
 					sound2.play();
 				}
@@ -106,7 +106,7 @@ void WeaponSystemComponent::fire() const
 			if (pistolMagazine > 0)
 			{
 				pistolMagazine--;
-				cout << "Pistol ammo in magazine:" << pistolMagazine <<endl;
+				cout << "Pistol ammo :" << pistolMagazine << " : " << playerAmmo->getAmmo("pistol") << endl;
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -128,7 +128,7 @@ void WeaponSystemComponent::fire() const
 				}
 				else
 				{
-					cout << "Play sound";
+					;
 					sound2.setBuffer(buffer2);
 					sound2.play();
 				}
@@ -143,7 +143,7 @@ void WeaponSystemComponent::fire() const
 				}
 				else
 				{
-					cout << "Play sound";
+					;
 					sound2.setBuffer(buffer2);
 					sound2.play();
 				}
@@ -155,7 +155,7 @@ void WeaponSystemComponent::fire() const
 		if (smgMagazine > 0)
 		{
 			smgMagazine--;
-			cout << "SMG ammo in magazine:" << smgMagazine << endl;
+			cout << "SMG ammo :" << smgMagazine << " : " << playerAmmo->getAmmo("smg") << endl;
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -177,7 +177,7 @@ void WeaponSystemComponent::fire() const
 				}
 				else
 				{
-					cout << "Play sound";
+					
 					sound2.setBuffer(buffer2);
 					sound2.play();
 				}
@@ -192,7 +192,6 @@ void WeaponSystemComponent::fire() const
 			}
 			else
 			{
-				cout << "Play sound";
 				sound2.setBuffer(buffer2);
 				sound2.play();
 			}
@@ -204,36 +203,134 @@ void WeaponSystemComponent::fire() const
 void WeaponSystemComponent::reload()
 {
 	auto playerAmmo = _parent->GetCompatibleComponent<PickupAmmoComponent>().at(0);
-
-	if (Keyboard::isKeyPressed(m_keys["Reload"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Reload"].key_pressed))
-	{
-		if (weapon = 1) //if the player has the pistol equipped
+	auto equippedWeapon = getWeapon();
+	
+		if (equippedWeapon == 1) //if the player has the pistol equipped
 		{
 			magazineSize = 8;
-			pistolMagazine = -magazineSize;
-			playerAmmo->setAmmo("pistol", playerAmmo->getAmmo("pistol") + pistolMagazine);
-			pistolMagazine = magazineSize;
-			cout << "pistol ammo on reserve: " << playerAmmo->getAmmo("pistol") << endl;
+			if (pistolMagazine < magazineSize && playerAmmo->getAmmo("pistol") !=0)
+			{
+				//play reload sound
+				{
+					if (!buffer2.loadFromFile("res/sounds/pistol_reload.wav"))
+					{
+						cout << "Error loading zombie sound";
+					}
+					else
+					{
+						;
+						sound2.setBuffer(buffer2);
+						sound2.play();
+					}
+				}
+				//add the remaining bullets back in to the ammo pool
+				playerAmmo->setAmmo("pistol", playerAmmo->getAmmo("pistol") +  pistolMagazine);
+
+				//if there are more bullets in a magazine than there are in the player's inventory,
+				//add what is left in the ammo pool to the player's magazine
+				//then remove all remaining bullets from the player's inventory
+				if (magazineSize > playerAmmo->getAmmo("pistol"))
+				{
+					pistolMagazine = playerAmmo->getAmmo("pistol");
+					playerAmmo->setAmmo("pistol", 0);
+				}
+
+				//otherwise, fill the magazine
+				//then remove the number of bullets in a magazine from the player's inventory
+				else
+				{
+					pistolMagazine = magazineSize;
+					playerAmmo->setAmmo("pistol", playerAmmo->getAmmo("pistol") - magazineSize);
+				}
+				cout << "pistol ammo on reserve: " << playerAmmo->getAmmo("pistol") << endl;
+			}
 		}
-		else if (weapon = 2) // if the player has the smg equipped
+		else if (equippedWeapon == 2) // if the player has the smg equipped
 		{
 			magazineSize = 20;
-			smgMagazine = -magazineSize;
-			playerAmmo->setAmmo("smg", playerAmmo->getAmmo("smg") + smgMagazine);
-			smgMagazine = magazineSize;
-			cout <<"smg ammo on reserve: "<< playerAmmo->getAmmo("smg") << endl;
+			if (smgMagazine < magazineSize && playerAmmo->getAmmo("smg") != 0)
+			{
+				//play reload sound
+				{
+					if (!buffer2.loadFromFile("res/sounds/pistol_reload.wav"))
+					{
+						cout << "Error loading zombie sound";
+					}
+					else
+					{
+						;
+						sound2.setBuffer(buffer2);
+						sound2.play();
+					}
+				}
+			
+
+				//add the remaining bullets back in to the ammo pool
+				playerAmmo->setAmmo("smg", playerAmmo->getAmmo("smg") + smgMagazine);
+
+				//if there are more bullets in a magazine than there are in the player's inventory,
+				//add what is left in the ammo pool to the player's magazine
+				//then remove all remaining bullets from the player's inventory
+				if (magazineSize > playerAmmo->getAmmo("smg"))
+				{
+					smgMagazine = playerAmmo->getAmmo("smg");
+					playerAmmo->setAmmo("smg", 0);
+				}
+
+				//otherwise, fill the magazine
+				//then remove the number of bullets in a magazine from the player's inventory
+				else
+				{
+					smgMagazine = magazineSize;
+					playerAmmo->setAmmo("smg", playerAmmo->getAmmo("smg") - magazineSize);
+				}
+				cout << "smg ammo on reserve: " << playerAmmo->getAmmo("smg") << endl;
+			}
 		}
-		else if (weapon = 3) // if the player has the shotgun equipped
+		else if (equippedWeapon ==3) // if the player has the shotgun equipped
 		{
 			magazineSize = 4;
-			shotgunMagazine = -magazineSize;
-			playerAmmo->setAmmo("shotgun", playerAmmo->getAmmo("shotgun") + shotgunMagazine);
-			shotgunMagazine = magazineSize;
-			cout << "shotgun ammo on reserve: " << playerAmmo->getAmmo("shotgun") << endl;
+			if (shotgunMagazine < magazineSize && playerAmmo->getAmmo("shotgun") != 0)
+			{
+				//play reload sound
+				if (!buffer2.loadFromFile("res/sounds/pistol_reload.wav"))
+				{
+					cout << "Error loading reload sound";
+				}
+				else
+				{
+					;
+					sound2.setBuffer(buffer2);
+					sound2.play();
+				}
+
+				
+				//add the remaining bullets back in to the ammo pool
+				playerAmmo->setAmmo("shotgun", playerAmmo->getAmmo("shotgun") + shotgunMagazine);
+
+				//if there are more bullets in a magazine than there are in the player's inventory,
+				//add what is left in the ammo pool to the player's magazine
+				//then remove all remaining bullets from the player's inventory
+				if (magazineSize > playerAmmo->getAmmo("shotgun"))
+				{
+					shotgunMagazine = playerAmmo->getAmmo("shotgun");
+					playerAmmo->setAmmo("shotgun", 0);
+				}
+
+				//otherwise, fill the magazine
+				//then remove the number of bullets in a magazine from the player's inventory
+				else
+				{
+					shotgunMagazine = magazineSize;
+					playerAmmo->setAmmo("shotgun", playerAmmo->getAmmo("shotgun") - magazineSize);
+				}
+
+				cout << "shotgun ammo on reserve: " << playerAmmo->getAmmo("shotgun") << endl;
+			}
 		}
 		else
 			return;
-	}
+	
 }
 
 int WeaponSystemComponent::getWeapon()
@@ -306,6 +403,11 @@ void WeaponSystemComponent::update(double dt)
 			fire();
 			fire_rate = temp;
 		}
+	}
+
+	if (Keyboard::isKeyPressed(m_keys["Reload"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Reload"].key_pressed))
+	{
+		reload();
 	}
 }
 

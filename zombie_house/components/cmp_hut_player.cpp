@@ -18,7 +18,7 @@ void HurtComponent::update(double dt) {
 		}
 		else
 		{
-			cout << "Play sound";
+			
 
 			sound4.setBuffer(buffer4);
 			sound4.play();

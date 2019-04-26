@@ -27,7 +27,7 @@ void HurtEnemyComponent::update(double dt) {
 				else
 				{
 
-					cout << "Play sound";
+					
 
 					//sound3.setBuffer(buffer3);
 					//sound3.play();
@@ -53,7 +53,7 @@ void HurtEnemyComponent::update(double dt) {
 					else
 					{
 
-						cout << "Play sound";
+						
 
 						//sound3.setBuffer(buffer3);
 					   // sound3.play();
