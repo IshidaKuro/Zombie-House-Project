@@ -16,11 +16,11 @@ void ControlScene::Load() {
   cout << "Menu Load \n";
   {
     auto txt = makeEntity();
-    auto t = txt->addComponent<TextComponent>(
+	auto t = txt->addComponent<TextComponent>(
 
-        "Platformer Control Mapping\n"
+		"Platformer Control Mapping\n"
 		"Press button then press new button\nDo not press enter before choosing a new button\nPlease don't choose the same key as a change\n-change it then switch back"
-		"\nPress Enter at any time to Return to Menu\n\nPress Left to change Left\nRight to change Right\nSpace/A Button to change shoot\nR Key\X Button to change Reload\n"
+		"\nPress Enter at any time to Return to Menu\nPress I to change the interact key\nPress Left to change Left\nRight to change Right\nSpace/A Button to change shoot\nR Key\X Button to change Reload\n"
 		"Up Arrow to change Jump\n1 to change pistol switch, 2 to change SMG switch\nor 3 to change shotgun switch\n"
 		"RB to change shotgun switch, LB to change SMG switch\nor Y to change pistol switch\n");
 
@@ -168,7 +168,7 @@ void ControlScene::Update(const double& dt) {
 						}
 					}
 				}
-				if (choice_event.key.code == sf::Keyboard::E)
+				if (choice_event.key.code == sf::Keyboard::I)
 				{
 					//cout << "E pressed";
 					if (Engine::GetWindow().waitEvent(in_event))

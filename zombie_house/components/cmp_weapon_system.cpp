@@ -5,6 +5,7 @@
 #include <SFML/Audio/SoundBuffer.hpp>
 #include "system_resources.h"
 #include "cmp_bullet.h"
+#include "LevelSystem.h"
 #include "engine.h"
 #include "../components/cmp_pickup_ammo.h"
 #include <SFML/Graphics/CircleShape.hpp>
@@ -333,32 +334,18 @@ void WeaponSystemComponent::reload()
 	
 }
 
+void WeaponSystemComponent::pickupWeapon()
+{
+	if (ls::getTileAt(_parent->getPosition()) == ls::INTERACT)
+	{
+		has_smg = true;
+		has_shotgun = true;
+	}
+}
+
 int WeaponSystemComponent::getWeapon()
 {
 	return weapon;
-}
-
-void WeaponSystemComponent::pickup(int weapon)
-{
-	if (weapon == 1)
-	{
-		has_pistol = true;
-	}
-	if (weapon == 2)
-	{
-		has_smg = true;
-	}
-	if (weapon == 3)
-	{
-		has_shotgun = true;
-	}
-	if (weapon == 4)
-	{
-		has_pistol = false;
-		has_smg = false;
-		has_shotgun = false;
-		has_ar = true;
-	}
 }
 
 void WeaponSystemComponent::select_weapon()
@@ -366,7 +353,7 @@ void WeaponSystemComponent::select_weapon()
 	auto player = _parent->scene->makeEntity();
 	auto p = _parent->GetCompatibleComponent<SpriteComponent>();
 
-	if (Keyboard::isKeyPressed(m_keys["Switch_Pistol"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Pistol"].joyButton) && has_pistol == true)
+	if ((Keyboard::isKeyPressed(m_keys["Switch_Pistol"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Pistol"].joyButton)) && has_pistol == true)
 	{
 		spriteSheet = Resources::get<Texture>("player_pistol.png");
 		p.at(0)->setTexure(spriteSheet);
@@ -376,7 +363,7 @@ void WeaponSystemComponent::select_weapon()
 		temp = fire_rate;
 		std::cout << "Weapon: 1";
 	}
-	if (Keyboard::isKeyPressed(m_keys["Switch_Smg"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Smg"].joyButton) && has_smg == true)
+	if ((Keyboard::isKeyPressed(m_keys["Switch_Smg"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Smg"].joyButton)) && has_smg == true)
 	{
 		spriteSheet = Resources::get<Texture>("player_smg.png");
 		p.at(0)->setTexure(spriteSheet);
@@ -386,7 +373,7 @@ void WeaponSystemComponent::select_weapon()
 		temp = fire_rate;
 		std::cout << "Weapon: 2";
 	}
-	if (Keyboard::isKeyPressed(m_keys["Switch_Shotgun"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Shotgun"].joyButton) && has_shotgun == true)
+	if ((Keyboard::isKeyPressed(m_keys["Switch_Shotgun"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Shotgun"].joyButton)) && has_shotgun == true)
 	{
 		spriteSheet = Resources::get<Texture>("player_shotgun.png");
 		p.at(0)->setTexure(spriteSheet);
@@ -401,6 +388,7 @@ void WeaponSystemComponent::select_weapon()
 void WeaponSystemComponent::update(double dt)
 {
 	select_weapon();
+	pickupWeapon();
 	
 	if(weapon == 1 || weapon == 2 || weapon == 3)
 	{ 

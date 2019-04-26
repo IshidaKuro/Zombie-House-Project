@@ -106,7 +106,7 @@ void MenuScene::Load() {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
 		
-        "Platformer\nInteract (E) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
+        "ZOMBIE HOUSE\nInteract (E/BButton) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
   }
 
   //set initial default controls if the user hasn't changed them this session
