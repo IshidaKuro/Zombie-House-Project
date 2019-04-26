@@ -23,6 +23,7 @@ public:
 	void render() override {};
 	WeaponSystemComponent() = delete;
 	explicit WeaponSystemComponent(Entity* p);
+	void reload();
 	/*
 	int pistolAmmo;
 	int smgAmmo;

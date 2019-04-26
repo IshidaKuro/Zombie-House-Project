@@ -14,21 +14,25 @@ using namespace std;
 using namespace sf;
 float temp;
 
+int magazineSize; //size of magazine for different guns
+int pistolMagazine = 0;
+int smgMagazine = 0;
+int shotgunMagazine = 0;
 
 sf::SoundBuffer buffer2;
 sf::Sound sound2;
 void WeaponSystemComponent::fire() const
 {
-	auto playerAmmo = _parent->GetCompatibleComponent<PickupAmmoComponent>().at(0);
+	
 
 	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Shoot"].key_pressed))
 	{
 		if (weapon == 3)
 		{
-			if (playerAmmo->getAmmo("shotgun") > 0)
+			if (shotgunMagazine > 0)
 			{
-				playerAmmo->setAmmo("shotgun", playerAmmo->getAmmo("shotgun")-1);
-				cout<< "Shotgun ammo:" << playerAmmo->getAmmo("shotgun");
+				shotgunMagazine--;
+				cout<< "Shotgun ammo in magazine:" << shotgunMagazine <<endl;
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -84,14 +88,25 @@ void WeaponSystemComponent::fire() const
 			else
 			{
 				//play out of ammo click
+
+				if (!buffer2.loadFromFile("res/sounds/pistol_click.wav"))
+				{
+					cout << "Error loading zombie sound";
+				}
+				else
+				{
+					cout << "Play sound";
+					sound2.setBuffer(buffer2);
+					sound2.play();
+				}
 			}
 		}
 		else if (weapon == 1)
 		{
-			if (playerAmmo->getAmmo("pistol") > 0)
+			if (pistolMagazine > 0)
 			{
-				playerAmmo->setAmmo("pistol", playerAmmo->getAmmo("pistol") - 1);
-				cout << "Pistol ammo:" << playerAmmo->getAmmo("pistol");
+				pistolMagazine--;
+				cout << "Pistol ammo in magazine:" << pistolMagazine <<endl;
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -121,15 +136,26 @@ void WeaponSystemComponent::fire() const
 			else
 			{
 				//play out of ammo click
+				
+				if (!buffer2.loadFromFile("res/sounds/pistol_click.wav"))
+				{
+					cout << "Error loading zombie sound";
+				}
+				else
+				{
+					cout << "Play sound";
+					sound2.setBuffer(buffer2);
+					sound2.play();
+				}
 			}
 
 		}
 		else if (weapon == 2)
 		{
-		if (playerAmmo->getAmmo("smg") > 0)
+		if (smgMagazine > 0)
 		{
-			playerAmmo->setAmmo("smg", playerAmmo->getAmmo("smg") - 1);
-			cout << "SMG ammo:" << playerAmmo->getAmmo("smg");
+			smgMagazine--;
+			cout << "SMG ammo in magazine:" << smgMagazine << endl;
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -158,9 +184,55 @@ void WeaponSystemComponent::fire() const
 			}
 			else
 			{
-				//play out of ammo click
+			//play out of ammo click
+
+			if (!buffer2.loadFromFile("res/sounds/pistol_click.wav"))
+			{
+				cout << "Error loading zombie sound";
+			}
+			else
+			{
+				cout << "Play sound";
+				sound2.setBuffer(buffer2);
+				sound2.play();
+			}
 			}
 		}
+	}
+}
+
+void WeaponSystemComponent::reload()
+{
+	auto playerAmmo = _parent->GetCompatibleComponent<PickupAmmoComponent>().at(0);
+
+	if (Keyboard::isKeyPressed(m_keys["Reload"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Reload"].key_pressed))
+	{
+		if (weapon = 1) //if the player has the pistol equipped
+		{
+			magazineSize = 8;
+			pistolMagazine = -magazineSize;
+			playerAmmo->setAmmo("pistol", playerAmmo->getAmmo("pistol") + pistolMagazine);
+			pistolMagazine = magazineSize;
+			cout << "pistol ammo on reserve: " << playerAmmo->getAmmo("pistol") << endl;
+		}
+		else if (weapon = 2) // if the player has the smg equipped
+		{
+			magazineSize = 20;
+			smgMagazine = -magazineSize;
+			playerAmmo->setAmmo("smg", playerAmmo->getAmmo("smg") + smgMagazine);
+			smgMagazine = magazineSize;
+			cout <<"smg ammo on reserve: "<< playerAmmo->getAmmo("smg") << endl;
+		}
+		else if (weapon = 3) // if the player has the shotgun equipped
+		{
+			magazineSize = 4;
+			shotgunMagazine = -magazineSize;
+			playerAmmo->setAmmo("shotgun", playerAmmo->getAmmo("shotgun") + shotgunMagazine);
+			shotgunMagazine = magazineSize;
+			cout << "shotgun ammo on reserve: " << playerAmmo->getAmmo("shotgun") << endl;
+		}
+		else
+			return;
 	}
 }
 
