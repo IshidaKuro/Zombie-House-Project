@@ -3,6 +3,7 @@
 #include "../components/cmp_physics.h"
 #include "../components/cmp_player_physics.h"
 #include "../components/cmp_pickup_ammo.h"
+#include "system_resources.h"
 #include "../game.h"
 #include "../components/cmp_persistence.h"
 #include "../components/cmp_weapon_system.h"
@@ -80,8 +81,6 @@ sf::FloatRect CalculateViewport(const sf::Vector2u& screensize,
 void MenuScene::Load() {
   cout << "Menu Load \n";
   //load file - set game.h kill and ammo counts from file
-
-  
   auto load = makeEntity();
   auto l = load->addComponent<LoadFileComponent>();
   string levelData = l->LoadFile("Menu.dat");
@@ -97,7 +96,7 @@ void MenuScene::Load() {
 	  ammoPickupCount = levelData[2] - '0';
   }
 
-
+  //loads last entered level
   string prev_level = l->LoadFile("ZombieHouseSaveFile.txt");
   if (prev_level.size() > 0)
   {
@@ -108,9 +107,10 @@ void MenuScene::Load() {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
 		
-        "Platformer\nInteract (E) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
+        "ZOMBIE HOUSE\nInteract (E/BButton) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
   }
 
+  //set initial default controls if the user hasn't changed them this session
   if (ctrl_change == false)
   {
 	  MyKeys key;
@@ -130,6 +130,8 @@ void MenuScene::Load() {
 	  m_keys["Switch_Smg"] = key;
 	  key.key_pressed = Keyboard::Num3;
 	  m_keys["Switch_Shotgun"] = key;
+	  key.key_pressed = Keyboard::Up;
+	  m_keys["Jump"] = key;
 
 	  key.joyButton = -Joystick::PovX;
 	  m_keys["Joy_Left"] = key;
@@ -147,6 +149,8 @@ void MenuScene::Load() {
 	  m_keys["Joy_Switch_Smg"] = key;
 	  key.joyButton = 5;
 	  m_keys["Joy_Switch_Shotgun"] = key;
+	  key.joyButton = Joystick::PovY;
+	  m_keys["Joy_Jump"] = key;
 
   }
 
@@ -160,17 +164,15 @@ void MenuScene::Load() {
   {
 	  player = makeEntity();
 	  player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+	 
+	  shared_ptr<Texture> spriteSheet;
+	
+	  spriteSheet = Resources::get<Texture>("player.png");
 
-	  //shared_ptr<Texture> ss;
-	  //if (!ss->loadFromFile("res/sprites/1.png")) {
-	  //	cerr << "Failed to load spritesheet!" << std::endl;
-	  //}
-	  //auto sp = player->addComponent<SpriteComponent>();
-	  //sp->setTexure(ss);
-	  auto s = player->addComponent<ShapeComponent>();
-	  s->setShape<sf::RectangleShape>(Vector2f(20.f, 30.f));
-	  s->getShape().setFillColor(Color::Magenta);
-	  s->getShape().setOrigin(10.f, 15.f);
+	  auto pSprite = player->addComponent<SpriteComponent>();
+	  pSprite->setTexure(spriteSheet);
+	  pSprite->getSprite().scale(2.0f, 2.0f);
+	  pSprite->getSprite().setOrigin(10.f, 15.f);
 
 	  player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
 	  player->addComponent<WeaponSystemComponent>();
@@ -207,6 +209,18 @@ void MenuScene::Load() {
 	  _ammo[i] = amm;
   }
 
+  auto door = makeEntity();
+  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]));
+
+  shared_ptr<Texture> spriteSheet;
+
+  spriteSheet = Resources::get<Texture>("door.png");
+
+  auto dSprite = door->addComponent<SpriteComponent>();
+  dSprite->setTexure(spriteSheet);
+  dSprite->getSprite().scale(2.0f, 2.0f);
+  dSprite->getSprite().setOrigin(0.f, -10.f);
+
   setLoaded(true);
 }
 
@@ -232,10 +246,9 @@ void MenuScene::Update(const double& dt) {
 			Engine::ChangeScene((Scene*)&level1);
 		}
 	}
-
-	if (Keyboard::isKeyPressed(Keyboard::C))
+	else if (ls::getTileAt(player->getPosition()) == ls::WAYPOINT && (Keyboard::isKeyPressed(m_keys["Interact"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Interact"].joyButton)))
 	{
-		Engine::ChangeScene(&controls);
+		Engine::ChangeScene((Scene*)(&controls));
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::F1))
