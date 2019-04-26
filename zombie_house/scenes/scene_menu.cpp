@@ -65,16 +65,34 @@ void MenuScene::Load() {
 	  m_keys["Right"] = key;
 	  key.key_pressed = Keyboard::Space;
 	  m_keys["Shoot"] = key;
+	  key.key_pressed = Keyboard::E;
+	  m_keys["Interact"] = key;
 	  key.key_pressed = Keyboard::R;
 	  m_keys["Reload"] = key;
-	  key.key_pressed == Joystick::isButtonPressed(0, 14);
+	  key.key_pressed = Keyboard::Num1;
+	  m_keys["Switch_Pistol"] = key;
+	  key.key_pressed = Keyboard::Num2;
+	  m_keys["Switch_Smg"] = key;
+	  key.key_pressed = Keyboard::Num3;
+	  m_keys["Switch_Shotgun"] = key;
+
+	  key.joyButton = -Joystick::PovX;
 	  m_keys["Joy_Left"] = key;
-	  key.key_pressed == Joystick::isButtonPressed(0, 15);
+	  key.joyButton = Joystick::PovX;
 	  m_keys["Joy_Right"] = key;
-	  key.key_pressed == Joystick::isButtonPressed(0, 1);
+	  key.joyButton = 0;
 	  m_keys["Joy_Shoot"] = key;
-	  key.key_pressed == Joystick::isButtonPressed(0, 3);
+	  key.joyButton = 1;
+	  m_keys["Joy_Interact"] = key;
+	  key.joyButton = 2;
 	  m_keys["Joy_Reload"] = key;
+	  key.joyButton = 3;
+	  m_keys["Joy_Switch_Pistol"] = key;
+	  key.joyButton = 4;
+	  m_keys["Joy_Switch_Smg"] = key;
+	  key.joyButton = 5;
+	  m_keys["Joy_Switch_Shotgun"] = key;
+
   }
 
   cout << " Scene 1 Load" << endl;
@@ -140,7 +158,7 @@ void MenuScene::Load() {
 void MenuScene::Update(const double& dt) {
   // cout << "Menu Update "<<dt<<"\n";
 
-	if (ls::getTileAt(player->getPosition()) == ls::END && Keyboard::isKeyPressed(Keyboard::E)) {
+	if (ls::getTileAt(player->getPosition()) == ls::END && (Keyboard::isKeyPressed(m_keys["Interact"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Interact"].joyButton))) {
 		if (out_level != "")
 		{
 			if (out_level == "2")
@@ -160,6 +178,10 @@ void MenuScene::Update(const double& dt) {
 		}
 	}
 
+	if (Keyboard::isKeyPressed(Keyboard::C))
+	{
+		Engine::ChangeScene(&controls);
+	}
   Scene::Update(dt);
 }
 

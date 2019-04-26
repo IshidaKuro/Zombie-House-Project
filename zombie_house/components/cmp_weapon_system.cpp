@@ -25,7 +25,7 @@ void WeaponSystemComponent::fire() const
 {
 	auto playerAmmo = _parent->GetCompatibleComponent<PickupAmmoComponent>().at(0);
 
-	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Shoot"].key_pressed))
+	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Shoot"].joyButton))
 	{
 		if (weapon == 3)
 		{
@@ -366,7 +366,7 @@ void WeaponSystemComponent::select_weapon()
 	auto player = _parent->scene->makeEntity();
 	auto p = _parent->GetCompatibleComponent<ShapeComponent>();
 
-	if (Keyboard::isKeyPressed(Keyboard::Num1) && has_pistol == true)
+	if (Keyboard::isKeyPressed(m_keys["Switch_Pistol"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Pistol"].joyButton) && has_pistol == true)
 	{
 		p.at(0)->getShape().setFillColor(Color::Blue);
 		weapon = 1;
@@ -374,7 +374,7 @@ void WeaponSystemComponent::select_weapon()
 		temp = fire_rate;
 		std::cout << "Weapon: 1";
 	}
-	if (Keyboard::isKeyPressed(Keyboard::Num2) && has_smg == true)
+	if (Keyboard::isKeyPressed(m_keys["Switch_Smg"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Smg"].joyButton) && has_smg == true)
 	{
 		p.at(0)->getShape().setFillColor(Color::Green);
 		weapon = 2;
@@ -382,7 +382,7 @@ void WeaponSystemComponent::select_weapon()
 		temp = fire_rate;
 		std::cout << "Weapon: 2";
 	}
-	if (Keyboard::isKeyPressed(Keyboard::Num3) && has_shotgun == true)
+	if (Keyboard::isKeyPressed(m_keys["Switch_Shotgun"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Shotgun"].joyButton) && has_shotgun == true)
 	{
 		p.at(0)->getShape().setFillColor(Color::Yellow);
 		weapon = 3;
@@ -405,7 +405,7 @@ void WeaponSystemComponent::update(double dt)
 		}
 	}
 
-	if (Keyboard::isKeyPressed(m_keys["Reload"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Reload"].key_pressed))
+	if (Keyboard::isKeyPressed(m_keys["Reload"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Reload"].joyButton))
 	{
 		reload();
 	}

@@ -41,15 +41,22 @@ void PlayerPhysicsComponent::update(double dt) {
   }
 
   if (Keyboard::isKeyPressed(m_keys["Left"].key_pressed) ||
-	  Keyboard::isKeyPressed(m_keys["Right"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Left"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Right"].key_pressed)) {
-    // Moving Either Left or Right
-    if (Keyboard::isKeyPressed(m_keys["Right"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Right"].key_pressed)) {
-      if (getVelocity().x < _maxVelocity.x)
-        impulse({(float)(dt * _groundspeed), 0});
-    } else if(Keyboard::isKeyPressed(m_keys["Left"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Left"].key_pressed)) {
-      if (getVelocity().x > -_maxVelocity.x)
-        impulse({-(float)(dt * _groundspeed), 0});
-    }
+	  Keyboard::isKeyPressed(m_keys["Right"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Left"].joyButton) || Joystick::isButtonPressed(0, m_keys["Joy_Right"].joyButton)) 
+  {
+
+	if (Joystick::getAxisPosition(0, Joystick::PovX) == 100 || Keyboard::isKeyPressed(m_keys["Right"].key_pressed))
+	{
+		if (getVelocity().x < _maxVelocity.x)
+		{
+			impulse({ (float)(dt * _groundspeed), 0 });
+		}
+	}
+	else if (Joystick::getAxisPosition(0, Joystick::PovX) == -100 || Keyboard::isKeyPressed(m_keys["Left"].key_pressed))
+	{
+		if (getVelocity().x > -_maxVelocity.x)
+			impulse({ -(float)(dt * _groundspeed), 0 });
+	}
+	  
   } else {
     // Dampen X axis movement
     dampen({0.9f, 1.0f});

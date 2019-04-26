@@ -23,6 +23,7 @@ extern struct MyKeys
 	//InputType myInputType;
 	sf::Event::EventType myEventType;
 	sf::Keyboard::Key key_pressed;
+	int joyButton;
 	sf::Mouse::Button myMouseButton;
 };
 

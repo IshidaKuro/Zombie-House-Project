@@ -15,7 +15,7 @@ void PickupAmmoComponent::update(double dt) {
 	{	
 		if (auto ammo = _ammo[i].am.lock())
 		{
-				if (length(ammo->getPosition() - _parent->getPosition()) < 25.0 && Keyboard::isKeyPressed(Keyboard::E))
+				if (length(ammo->getPosition() - _parent->getPosition()) < 25.0 && (Keyboard::isKeyPressed(m_keys["Interact"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Interact"].joyButton)))
 				{
 					ammo->setForDelete();
 
