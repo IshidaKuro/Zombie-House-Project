@@ -47,7 +47,6 @@ void Level2Scene::Load() {
   int shotgun_ammo;
   if (ammo.size() > 0)
   {
-
 	  if (ammo[0] == 0)
 	  {
 		  p_ammo = ammo[1] - '0';
@@ -77,11 +76,11 @@ void Level2Scene::Load() {
   }
   else
   {
-	  p_ammo = 10;
-	  smg_ammo = 20;
+	  p_ammo = 9;
+	  smg_ammo = 6;
 	  shotgun_ammo = 4;
   }
-  
+  //ALL ABOVE CODE MUST BE IN ALL SCENES EXCEPT THE ELSE DIRECTLY ABOVE = THIS IS LEVEL 1 SPECIFIC
 
   // Create player
   {
@@ -195,6 +194,7 @@ void Level2Scene::Update(const double& dt) {
   }
   if (Keyboard::isKeyPressed(Keyboard::S))
   {
+	  //THIS CODE MUST BE IN ALL SCENES
 	  auto save = makeEntity();
 	  auto s = save->addComponent<SaveFileComponent>();
 	  s->SaveFile("2");

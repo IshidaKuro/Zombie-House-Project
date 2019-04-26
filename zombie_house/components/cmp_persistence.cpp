@@ -49,7 +49,7 @@ void SaveFileComponent::SaveFile(string level)
 	{
 		saveFile << level;
 	}
-	saveFile.close();
+	
 
 	ofstream levelFile;
 	levelFile.open("Level" + level + ".dat");
@@ -57,7 +57,7 @@ void SaveFileComponent::SaveFile(string level)
 	{
 		levelFile << zombieKillCount << "," << ammoPickupCount;
 	}
-	levelFile.close();
+	
 
 	ofstream ammoFile;
 	ammoFile.open("ammo.dat");
@@ -71,19 +71,23 @@ void SaveFileComponent::SaveFile(string level)
 			string shotgun_ammo;
 			if (ammo->getAmmo("pistol") < 10)
 			{
-				p_ammo = "0" + ammo->getAmmo("pistol");
+				p_ammo = "0" + to_string(ammo->getAmmo("pistol"));
+				
 			}
 			if (ammo->getAmmo("smg") < 10)
 			{
-				smg_ammo = "0" + ammo->getAmmo("smg");
+				smg_ammo = "0" + to_string(ammo->getAmmo("smg"));
 			}
 			if (ammo->getAmmo("smg") < 10)
 			{
-				shotgun_ammo = "0" + ammo->getAmmo("shotgun");
+				shotgun_ammo = "0" + to_string(ammo->getAmmo("shotgun"));
 			}
-			ammoFile << ammo->getAmmo("pistol") << "," << ammo->getAmmo("smg") << "," << ammo->getAmmo("shotgun");
+			ammoFile << p_ammo << "," << smg_ammo << "," << shotgun_ammo;
 		}
+		
 	}
+	saveFile.close();
+	levelFile.close();
 	ammoFile.close();
 }
 
