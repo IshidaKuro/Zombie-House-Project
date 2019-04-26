@@ -67,6 +67,14 @@ void MenuScene::Load() {
 	  m_keys["Shoot"] = key;
 	  key.key_pressed = Keyboard::R;
 	  m_keys["Reload"] = key;
+	  key.key_pressed == Joystick::isButtonPressed(0, 14);
+	  m_keys["Joy_Left"] = key;
+	  key.key_pressed == Joystick::isButtonPressed(0, 15);
+	  m_keys["Joy_Right"] = key;
+	  key.key_pressed == Joystick::isButtonPressed(0, 1);
+	  m_keys["Joy_Shoot"] = key;
+	  key.key_pressed == Joystick::isButtonPressed(0, 3);
+	  m_keys["Joy_Reload"] = key;
   }
 
   cout << " Scene 1 Load" << endl;
