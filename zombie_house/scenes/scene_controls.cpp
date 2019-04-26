@@ -18,7 +18,7 @@ void ControlScene::Load() {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
 
-        "Platformer Control Mapping\nPress Enter at any time to Return to Menu\nPress Left to change Left\nRight to change Right\nSpace to change shoot\n");
+        "Platformer Control Mapping\nPress Enter at any time to Return to Menu\nPress Left to change Left\nRight to change Right\nSpace/A to change shoot\nR Key\X Button to change Reload\n");
 
   }
   setLoaded(true);
@@ -71,13 +71,22 @@ void ControlScene::Update(const double& dt) {
 						m_keys["Joy_Right"] = key;
 					}
 				}
-				if (choice_event.joystickButton.button == Joystick::isButtonPressed(0, 14))
+				if (choice_event.joystickButton.button == Joystick::isButtonPressed(0, 1))
 				{
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						key.myEventType == Event::JoystickButtonPressed;
 						key.key_pressed == in_event.joystickButton.button;
 						m_keys["Joy_Shoot"] = key;
+					}
+				}
+				if (choice_event.joystickButton.button == Joystick::isButtonPressed(0, 3))
+				{
+					if (Engine::GetWindow().waitEvent(in_event))
+					{
+						key.myEventType == Event::JoystickButtonPressed;
+						key.key_pressed == in_event.joystickButton.button;
+						m_keys["Joy_Reload"] = key;
 					}
 				}
 			}
@@ -93,7 +102,7 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Left"] = key;
-							cout << "CHOSE NEW KEY FOR LEFT";
+							//cout << "CHOSE NEW KEY FOR LEFT";
 						}
 					}
 				}
@@ -107,7 +116,7 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Right"] = key;
-							cout << "CHOSE NEW KEY FOR RIGHT";
+							//cout << "CHOSE NEW KEY FOR RIGHT";
 						}
 					}
 				}
@@ -121,7 +130,21 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Shoot"] = key;
-							cout << "CHOSE NEW KEY FOR SPACE";
+							//cout << "CHOSE NEW KEY FOR SPACE";
+						}
+					}
+				}
+				if (choice_event.key.code == sf::Keyboard::R)
+				{
+					//cout << "Space pressed";
+					if (Engine::GetWindow().waitEvent(in_event))
+					{
+						if (in_event.type == sf::Event::KeyPressed)
+						{
+							key.myEventType = Event::KeyPressed;
+							key.key_pressed = in_event.key.code;
+							m_keys["Reload"] = key;
+							//cout << "CHOSE NEW KEY FOR SPACE";
 						}
 					}
 				}
