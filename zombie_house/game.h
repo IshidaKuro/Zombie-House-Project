@@ -4,6 +4,13 @@
 #include "scenes/scene_level1.h"
 #include "scenes/scene_level2.h"
 #include "scenes/scene_level3.h"
+#include "scenes/scene_level4.h"
+#include "scenes/scene_level5.h"
+#include "scenes/scene_level6.h"
+#include "scenes/scene_level7.h"
+#include "scenes/scene_level8.h"
+#include "scenes/scene_level9.h"
+#include "scenes/scene_level10.h"
 #include "scenes/scene_menu.h"
 #include "scenes/scene_controls.h"
 #include <map>
@@ -17,6 +24,13 @@ extern MenuScene menu;
 extern Level1Scene level1;
 extern Level2Scene level2;
 extern Level3Scene level3;
+extern Level4Scene level4;
+extern Level5Scene level5;
+extern Level6Scene level6;
+extern Level7Scene level7;
+extern Level8Scene level8;
+extern Level9Scene level9;
+extern Level10Scene level10;
 extern ControlScene controls;
 extern struct MyKeys
 {

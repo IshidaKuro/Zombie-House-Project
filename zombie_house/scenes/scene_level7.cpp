@@ -1,6 +1,6 @@
 //we need to use this as a template for other levels!!!!
 
-#include "scene_level3.h"
+#include "scene_level7.h"
 #include "../components/cmp_enemy_ai.h"
 #include "../components/cmp_enemy_turret.h"
 #include "../components/cmp_hurt_player.h"
@@ -19,16 +19,16 @@ using namespace sf;
 
 static shared_ptr<Entity> player;
 
-void Level3Scene::Load() {
-  cout << "Scene 3 Load" << endl;
-  ls::loadLevelFile("res/levels/level_3.txt", 40.0f);
+void Level7Scene::Load() {
+  cout << "Scene 7 Load" << endl;
+  ls::loadLevelFile("res/levels/level_7.txt", 40.0f);
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
 
   //load file - set game.h kill and ammo counts from file
   auto load = makeEntity();
   auto l = load->addComponent<LoadFileComponent>();
-  string levelData = l->LoadFile("Level3.dat");
+  string levelData = l->LoadFile("Level7.dat");
   //cout << "LOADING DATA: " << out;
   if (levelData.size() <= 0)
   {
@@ -179,37 +179,37 @@ void Level3Scene::Load() {
 	  _ammo[i] = amm;
   }
 
-  cout << " Scene 2 Load Done" << endl;
+  cout << " Scene 7 Load Done" << endl;
   setLoaded(true);
 }
 
-void Level3Scene::UnLoad() {
-  cout << "Scene 3 UnLoad" << endl;
+void Level7Scene::UnLoad() {
+  cout << "Scene 7 UnLoad" << endl;
   player.reset();
   ls::unload();
   Scene::UnLoad();
 }
 
-void Level3Scene::Update(const double& dt) {
+void Level7Scene::Update(const double& dt) {
   Scene::Update(dt);
 
   const auto pp = player->getPosition();
   if (ls::getTileAt(pp) == ls::END) {
-    Engine::ChangeScene((Scene*)&level4);
+    Engine::ChangeScene((Scene*)&level8);
   } else if (!player->isAlive()) {
-    Engine::ChangeScene((Scene*)&level3);
+    Engine::ChangeScene((Scene*)&level7);
   }
   if (Keyboard::isKeyPressed(Keyboard::S))
   {
 	  //THIS CODE MUST BE IN ALL SCENES
 	  auto save = makeEntity();
 	  auto s = save->addComponent<SaveFileComponent>();
-	  s->SaveFile("2");
+	  s->SaveFile("7");
 	  Engine::ChangeScene(&menu);
   }
 }
 
-void Level3Scene::Render() {
+void Level7Scene::Render() {
   ls::render(Engine::GetWindow());
   Scene::Render();
 }

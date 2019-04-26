@@ -8,6 +8,7 @@
 #include "../components/cmp_weapon_system.h"
 #include "../components/cmp_hp.h"
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Joystick.hpp>
 #include <iostream>
 #include <system_renderer.h>
 #include <LevelSystem.h>
@@ -149,7 +150,7 @@ void MenuScene::Load() {
 
   }
 
-  cout << " Scene 1 Load" << endl;
+  cout << " Menu Scene Load" << endl;
   ls::loadLevelFile("res/levels/menu.txt", 40.0f);
 
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
@@ -228,7 +229,7 @@ void MenuScene::Update(const double& dt) {
 		}
 		else
 		{
-			Engine::ChangeScene((Scene*)&level2);
+			Engine::ChangeScene((Scene*)&level1);
 		}
 	}
 
@@ -262,7 +263,7 @@ void MenuScene::Update(const double& dt) {
 
 void MenuScene::UnLoad()
 {
-	cout << "Scene 1 Unload" << endl;
+	cout << "Menu Scene Unload" << endl;
 	player.reset();
 	ls::unload();
 	Scene::UnLoad();

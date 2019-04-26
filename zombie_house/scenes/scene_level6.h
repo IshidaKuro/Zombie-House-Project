@@ -2,7 +2,7 @@
 
 #include "engine.h"
 
-class Level1Scene : public Scene {
+class Level6Scene : public Scene {
 public:
   void Load() override;
 
