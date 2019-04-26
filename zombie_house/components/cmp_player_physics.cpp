@@ -63,7 +63,7 @@ void PlayerPhysicsComponent::update(double dt) {
   }
 
    //Handle Jump
-   if (Keyboard::isKeyPressed(Keyboard::Up)) {
+  if (Keyboard::isKeyPressed(m_keys["Jump"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Jump"].joyButton)) {
     _grounded = isGrounded();
     if (_grounded) {
       setVelocity(Vector2f(getVelocity().x, 0.f));

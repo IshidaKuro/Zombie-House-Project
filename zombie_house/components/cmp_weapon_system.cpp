@@ -3,6 +3,7 @@
 #include <SFML/Window/Joystick.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
+#include "system_resources.h"
 #include "cmp_bullet.h"
 #include "engine.h"
 #include "../components/cmp_pickup_ammo.h"
@@ -18,6 +19,7 @@ int magazineSize; //size of magazine for different guns
 int pistolMagazine = 0;
 int smgMagazine = 0;
 int shotgunMagazine = 0;
+shared_ptr<Texture> spriteSheet;
 
 sf::SoundBuffer buffer2;
 sf::Sound sound2;
@@ -40,7 +42,7 @@ void WeaponSystemComponent::fire() const
 				auto b1 = bullet->addComponent<ShapeComponent>();
 				b1->setShape<sf::CircleShape>(3.f);
 				b1->getShape().setFillColor(Color::Red);
-				b1->getShape().setOrigin(8.f, 8.f);
+				b1->getShape().setOrigin(-30.f, 6.f);
 				auto p = bullet->addComponent<PhysicsComponent>(true, Vector2f(3.f, 0.f));
 				p->setRestitution(.4f);
 				p->setFriction(.005f);
@@ -53,7 +55,7 @@ void WeaponSystemComponent::fire() const
 				auto b2 = bullet2->addComponent<ShapeComponent>();
 				b2->setShape<sf::CircleShape>(3.f);
 				b2->getShape().setFillColor(Color::Yellow);
-				b2->getShape().setOrigin(8.f, 8.f);
+				b2->getShape().setOrigin(-30.f, 6.f);
 				auto p2 = bullet2->addComponent<PhysicsComponent>(true, Vector2f(30.f, 0.f));
 				p2->setRestitution(.4f);
 				p2->setFriction(.005f);
@@ -67,7 +69,7 @@ void WeaponSystemComponent::fire() const
 				auto b3 = bullet3->addComponent<ShapeComponent>();
 				b3->setShape<sf::CircleShape>(3.f);
 				b3->getShape().setFillColor(Color::Blue);
-				b3->getShape().setOrigin(8.f, 8.f);
+				b3->getShape().setOrigin(-30.f, 6.f);
 				auto p3 = bullet3->addComponent<PhysicsComponent>(true, Vector2f(80.f, 0.f));
 				p3->setRestitution(.4f);
 				p3->setFriction(.005f);
@@ -80,7 +82,6 @@ void WeaponSystemComponent::fire() const
 				}
 				else
 				{
-					;
 					sound2.setBuffer(buffer2);
 					sound2.play();
 				}
@@ -95,7 +96,6 @@ void WeaponSystemComponent::fire() const
 				}
 				else
 				{
-					;
 					sound2.setBuffer(buffer2);
 					sound2.play();
 				}
@@ -115,7 +115,7 @@ void WeaponSystemComponent::fire() const
 
 				s->setShape<sf::CircleShape>(3.f);
 				s->getShape().setFillColor(Color::Red);
-				s->getShape().setOrigin(8.f, 8.f);
+				s->getShape().setOrigin(-30.f, 6.f);
 				auto p = bullet->addComponent<PhysicsComponent>(true, Vector2f(3.f, 0.f));
 				p->setRestitution(.4f);
 				p->setFriction(.005f);
@@ -164,7 +164,7 @@ void WeaponSystemComponent::fire() const
 
 				s->setShape<sf::CircleShape>(3.f);
 				s->getShape().setFillColor(Color::Red);
-				s->getShape().setOrigin(8.f, 8.f);
+				s->getShape().setOrigin(-30.f, 6.f);
 				auto p = bullet->addComponent<PhysicsComponent>(true, Vector2f(3.f, 0.f));
 				p->setRestitution(.4f);
 				p->setFriction(.005f);
@@ -364,11 +364,13 @@ void WeaponSystemComponent::pickup(int weapon)
 void WeaponSystemComponent::select_weapon()
 {
 	auto player = _parent->scene->makeEntity();
-	auto p = _parent->GetCompatibleComponent<ShapeComponent>();
+	auto p = _parent->GetCompatibleComponent<SpriteComponent>();
 
 	if (Keyboard::isKeyPressed(m_keys["Switch_Pistol"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Pistol"].joyButton) && has_pistol == true)
 	{
-		p.at(0)->getShape().setFillColor(Color::Blue);
+		spriteSheet = Resources::get<Texture>("player_pistol.png");
+		p.at(0)->setTexure(spriteSheet);
+		p.at(0)->getSprite().setOrigin(10.f, 15.f);
 		weapon = 1;
 		fire_rate = 0.5f;
 		temp = fire_rate;
@@ -376,7 +378,9 @@ void WeaponSystemComponent::select_weapon()
 	}
 	if (Keyboard::isKeyPressed(m_keys["Switch_Smg"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Smg"].joyButton) && has_smg == true)
 	{
-		p.at(0)->getShape().setFillColor(Color::Green);
+		spriteSheet = Resources::get<Texture>("player_smg.png");
+		p.at(0)->setTexure(spriteSheet);
+		p.at(0)->getSprite().setOrigin(10.f, 15.f);
 		weapon = 2;
 		fire_rate = 0.05f;
 		temp = fire_rate;
@@ -384,7 +388,9 @@ void WeaponSystemComponent::select_weapon()
 	}
 	if (Keyboard::isKeyPressed(m_keys["Switch_Shotgun"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Shotgun"].joyButton) && has_shotgun == true)
 	{
-		p.at(0)->getShape().setFillColor(Color::Yellow);
+		spriteSheet = Resources::get<Texture>("player_shotgun.png");
+		p.at(0)->setTexure(spriteSheet);
+		p.at(0)->getSprite().setOrigin(10.f, 15.f);
 		weapon = 3;
 		fire_rate = 1.0f;
 		temp = fire_rate;

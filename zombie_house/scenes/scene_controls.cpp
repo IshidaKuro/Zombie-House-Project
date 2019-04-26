@@ -18,7 +18,11 @@ void ControlScene::Load() {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
 
-        "Platformer Control Mapping\nPress Enter at any time to Return to Menu\nPress Left to change Left\nRight to change Right\nSpace/A to change shoot\nR Key\X Button to change Reload\n");
+        "Platformer Control Mapping\n"
+		"Press button then press new button\nDo not press enter before choosing a new button"
+		"\nPress Enter at any time to Return to Menu\n\nPress Left to change Left\nRight to change Right\nSpace/A Button to change shoot\nR Key\X Button to change Reload\n"
+		"Up Arrow to change Jump\n1 to change pistol switch, 2 to change SMG switch\nor 3 to change shotgun switch\n"
+		"RB to change shotgun switch, LB to change SMG switch\nor Y to change pistol switch\n");
 
   }
   setLoaded(true);
@@ -231,6 +235,20 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Switch_Shotgun"] = key;
+							//cout << "CHOSE NEW KEY FOR SPACE";
+						}
+					}
+				}
+				if (choice_event.key.code == sf::Keyboard::Up)
+				{
+					//cout << "Space pressed";
+					if (Engine::GetWindow().waitEvent(in_event))
+					{
+						if (in_event.type == sf::Event::KeyPressed)
+						{
+							key.myEventType = Event::KeyPressed;
+							key.key_pressed = in_event.key.code;
+							m_keys["Jump"] = key;
 							//cout << "CHOSE NEW KEY FOR SPACE";
 						}
 					}
