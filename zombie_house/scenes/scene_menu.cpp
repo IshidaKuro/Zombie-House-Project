@@ -65,7 +65,7 @@ void MenuScene::Load() {
 	  key.key_pressed = Keyboard::Space;
 	  m_keys["Shoot"] = key;
 	  key.key_pressed = Keyboard::R;
-	  m_keys["reload"] = key;
+	  m_keys["Reload"] = key;
   }
 
   cout << " Scene 1 Load" << endl;
