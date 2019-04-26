@@ -48,7 +48,6 @@ void MenuScene::Load() {
 	   out_level = prev_level[5];
   }
 
-
   {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
@@ -56,7 +55,6 @@ void MenuScene::Load() {
         "Platformer\nInteract (E) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
   }
 
-  
   if (ctrl_change == false)
   {
 	  MyKeys key;
@@ -92,6 +90,11 @@ void MenuScene::Load() {
 
 	  player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
 	  player->addComponent<WeaponSystemComponent>();
+	  auto a = player->addComponent<PickupAmmoComponent>();
+	  a->setAmmo("pistol", 8);
+	  a->setAmmo("smg", 20);
+	  a->setAmmo("shotgun", 4);
+
   }
 
   // Add physics colliders to level tiles.
@@ -136,8 +139,7 @@ void MenuScene::Update(const double& dt) {
 			else if(out_level == "3")
 			{
 				Engine::ChangeScene(&level3);
-			}
-			
+			}	
 		}
 		else
 		{

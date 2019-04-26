@@ -57,9 +57,6 @@ void PickupAmmoComponent::update(double dt) {
 		}
   }
 
-
-
-
 int PickupAmmoComponent::getAmmo(const std::string& type)
 {
 	

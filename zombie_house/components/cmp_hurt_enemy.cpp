@@ -34,8 +34,12 @@ void HurtEnemyComponent::update(double dt) {
 
 				}
 
-				setHP(getHP() - 1);
-				if (getHP() <= 0)
+				
+				auto hpGet = pl->GetCompatibleComponent<HPComponent>().at(0);
+				//int hp = hpGet->getHP();
+				hpGet->setHP(hpGet->getHP() - 1);
+
+				if (hpGet->getHP() <= 0)
 				{
 					zombieKillCount++;
 					pl->setForDelete();
@@ -60,32 +64,7 @@ void HurtEnemyComponent::update(double dt) {
 				//cout << "HP: " << hp;
 			}
 		}
-  }
-}
-
-int HurtEnemyComponent::getHP()
-{
-	for (int i = 0; i < _enemies.size(); i++)
-	{
-		_enemy = _enemies[i].en;
-		auto en = _enemies[i].en.lock();
-		int hp = en->GetCompatibleComponent<HPComponent>().at(0)->getHP();
-		return hp;
-	}
-}
-
-void HurtEnemyComponent::getEnemies()
-{
-
-}
-
-void HurtEnemyComponent::setHP(int in)
-{
-	for (int i = 0; i < _enemies.size(); i++)
-	{
-		auto en = _enemies[i].en.lock();
-		en->GetCompatibleComponent<HPComponent>().at(0)->setHP(in);
-	}
+    }
 }
 
 HurtEnemyComponent::HurtEnemyComponent(Entity* p)
