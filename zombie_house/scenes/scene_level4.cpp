@@ -169,7 +169,17 @@ void Level4Scene::Load() {
 		  aSprite->getSprite().setOrigin(10.f, 15.f);
 	  }
 	  // *********************************
+	  auto weapons = makeEntity();
+	  weapons->setPosition(ls::getTilePosition(ls::findTiles(ls::INTERACT)[0]));
 
+	  shared_ptr<Texture> spriteSheet;
+
+	  spriteSheet = Resources::get<Texture>("weapons.png");
+
+	  auto wSprite = weapons->addComponent<SpriteComponent>();
+	  wSprite->setTexure(spriteSheet);
+	  wSprite->getSprite().scale(2.0f, 2.0f);
+	  wSprite->getSprite().setOrigin(0.f, 0.f);
   }
 
   // Add physics colliders to level tiles.

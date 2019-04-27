@@ -210,12 +210,8 @@ void Level3Scene::Load() {
 
   cout << " Scene 2 Load Done" << endl;
   {
-	  auto txt = makeEntity();
-	  auto t = txt->addComponent<TextComponent>(
 
-		  "ZOMBIE HOUSE\nInteract (E/BButton) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
   }
-
   setLoaded(true);
 }
 
