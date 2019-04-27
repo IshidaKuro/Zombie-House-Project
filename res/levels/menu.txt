@@ -9,10 +9,10 @@
      w                w         
     wwwwwwwwwwwwwwwwwwww        
     w                  w        
-    w   wwww     wwww  w        
-    w   w  w     w  w  w        
-    w   wwww     wwww  w        
     w                  w        
-  s w   e              w        
-        e    +     n   w        
+    w                  w        
+    w                  w        
+    w                  w        
+    w                  w        
+  s     e    +     n   w        
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww

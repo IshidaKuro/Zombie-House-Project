@@ -124,7 +124,7 @@ void Level3Scene::Load() {
   }
   for (auto e : enemySpawn)
   {
-	  auto pos = ls::getTilePosition(e);
+	  auto pos = ls::getTilePosition(e) + Vector2f(0, 25);
 	  auto enemy2 = makeEntity();
 	  enemy2->setPosition(pos);
 	  enemy2->addComponent<HurtComponent>();
@@ -154,9 +154,9 @@ void Level3Scene::Load() {
 	  
 	  for (auto a : ammoCount)
 	  {
-		  auto pos = ls::getTilePosition(a);
+		  auto pos = ls::getTilePosition(a)+ Vector2f(0,10);
 		  auto ammo = makeEntity();
-		  ammo->setPosition(pos + Vector2f(0, 24));
+		  ammo->setPosition(pos);
 
 		  ammo->addTag("ammo");
 		  shared_ptr<Texture> spriteSheet;
@@ -198,7 +198,7 @@ void Level3Scene::Load() {
 	  _ammo[i] = amm;
   }
   auto door = makeEntity();
-  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]));
+  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]) + Vector2f(0, -25));
 
   shared_ptr<Texture> spriteSheet;
 

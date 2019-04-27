@@ -210,7 +210,7 @@ void MenuScene::Load() {
   }
 
   auto door = makeEntity();
-  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]));
+  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]) + Vector2f(0, -45));
 
   shared_ptr<Texture> spriteSheet;
 
@@ -283,7 +283,7 @@ void MenuScene::Update(const double& dt) {
 
 	if (Keyboard::isKeyPressed(Keyboard::F1))
 	{
-		const sf::Vector2u screensize(1280,720);
+		const sf::Vector2u screensize(1920,1080);
 		const sf::Vector2u gamesize(GAMEX, GAMEY);
 		//set View as normal
 		Engine::GetWindow().setSize(screensize);
