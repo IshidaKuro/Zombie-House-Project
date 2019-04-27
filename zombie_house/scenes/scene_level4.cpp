@@ -9,6 +9,7 @@
 #include "../components/cmp_persistence.h"
 #include "../components/cmp_pickup_ammo.h"
 #include "../game.h"
+#include "system_resources.h"
 #include "../components/cmp_weapon_system.h"
 #include "../components/cmp_hp.h"
 #include <LevelSystem.h>
@@ -94,10 +95,7 @@ void Level4Scene::Load() {
     // *********************************
 	player = makeEntity();
 	player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
-	auto s = player->addComponent<ShapeComponent>();
-	s->setShape<sf::RectangleShape>(Vector2f(20.f, 30.f));
-	s->getShape().setFillColor(Color::Magenta);
-	s->getShape().setOrigin(10.f, 15.f);
+
 	player->addComponent<WeaponSystemComponent>();
 	player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
     // *********************************
@@ -106,6 +104,14 @@ void Level4Scene::Load() {
 	a->setAmmo("pistol", p_ammo);
 	a->setAmmo("smg", smg_ammo);
 	a->setAmmo("shotgun", shotgun_ammo);
+	shared_ptr<Texture> spriteSheet;
+
+	spriteSheet = Resources::get<Texture>("player.png");
+
+	auto pSprite = player->addComponent<SpriteComponent>();
+	pSprite->setTexure(spriteSheet);
+	pSprite->getSprite().scale(2.0f, 2.0f);
+	pSprite->getSprite().setOrigin(10.f, 15.f);
 	
   }
   //same as ammo needs done here
@@ -121,13 +127,18 @@ void Level4Scene::Load() {
 	  enemy2->setPosition(pos);
 	  enemy2->addComponent<HurtComponent>();
 	  enemy2->addComponent<HPComponent>();
-	  // Add ShapeComponent, Red 16.f Circle
-	  auto sEnemy2 = enemy2->addComponent<ShapeComponent>();
-	  sEnemy2->setShape<sf::CircleShape>(16.0f);
-	  sEnemy2->getShape().setFillColor(Color::Green);
+
 	  enemy2->addTag("enemy");
 	  // Add EnemyAIComponent
 	  enemy2->addComponent<EnemyAIComponent>();
+	  shared_ptr<Texture> spriteSheet;
+
+	  spriteSheet = Resources::get<Texture>("zombie.png");
+
+	  auto eSprite = enemy2->addComponent<SpriteComponent>();
+	  eSprite->setTexure(spriteSheet);
+	  eSprite->getSprite().scale(2.0f, 2.0f);
+	  eSprite->getSprite().setOrigin(10.f, 15.f);
   }
 
    //create ammo objects
@@ -144,10 +155,16 @@ void Level4Scene::Load() {
 		  auto pos = ls::getTilePosition(a);
 		  auto ammo = makeEntity();
 		  ammo->setPosition(pos + Vector2f(0, 24));
-		  auto sAmmo = ammo->addComponent<ShapeComponent>();
-		  sAmmo->setShape<sf::CircleShape>(8.0f);
-		  sAmmo->getShape().setFillColor(Color::White);
+
 		  ammo->addTag("ammo");
+		  shared_ptr<Texture> spriteSheet;
+
+		  spriteSheet = Resources::get<Texture>("ammo.png");
+
+		  auto aSprite = ammo->addComponent<SpriteComponent>();
+		  aSprite->setTexure(spriteSheet);
+		  aSprite->getSprite().scale(2.0f, 2.0f);
+		  aSprite->getSprite().setOrigin(10.f, 15.f);
 	  }
 	  // *********************************
 
@@ -179,6 +196,17 @@ void Level4Scene::Load() {
 	  _ammo[i] = amm;
   }
 
+  auto door = makeEntity();
+  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]));
+
+  shared_ptr<Texture> spriteSheet;
+
+  spriteSheet = Resources::get<Texture>("door.png");
+
+  auto dSprite = door->addComponent<SpriteComponent>();
+  dSprite->setTexure(spriteSheet);
+  dSprite->getSprite().scale(2.0f, 2.0f);
+
   cout << " Scene 4 Load Done" << endl;
   setLoaded(true);
 }
@@ -204,7 +232,7 @@ void Level4Scene::Update(const double& dt) {
 	  //THIS CODE MUST BE IN ALL SCENES
 	  auto save = makeEntity();
 	  auto s = save->addComponent<SaveFileComponent>();
-	  s->SaveFile("2");
+	  s->SaveFile("4");
 	  Engine::ChangeScene(&menu);
   }
 }

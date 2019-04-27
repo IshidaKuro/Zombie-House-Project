@@ -154,10 +154,16 @@ void Level2Scene::Load() {
 		  auto pos = ls::getTilePosition(a);
 		  auto ammo = makeEntity();
 		  ammo->setPosition(pos + Vector2f(0, 24));
-		  auto sAmmo = ammo->addComponent<ShapeComponent>();
-		  sAmmo->setShape<sf::CircleShape>(8.0f);
-		  sAmmo->getShape().setFillColor(Color::White);
+
 		  ammo->addTag("ammo");
+		  shared_ptr<Texture> spriteSheet;
+
+		  spriteSheet = Resources::get<Texture>("ammo.png");
+
+		  auto aSprite = ammo->addComponent<SpriteComponent>();
+		  aSprite->setTexure(spriteSheet);
+		  aSprite->getSprite().scale(2.0f, 2.0f);
+		  aSprite->getSprite().setOrigin(10.f, 15.f);
 	  }
 	  // *********************************
 
@@ -199,7 +205,6 @@ void Level2Scene::Load() {
   auto dSprite = door->addComponent<SpriteComponent>();
   dSprite->setTexure(spriteSheet);
   dSprite->getSprite().scale(2.0f, 2.0f);
-  //dSprite->getSprite().setOrigin(0.f, 0.f);
 
   cout << " Scene 2 Load Done" << endl;
   setLoaded(true);

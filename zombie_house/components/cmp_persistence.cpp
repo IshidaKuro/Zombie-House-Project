@@ -1,6 +1,7 @@
 #include "cmp_persistence.h"
 #include "cmp_pickup_ammo.h"
 #include <iostream>
+#include <stdio.h>
 #include <fstream>
 #include "engine.h"
 #include "../game.h"
@@ -16,7 +17,10 @@ string LoadFileComponent::LoadFile(string fileToRead)
 	string output;
 	char c;
 	ifstream loadFile;
-	loadFile.open(fileToRead);
+	string path4;
+	path4 = getenv("appdata");
+	path4 += "\\" + fileToRead;
+	loadFile.open(path4.c_str());
 	if (loadFile.is_open())
 	{
 		while (loadFile.get(c))
@@ -43,8 +47,14 @@ void SaveFileComponent::update(double dt)
 
 void SaveFileComponent::SaveFile(string level)
 {
+	string path1;
 	ofstream saveFile;
-	saveFile.open("ZombieHouseSaveFile.txt");
+
+	path1 = getenv("appdata");
+	//cout << "appdata=" << path << endl;
+	path1 += "\\ZombieHouseSaveFile.txt";
+	//cout << "path=" << path << endl;
+	saveFile.open(path1.c_str());
 	if (saveFile.is_open())
 	{
 		saveFile << level;
@@ -52,7 +62,10 @@ void SaveFileComponent::SaveFile(string level)
 	
 
 	ofstream levelFile;
-	levelFile.open("Level" + level + ".dat");
+	string path2;
+	path2 = getenv("appdata");
+	path2 += "\\Level" + level + ".dat";
+	levelFile.open(path2.c_str());
 	if (levelFile.is_open())
 	{
 		levelFile << zombieKillCount << "," << ammoPickupCount;
@@ -60,7 +73,11 @@ void SaveFileComponent::SaveFile(string level)
 	
 
 	ofstream ammoFile;
-	ammoFile.open("ammo.dat");
+	string path3;
+	path3 = getenv("appdata");
+	path3 += "\\ammo.dat";
+	levelFile.open(path3.c_str());
+	ammoFile.open(path3);
 	if (ammoFile.is_open())
 	{
 		if (auto pl = _player.lock())

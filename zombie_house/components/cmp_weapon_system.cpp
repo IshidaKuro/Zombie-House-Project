@@ -4,13 +4,15 @@
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 #include "system_resources.h"
+#include "../components/cmp_pickup_ammo.h"
+#include "../components/cmp_text.h"
 #include "cmp_bullet.h"
 #include "LevelSystem.h"
 #include "engine.h"
-#include "../components/cmp_pickup_ammo.h"
 #include <SFML/Graphics/CircleShape.hpp>
 #include "cmp_hurt_enemy.h"
 #include "../game.h"
+
 
 using namespace std;
 using namespace sf;
@@ -26,10 +28,11 @@ sf::SoundBuffer buffer2;
 sf::Sound sound2;
 void WeaponSystemComponent::fire() const
 {
+	
 	auto playerAmmo = _parent->GetCompatibleComponent<PickupAmmoComponent>().at(0);
 
 	if (Keyboard::isKeyPressed(m_keys["Shoot"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Shoot"].joyButton))
-	{
+	{	
 		if (weapon == 3)
 		{
 			if (shotgunMagazine > 0)
@@ -389,7 +392,7 @@ void WeaponSystemComponent::update(double dt)
 {
 	select_weapon();
 	pickupWeapon();
-	
+
 	if(weapon == 1 || weapon == 2 || weapon == 3)
 	{ 
 		fire_rate -= dt;

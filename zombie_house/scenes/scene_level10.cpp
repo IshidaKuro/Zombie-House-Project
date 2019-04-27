@@ -1,6 +1,6 @@
 //we need to use this as a template for other levels!!!!
 
-#include "scene_level10.h"
+#include "scene_level2.h"
 #include "../components/cmp_enemy_ai.h"
 #include "../components/cmp_enemy_turret.h"
 #include "../components/cmp_hurt_player.h"
@@ -9,6 +9,7 @@
 #include "../components/cmp_persistence.h"
 #include "../components/cmp_pickup_ammo.h"
 #include "../game.h"
+#include "system_resources.h"
 #include "../components/cmp_weapon_system.h"
 #include "../components/cmp_hp.h"
 #include <LevelSystem.h>
@@ -94,10 +95,7 @@ void Level10Scene::Load() {
     // *********************************
 	player = makeEntity();
 	player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
-	auto s = player->addComponent<ShapeComponent>();
-	s->setShape<sf::RectangleShape>(Vector2f(20.f, 30.f));
-	s->getShape().setFillColor(Color::Magenta);
-	s->getShape().setOrigin(10.f, 15.f);
+
 	player->addComponent<WeaponSystemComponent>();
 	player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
     // *********************************
@@ -106,6 +104,14 @@ void Level10Scene::Load() {
 	a->setAmmo("pistol", p_ammo);
 	a->setAmmo("smg", smg_ammo);
 	a->setAmmo("shotgun", shotgun_ammo);
+	shared_ptr<Texture> spriteSheet;
+
+	spriteSheet = Resources::get<Texture>("player.png");
+
+	auto pSprite = player->addComponent<SpriteComponent>();
+	pSprite->setTexure(spriteSheet);
+	pSprite->getSprite().scale(2.0f, 2.0f);
+	pSprite->getSprite().setOrigin(10.f, 15.f);
 	
   }
   //same as ammo needs done here
@@ -121,13 +127,18 @@ void Level10Scene::Load() {
 	  enemy2->setPosition(pos);
 	  enemy2->addComponent<HurtComponent>();
 	  enemy2->addComponent<HPComponent>();
-	  // Add ShapeComponent, Red 16.f Circle
-	  auto sEnemy2 = enemy2->addComponent<ShapeComponent>();
-	  sEnemy2->setShape<sf::CircleShape>(16.0f);
-	  sEnemy2->getShape().setFillColor(Color::Green);
+
 	  enemy2->addTag("enemy");
 	  // Add EnemyAIComponent
 	  enemy2->addComponent<EnemyAIComponent>();
+	  shared_ptr<Texture> spriteSheet;
+
+	  spriteSheet = Resources::get<Texture>("zombie.png");
+
+	  auto eSprite = enemy2->addComponent<SpriteComponent>();
+	  eSprite->setTexure(spriteSheet);
+	  eSprite->getSprite().scale(2.0f, 2.0f);
+	  eSprite->getSprite().setOrigin(10.f, 15.f);
   }
 
    //create ammo objects
@@ -144,10 +155,16 @@ void Level10Scene::Load() {
 		  auto pos = ls::getTilePosition(a);
 		  auto ammo = makeEntity();
 		  ammo->setPosition(pos + Vector2f(0, 24));
-		  auto sAmmo = ammo->addComponent<ShapeComponent>();
-		  sAmmo->setShape<sf::CircleShape>(8.0f);
-		  sAmmo->getShape().setFillColor(Color::White);
+
 		  ammo->addTag("ammo");
+		  shared_ptr<Texture> spriteSheet;
+
+		  spriteSheet = Resources::get<Texture>("ammo.png");
+
+		  auto aSprite = ammo->addComponent<SpriteComponent>();
+		  aSprite->setTexure(spriteSheet);
+		  aSprite->getSprite().scale(2.0f, 2.0f);
+		  aSprite->getSprite().setOrigin(10.f, 15.f);
 	  }
 	  // *********************************
 
@@ -178,7 +195,16 @@ void Level10Scene::Load() {
 	  amm.am = ents.find("ammo").at(i);
 	  _ammo[i] = amm;
   }
+  auto door = makeEntity();
+  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]));
 
+  shared_ptr<Texture> spriteSheet;
+
+  spriteSheet = Resources::get<Texture>("door.png");
+
+  auto dSprite = door->addComponent<SpriteComponent>();
+  dSprite->setTexure(spriteSheet);
+  dSprite->getSprite().scale(2.0f, 2.0f);
   cout << " Scene 10 Load Done" << endl;
   setLoaded(true);
 }
@@ -204,7 +230,7 @@ void Level10Scene::Update(const double& dt) {
 	  //THIS CODE MUST BE IN ALL SCENES
 	  auto save = makeEntity();
 	  auto s = save->addComponent<SaveFileComponent>();
-	  s->SaveFile("2");
+	  s->SaveFile("10");
 	  Engine::ChangeScene(&menu);
   }
 }

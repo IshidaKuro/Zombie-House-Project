@@ -107,7 +107,7 @@ void MenuScene::Load() {
     auto txt = makeEntity();
     auto t = txt->addComponent<TextComponent>(
 		
-        "ZOMBIE HOUSE\nInteract (E/BButton) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
+        "Interact (E/BButton) with the door to start/continue\nPress F1 to enter windowed from fullscreen menu\nInteract with blue square to remap controls\nPress S during a level to save and menu");
   }
 
   //set initial default controls if the user hasn't changed them this session
@@ -230,16 +230,46 @@ void MenuScene::Update(const double& dt) {
 	if (ls::getTileAt(player->getPosition()) == ls::END && (Keyboard::isKeyPressed(m_keys["Interact"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Interact"].joyButton))) {
 		if (out_level != "")
 		{
-			if (out_level == "2")
+			if (out_level == "1")
 			{
-				//auto s2 = save->addComponent<SaveFileComponent>();
-				//s2->SaveFile("0");
+				Engine::ChangeScene(&level1);
+			}
+			else if (out_level == "2")
+			{
 				Engine::ChangeScene(&level2);
 			}
 			else if(out_level == "3")
 			{
 				Engine::ChangeScene(&level3);
 			}	
+			else if (out_level == "4")
+			{
+				Engine::ChangeScene(&level4);
+			}
+			else if (out_level == "5")
+			{
+				Engine::ChangeScene(&level5);
+			}
+			else if (out_level == "6")
+			{
+				Engine::ChangeScene(&level6);
+			}
+			else if (out_level == "7")
+			{
+				Engine::ChangeScene(&level7);
+			}
+			else if (out_level == "8")
+			{
+				Engine::ChangeScene(&level8);
+			}
+			else if (out_level == "9")
+			{
+				Engine::ChangeScene(&level9);
+			}
+			else if (out_level == "10")
+			{
+				Engine::ChangeScene(&level10);
+			}
 		}
 		else
 		{
