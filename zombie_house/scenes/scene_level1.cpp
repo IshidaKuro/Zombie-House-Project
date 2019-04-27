@@ -208,6 +208,12 @@ void Level1Scene::Load() {
   dSprite->getSprite().scale(2.0f, 2.0f);
 
   cout << " Scene 1 Load Done" << endl;
+  {
+	  auto txt = makeEntity();
+	  auto t = txt->addComponent<TextComponent>(
+
+		  "ZOMBIE HOUSE\nInteract (E/BButton) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
+  }
   setLoaded(true);
 }
 

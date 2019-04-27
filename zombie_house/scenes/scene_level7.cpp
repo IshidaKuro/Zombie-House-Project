@@ -15,6 +15,7 @@
 #include <LevelSystem.h>
 #include <iostream>
 #include <SFML/Audio/Music.hpp>
+#include "../components/cmp_text.h"
 using namespace std;
 using namespace sf;
 
@@ -208,6 +209,13 @@ void Level7Scene::Load() {
   dSprite->getSprite().scale(2.0f, 2.0f);
 
   cout << " Scene 7 Load Done" << endl;
+  {
+	  auto txt = makeEntity();
+	  auto t = txt->addComponent<TextComponent>(
+
+		  "ZOMBIE HOUSE\nInteract (E/BButton) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
+  }
+
   setLoaded(true);
 }
 
