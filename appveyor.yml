@@ -1,0 +1,24 @@
+version: 1.0.{build}
+branches:
+  only:
+  - development
+skip_tags: true
+image: Visual Studio 2017
+configuration: Debug, Release
+platform: x86
+environment:
+  TOOLSET: v140
+  ToolsVersion: 14.0
+before_build:
+- cmd: >-
+    git submodule update --init --recursive
+
+    mkdir build & cd build & cmake -G "Visual Studio 15 2017" ../
+build:
+  project: build/PACKAGE.vcxproj
+  verbosity: minimal
+after_build:
+- cmd: "cd %APPVEYOR_BUILD_FOLDER% \nset LOC=%APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/\nset ZIPNAME=set09121_%CONFIGURATION%_%APPVEYOR_REPO_COMMIT%.zip\n7z a %ZIPNAME% %LOC%/*.exe %LOC%/*.dll %LOC%/res/* %LOC%/res/**/*"
+artifacts:
+- path: '*zip'
+  name: zip
