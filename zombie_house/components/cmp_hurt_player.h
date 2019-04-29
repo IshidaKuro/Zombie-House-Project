@@ -1,10 +1,9 @@
 #pragma once
 #include "cmp_physics.h"
-#include <ecm.h>
+#include <ecm.h>_
 
 class HurtComponent : public Component {
 protected:
-  void fire() const;
   std::weak_ptr<Entity> _player;
 
 public:

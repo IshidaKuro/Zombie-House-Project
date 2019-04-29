@@ -2,7 +2,10 @@
 #include <system_renderer.h>
 #include <system_resources.h>
 
-void TextComponent::update(double dt) {}
+void TextComponent::update(double dt) 
+{
+	
+}
 
 void TextComponent::render() { Renderer::queue(&_text); }
 
@@ -16,4 +19,8 @@ TextComponent::TextComponent(Entity* const p, const std::string& str)
 void TextComponent::SetText(const std::string& str) {
   _string = str;
   _text.setString(_string);
+}
+
+void TextComponent::SetColour(const sf::Color color) {
+	_text.setColor(color);
 }

@@ -1,7 +1,9 @@
 #include "cmp_player_physics.h"
 #include "system_physics.h"
+#include "cmp_controls.h"
 #include <LevelSystem.h>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Joystick.hpp>
 
 using namespace std;
 using namespace sf;
@@ -38,23 +40,30 @@ void PlayerPhysicsComponent::update(double dt) {
     teleport(ls::getTilePosition(ls::findTiles(ls::START)[0]));
   }
 
-  if (Keyboard::isKeyPressed(Keyboard::Left) ||
-      Keyboard::isKeyPressed(Keyboard::Right)) {
-    // Moving Either Left or Right
-    if (Keyboard::isKeyPressed(Keyboard::Right)) {
-      if (getVelocity().x < _maxVelocity.x)
-        impulse({(float)(dt * _groundspeed), 0});
-    } else {
-      if (getVelocity().x > -_maxVelocity.x)
-        impulse({-(float)(dt * _groundspeed), 0});
-    }
+  if (Keyboard::isKeyPressed(m_keys["Left"].key_pressed) ||
+	  Keyboard::isKeyPressed(m_keys["Right"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Left"].joyButton) || Joystick::isButtonPressed(0, m_keys["Joy_Right"].joyButton)) 
+  {
+
+	if (Joystick::getAxisPosition(0, Joystick::PovX) == 100 || Keyboard::isKeyPressed(m_keys["Right"].key_pressed))
+	{
+		if (getVelocity().x < _maxVelocity.x)
+		{
+			impulse({ (float)(dt * _groundspeed), 0 });
+		}
+	}
+	else if (Joystick::getAxisPosition(0, Joystick::PovX) == -100 || Keyboard::isKeyPressed(m_keys["Left"].key_pressed))
+	{
+		if (getVelocity().x > -_maxVelocity.x)
+			impulse({ -(float)(dt * _groundspeed), 0 });
+	}
+	  
   } else {
     // Dampen X axis movement
     dampen({0.9f, 1.0f});
   }
 
-  // Handle Jump
-  if (Keyboard::isKeyPressed(Keyboard::Up)) {
+   //Handle Jump
+  if (Keyboard::isKeyPressed(m_keys["Jump"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Jump"].joyButton)) {
     _grounded = isGrounded();
     if (_grounded) {
       setVelocity(Vector2f(getVelocity().x, 0.f));
@@ -64,10 +73,10 @@ void PlayerPhysicsComponent::update(double dt) {
   }
 
   //Are we in air?
-  if (!_grounded) {
-    // Check to see if we have landed yet
+ if (!_grounded) {
+     //Check to see if we have landed yet
     _grounded = isGrounded();
-    // disable friction while jumping
+     //disable friction while jumping
     setFriction(0.f);
   } else {
     setFriction(0.1f);
@@ -88,7 +97,7 @@ PlayerPhysicsComponent::PlayerPhysicsComponent(Entity* p,
   _size = sv2_to_bv2(size, true);
   _maxVelocity = Vector2f(200.f, 400.f);
   _groundspeed = 30.f;
-  _grounded = false;
+  _grounded = true;
   _body->SetSleepingAllowed(false);
   _body->SetFixedRotation(true);
   //Bullet items have higher-res collision detection
