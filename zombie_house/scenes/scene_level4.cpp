@@ -22,217 +22,215 @@ using namespace sf;
 
 static shared_ptr<Entity> player;
 
+
+
 void Level4Scene::Load() {
-  cout << "Scene 4 Load" << endl;
-  ls::loadLevelFile("res/levels/level_4.txt", 40.0f);
-  auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
-  ls::setOffset(Vector2f(0, ho));
+	{
+		////cout << "Scene 4 Load" << endl;
+		ls::loadLevelFile("res/levels/level_4.txt", 40.0f);
+		auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
+		ls::setOffset(Vector2f(0, ho));
 
-  //load file - set game.h kill and ammo counts from file
-  auto load = makeEntity();
-  auto l = load->addComponent<LoadFileComponent>();
-  string levelData = l->LoadFile("Level4.dat");
-  //cout << "LOADING DATA: " << out;
-  if (levelData.size() <= 0)
-  {
-	  zombieKillCount = 0;
-	  ammoPickupCount = 0;
-  }
-  else
-  {
-	  zombieKillCount = levelData[0] - '0';
-	  ammoPickupCount = levelData[2] - '0';
-  }
+		//load file - set game.h kill and ammo counts from file
+		auto load = makeEntity();
+		auto l = load->addComponent<LoadFileComponent>();
+		string levelData = l->LoadFile("Level4.dat");
+		//////cout << "LOADING DATA: " << out;
+		if (levelData.size() <= 0)
+		{
+			zombieKillCount = 0;
+			ammoPickupCount = 0;
+		}
+		else
+		{
+			zombieKillCount = levelData[0] - '0';
+			ammoPickupCount = levelData[2] - '0';
+		}
 
-  string ammo = l->LoadFile("ammo.dat");
-  string ps_ammo;
-  int p_ammo;
-  string ssmg_ammo;
-  int smg_ammo;
-  string sshotgun_ammo;
-  int shotgun_ammo;
-  if (ammo.size() > 0)
-  {
-	  
-	  if (ammo[0] == 0)
-	  {
-		  p_ammo = ammo[1] - '0';
-	  }
-	  else
-	  {
-		  ps_ammo = to_string(ammo[0] - '0') + to_string(ammo[1] - '0');
-		  p_ammo = stoi(ps_ammo);
-	  }
+		string ammo = l->LoadFile("ammo.dat");
+		string ps_ammo;
+		int p_ammo;
+		string ssmg_ammo;
+		int smg_ammo;
+		string sshotgun_ammo;
+		int shotgun_ammo;
+		if (ammo.size() > 0)
+		{
 
-	  if (ammo[3] == 0)
-	  {
-		  smg_ammo = ammo[4] - '0';
-	  }
-	  else
-	  {
-		  ssmg_ammo = to_string(ammo[3] - '0') + to_string(ammo[4] - '0');
-		  smg_ammo = stoi(ssmg_ammo);
-	  }
+			if (ammo[0] == 0)
+			{
+				p_ammo = ammo[1] - '0';
+			}
+			else
+			{
+				ps_ammo = to_string(ammo[0] - '0') + to_string(ammo[1] - '0');
+				p_ammo = stoi(ps_ammo);
+			}
 
-	  if (ammo[6] == 0)
-	  {
-		  shotgun_ammo = ammo[7] - '0';
-	  }
-	  else
-	  {
-		  sshotgun_ammo = to_string(ammo[6] - '0') + to_string(ammo[7] - '0');
-		  shotgun_ammo = stoi(sshotgun_ammo);
-	  }
-  }
-  else
-  {
-	  p_ammo = 9;
-	  smg_ammo = 6;
-	  shotgun_ammo = 4;
-  }
-  //ALL ABOVE CODE MUST BE IN ALL SCENES EXCEPT THE ELSE DIRECTLY ABOVE = THIS IS LEVEL 1 SPECIFIC
+			if (ammo[3] == 0)
+			{
+				smg_ammo = ammo[4] - '0';
+			}
+			else
+			{
+				ssmg_ammo = to_string(ammo[3] - '0') + to_string(ammo[4] - '0');
+				smg_ammo = stoi(ssmg_ammo);
+			}
 
-  // Create player
-  {
-    // *********************************
-	player = makeEntity();
-	player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+			if (ammo[6] == 0)
+			{
+				shotgun_ammo = ammo[7] - '0';
+			}
+			else
+			{
+				sshotgun_ammo = to_string(ammo[6] - '0') + to_string(ammo[7] - '0');
+				shotgun_ammo = stoi(sshotgun_ammo);
+			}
+		}
+		else
+		{
+			p_ammo = 9;
+			smg_ammo = 6;
+			shotgun_ammo = 4;
+		}
+		//ALL ABOVE CODE MUST BE IN ALL SCENES EXCEPT THE ELSE DIRECTLY ABOVE = THIS IS LEVEL 1 SPECIFIC
 
-	player->addComponent<WeaponSystemComponent>();
-	player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
-    // *********************************
-    player->addTag("player");
-	auto a = player->addComponent<PickupAmmoComponent>();
-	a->setAmmo("pistol", p_ammo);
-	a->setAmmo("smg", smg_ammo);
-	a->setAmmo("shotgun", shotgun_ammo);
-	shared_ptr<Texture> spriteSheet;
+		// Create player
+		{
+			// *********************************
+			player = makeEntity();
+			player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
 
-	spriteSheet = Resources::get<Texture>("player.png");
+			player->addComponent<WeaponSystemComponent>();
+			player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
+			// *********************************
+			player->addTag("player");
+			auto a = player->addComponent<PickupAmmoComponent>();
+			a->setAmmo("pistol", p_ammo);
+			a->setAmmo("smg", smg_ammo);
+			a->setAmmo("shotgun", shotgun_ammo);
+			shared_ptr<Texture> spriteSheet;
 
-	auto pSprite = player->addComponent<SpriteComponent>();
-	pSprite->setTexure(spriteSheet);
-	pSprite->getSprite().scale(2.0f, 2.0f);
-	pSprite->getSprite().setOrigin(10.f, 15.f);
-	
-  }
-  //same as ammo needs done here
-  auto enemySpawn = ls::findTiles(ls::ENEMY);
-  for (int e = 0; e < zombieKillCount; e++)
-  {
-	  enemySpawn.pop_back();
-  }
-  for (auto e : enemySpawn)
-  {
-	  auto pos = ls::getTilePosition(e) + Vector2f(0, 25);
-	  auto enemy2 = makeEntity();
-	  enemy2->setPosition(pos);
-	  enemy2->addComponent<HurtComponent>();
-	  enemy2->addComponent<HPComponent>();
+			spriteSheet = Resources::get<Texture>("player.png");
 
-	  enemy2->addTag("enemy");
-	  // Add EnemyAIComponent
-	  enemy2->addComponent<EnemyAIComponent>();
-	  shared_ptr<Texture> spriteSheet;
+			auto pSprite = player->addComponent<SpriteComponent>();
+			pSprite->setTexure(spriteSheet);
+			pSprite->getSprite().scale(2.0f, 2.0f);
+			pSprite->getSprite().setOrigin(10.f, 15.f);
 
-	  spriteSheet = Resources::get<Texture>("zombie.png");
+		}
+		//same as ammo needs done here
+		auto enemySpawn = ls::findTiles(ls::ENEMY);
+		for (int e = 0; e < zombieKillCount; e++)
+		{
+			enemySpawn.pop_back();
+		}
+		for (auto e : enemySpawn)
+		{
+			auto pos = ls::getTilePosition(e) + Vector2f(0, 25);
+			auto enemy2 = makeEntity();
+			enemy2->setPosition(pos);
+			enemy2->addComponent<HurtComponent>();
+			enemy2->addComponent<HPComponent>();
 
-	  auto eSprite = enemy2->addComponent<SpriteComponent>();
-	  eSprite->setTexure(spriteSheet);
-	  eSprite->getSprite().scale(2.0f, 2.0f);
-	  eSprite->getSprite().setOrigin(10.f, 15.f);
-  }
+			enemy2->addTag("enemy");
+			// Add EnemyAIComponent
+			enemy2->addComponent<EnemyAIComponent>();
+			shared_ptr<Texture> spriteSheet;
 
-   //create ammo objects
-  {
-	  auto ammoCount = ls::findTiles(ls::AMMO);
-	  //remove based on loaded count
-	  for (int c = 0; c < ammoPickupCount; c++)
-	  {
-		  ammoCount.pop_back();
-	  }
-	  
-	  for (auto a : ammoCount)
-	  {
-		  auto pos = ls::getTilePosition(a) + Vector2f(0, 34);
-		  auto ammo = makeEntity();
-		  ammo->setPosition(pos);
+			spriteSheet = Resources::get<Texture>("zombie.png");
 
-		  ammo->addTag("ammo");
-		  shared_ptr<Texture> spriteSheet;
+			auto eSprite = enemy2->addComponent<SpriteComponent>();
+			eSprite->setTexure(spriteSheet);
+			eSprite->getSprite().scale(2.0f, 2.0f);
+			eSprite->getSprite().setOrigin(10.f, 15.f);
+		}
 
-		  spriteSheet = Resources::get<Texture>("ammo.png");
+		//create ammo objects
+		{
+			auto ammoCount = ls::findTiles(ls::AMMO);
+			//remove based on loaded count
+			for (int c = 0; c < ammoPickupCount; c++)
+			{
+				ammoCount.pop_back();
+			}
 
-		  auto aSprite = ammo->addComponent<SpriteComponent>();
-		  aSprite->setTexure(spriteSheet);
-		  aSprite->getSprite().scale(2.0f, 2.0f);
-		  aSprite->getSprite().setOrigin(10.f, 15.f);
-	  }
-	  // *********************************
-	  auto weapons = makeEntity();
-	  weapons->setPosition(ls::getTilePosition(ls::findTiles(ls::INTERACT)[0]));
+			for (auto a : ammoCount)
+			{
+				auto pos = ls::getTilePosition(a) + Vector2f(0, 34);
+				auto ammo = makeEntity();
+				ammo->setPosition(pos);
 
-	  shared_ptr<Texture> spriteSheet;
+				ammo->addTag("ammo");
+				shared_ptr<Texture> spriteSheet;
 
-	  spriteSheet = Resources::get<Texture>("weapons.png");
+				spriteSheet = Resources::get<Texture>("ammo.png");
 
-	  auto wSprite = weapons->addComponent<SpriteComponent>();
-	  wSprite->setTexure(spriteSheet);
-	  wSprite->getSprite().scale(2.0f, 2.0f);
-	  wSprite->getSprite().setOrigin(0.f, 0.f);
-  }
+				auto aSprite = ammo->addComponent<SpriteComponent>();
+				aSprite->setTexure(spriteSheet);
+				aSprite->getSprite().scale(2.0f, 2.0f);
+				aSprite->getSprite().setOrigin(10.f, 15.f);
+			}
+			// *********************************
+			auto weapons = makeEntity();
+			weapons->setPosition(ls::getTilePosition(ls::findTiles(ls::INTERACT)[0]));
 
-  // Add physics colliders to level tiles.
-  {
-    // *********************************
-	  auto walls = ls::findTiles(ls::WALL);
-	  for (auto w : walls) {
-		  auto pos = ls::getTilePosition(w);
-		  pos += Vector2f(20.f, 20.f); //offset to center
-		  auto e = makeEntity();
-		  e->setPosition(pos);
-		  e->addComponent<PhysicsComponent>(false, Vector2f(40.f, 40.f));
-	  }
-    // *********************************
-  }
-  for (int i = 0; i < ents.find("enemy").size(); i++)
-  {
-	  Enemies ens;
-	  ens.en = ents.find("enemy").at(i);
-	  _enemies[i] = ens;
-  }
-  for (int i = 0; i < ents.find("ammo").size(); i++)
-  {
-	  Ammo amm;
-	  amm.am = ents.find("ammo").at(i);
-	  _ammo[i] = amm;
-  }
+			shared_ptr<Texture> spriteSheet;
 
-  auto door = makeEntity();
-  door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]) + Vector2f(0, -25));
+			spriteSheet = Resources::get<Texture>("weapons.png");
 
-  shared_ptr<Texture> spriteSheet;
+			auto wSprite = weapons->addComponent<SpriteComponent>();
+			wSprite->setTexure(spriteSheet);
+			wSprite->getSprite().scale(2.0f, 2.0f);
+			wSprite->getSprite().setOrigin(0.f, 0.f);
+		}
 
-  spriteSheet = Resources::get<Texture>("door.png");
+		// Add physics colliders to level tiles.
+		{
+			// *********************************
+			auto walls = ls::findTiles(ls::WALL);
+			for (auto w : walls) {
+				auto pos = ls::getTilePosition(w);
+				pos += Vector2f(20.f, 20.f); //offset to center
+				auto e = makeEntity();
+				e->setPosition(pos);
+				e->addComponent<PhysicsComponent>(false, Vector2f(40.f, 40.f));
+			}
+			// *********************************
+		}
+		for (int i = 0; i < ents.find("enemy").size(); i++)
+		{
+			Enemies ens;
+			ens.en = ents.find("enemy").at(i);
+			_enemies[i] = ens;
+		}
+		for (int i = 0; i < ents.find("ammo").size(); i++)
+		{
+			Ammo amm;
+			amm.am = ents.find("ammo").at(i);
+			_ammo[i] = amm;
+		}
 
-  auto dSprite = door->addComponent<SpriteComponent>();
-  dSprite->setTexure(spriteSheet);
-  dSprite->getSprite().scale(2.0f, 2.0f);
+		auto door = makeEntity();
+		door->setPosition(ls::getTilePosition(ls::findTiles(ls::END)[0]) + Vector2f(0, -25));
 
-  cout << " Scene 4 Load Done" << endl;
+		shared_ptr<Texture> spriteSheet;
 
-  {
-	  auto txt = makeEntity();
-	  auto t = txt->addComponent<TextComponent>(
+		spriteSheet = Resources::get<Texture>("door.png");
 
-		  "ZOMBIE HOUSE\nInteract (E/BButton) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
+		auto dSprite = door->addComponent<SpriteComponent>();
+		dSprite->setTexure(spriteSheet);
+		dSprite->getSprite().scale(2.0f, 2.0f);
+
+		////cout << " Scene 4 Load Done" << endl;
+
   }
 
   setLoaded(true);
 }
 
 void Level4Scene::UnLoad() {
-  cout << "Scene 4 UnLoad" << endl;
+  ////cout << "Scene 4 UnLoad" << endl;
   player.reset();
   ls::unload();
   Scene::UnLoad();
@@ -240,6 +238,8 @@ void Level4Scene::UnLoad() {
 
 void Level4Scene::Update(const double& dt) {
   Scene::Update(dt);
+
+  
 
   const auto pp = player->getPosition();
   if (ls::getTileAt(pp) == ls::END) {
@@ -255,6 +255,9 @@ void Level4Scene::Update(const double& dt) {
 	  s->SaveFile("4");
 	  Engine::ChangeScene(&menu);
   }
+
+  
+
 }
 
 void Level4Scene::Render() {

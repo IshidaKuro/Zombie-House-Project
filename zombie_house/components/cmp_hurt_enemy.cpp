@@ -12,7 +12,7 @@ sf::SoundBuffer buffer3;
 sf::Sound sound3;
 
 void HurtEnemyComponent::update(double dt) {
-	//cout << "HP : " << hp;
+	////cout << "HP : " << hp;
 	for (int i = 0; i < _enemies.size(); i++)
 	{	
 		if (auto pl = _enemies[i].en.lock())
@@ -22,7 +22,7 @@ void HurtEnemyComponent::update(double dt) {
 				//play sound
 				if (!buffer3.loadFromFile("res/sounds/zombie_hurt.wav"))
 				{
-					cout << "Error loading zombie sound";
+					//cout << "Error loading zombie sound";
 				}
 				else
 				{
@@ -45,10 +45,10 @@ void HurtEnemyComponent::update(double dt) {
 					pl->setForDelete();
 					_enemies.erase(i);
 					// _parent->setForDelete();
-					cout << "Kill enemy";
+					//cout << "Kill enemy";
 					if (!buffer3.loadFromFile("res/sounds/zombie_dead.wav"))
 					{
-						cout << "Error loading zombie sound";
+						//cout << "Error loading zombie sound";
 					}
 					else
 					{
@@ -61,7 +61,7 @@ void HurtEnemyComponent::update(double dt) {
 					}
 				}
 				_parent->setForDelete();
-				//cout << "HP: " << hp;
+				////cout << "HP: " << hp;
 			}
 		}
     }

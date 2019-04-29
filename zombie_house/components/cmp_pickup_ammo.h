@@ -11,6 +11,8 @@ protected:
 	int shotgunAmmo;
 
 public:
+	
+
   void update(double dt) override;
   void render() override {}
   int getAmmo(const std::string& type);

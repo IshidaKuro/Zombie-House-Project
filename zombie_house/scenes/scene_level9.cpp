@@ -22,7 +22,7 @@ using namespace sf;
 static shared_ptr<Entity> player;
 
 void Level9Scene::Load() {
-  cout << "Scene 9 Load" << endl;
+  ////cout << "Scene 9 Load" << endl;
   ls::loadLevelFile("res/levels/level_9.txt", 40.0f);
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
@@ -31,7 +31,7 @@ void Level9Scene::Load() {
   auto load = makeEntity();
   auto l = load->addComponent<LoadFileComponent>();
   string levelData = l->LoadFile("Level9.dat");
-  //cout << "LOADING DATA: " << out;
+  //////cout << "LOADING DATA: " << out;
   if (levelData.size() <= 0)
   {
 	  zombieKillCount = 0;
@@ -206,18 +206,13 @@ void Level9Scene::Load() {
   auto dSprite = door->addComponent<SpriteComponent>();
   dSprite->setTexure(spriteSheet);
   dSprite->getSprite().scale(2.0f, 2.0f);
-  cout << " Scene 9 Load Done" << endl;
-  {
-	  auto txt = makeEntity();
-	  auto t = txt->addComponent<TextComponent>(
-
-		  "ZOMBIE HOUSE\nInteract (E/BButton) with the door to start/continue\nPress F1 to enter fullscreen\nInteract with blue square to remap controls");
-  }
+  ////cout << " Scene 9 Load Done" << endl;
+ 
   setLoaded(true);
 }
 
 void Level9Scene::UnLoad() {
-  cout << "Scene 9 UnLoad" << endl;
+  ////cout << "Scene 9 UnLoad" << endl;
   player.reset();
   ls::unload();
   Scene::UnLoad();

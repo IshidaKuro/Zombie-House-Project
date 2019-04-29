@@ -14,7 +14,7 @@ void HurtComponent::update(double dt) {
     if (length(pl->getPosition() - _parent->getPosition()) < 25.0) {
 		if (!buffer4.loadFromFile("res/sounds/player_die.wav"))
 		{
-			cout << "Error loading zombie sound";
+			//cout << "Error loading zombie sound";
 		}
 		else
 		{

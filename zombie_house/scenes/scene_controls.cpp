@@ -13,7 +13,7 @@ bool choose = true;
 bool ctrl_change;
 void ControlScene::Load() {
 	choose = true;
-  cout << "Menu Load \n";
+  //cout << "Menu Load \n";
   {
     auto txt = makeEntity();
 	auto t = txt->addComponent<TextComponent>(
@@ -34,14 +34,14 @@ void ControlScene::UnLoad()
 }
 
 void ControlScene::Update(const double& dt) {
-  // cout << "Menu Update "<<dt<<"\n";
+  // //cout << "Menu Update "<<dt<<"\n";
 
 	Event choice_event;
 	Event in_event;
 	MyKeys key;
 	while (choose == true)
 	{
-		//cout << "Choosing..";
+		////cout << "Choosing..";
 
 		while (Engine::GetWindow().pollEvent(choice_event))
 		{
@@ -49,7 +49,7 @@ void ControlScene::Update(const double& dt) {
 			{
 				if (choice_event.key.code == sf::Keyboard::Enter)
 				{
-					//cout << "Up Pressed";
+					////cout << "Up Pressed";
 					choose = false;
 					ctrl_change = true;
 					Engine::ChangeScene(&menu);
@@ -59,19 +59,19 @@ void ControlScene::Update(const double& dt) {
 			{
 				if (choice_event.joystickButton.button == 0)
 				{
-					cout << "A";
+					//cout << "A";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						
 						key.myEventType = Event::JoystickButtonPressed;
 						key.joyButton  = in_event.joystickButton.button;
 						m_keys["Joy_Shoot"] = key;
-						cout << "Choosing A";
+						//cout << "Choosing A";
 					}
 				}
 				if (choice_event.joystickButton.button == 2)
 				{
-					cout << "B";
+					//cout << "B";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 				
@@ -82,7 +82,7 @@ void ControlScene::Update(const double& dt) {
 				}
 				if (choice_event.joystickButton.button == 3)
 				{
-					cout << "Y";
+					//cout << "Y";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 
@@ -93,7 +93,7 @@ void ControlScene::Update(const double& dt) {
 				}
 				if (choice_event.joystickButton.button == 4)
 				{
-					//cout << "SMGGGGG";
+					////cout << "SMGGGGG";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 
@@ -104,7 +104,7 @@ void ControlScene::Update(const double& dt) {
 				}
 				if (choice_event.joystickButton.button == 5)
 				{
-					cout << "Y";
+					//cout << "Y";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 
@@ -115,7 +115,7 @@ void ControlScene::Update(const double& dt) {
 				}
 				if (choice_event.joystickButton.button == 1)
 				{
-					//cout << "Y";
+					////cout << "Y";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						key.myEventType = Event::JoystickButtonPressed;
@@ -128,7 +128,7 @@ void ControlScene::Update(const double& dt) {
 			{
 				if (choice_event.key.code == sf::Keyboard::Left)
 				{
-					cout << "Left pressed";
+					//cout << "Left pressed";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						if (in_event.type == sf::Event::KeyPressed)
@@ -136,13 +136,13 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Left"] = key;
-							//cout << "CHOSE NEW KEY FOR LEFT";
+							////cout << "CHOSE NEW KEY FOR LEFT";
 						}
 					}
 				}
 				if (choice_event.key.code == sf::Keyboard::Right)
 				{
-					cout << "Right pressed";
+					//cout << "Right pressed";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						if (in_event.type == sf::Event::KeyPressed)
@@ -150,13 +150,13 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Right"] = key;
-							//cout << "CHOSE NEW KEY FOR RIGHT";
+							////cout << "CHOSE NEW KEY FOR RIGHT";
 						}
 					}
 				}
 				if (choice_event.key.code == sf::Keyboard::Space)
 				{
-					cout << "Space pressed";
+					//cout << "Space pressed";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						if (in_event.type == sf::Event::KeyPressed)
@@ -164,13 +164,13 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Shoot"] = key;
-							//cout << "CHOSE NEW KEY FOR SPACE";
+							////cout << "CHOSE NEW KEY FOR SPACE";
 						}
 					}
 				}
 				if (choice_event.key.code == sf::Keyboard::I)
 				{
-					//cout << "E pressed";
+					////cout << "E pressed";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						if (in_event.type == sf::Event::KeyPressed)
@@ -178,14 +178,14 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Interact"] = key;
-							//cout << "CHOSE E";
-							//cout << "CHOSE NEW KEY FOR RIGHT";
+							////cout << "CHOSE E";
+							////cout << "CHOSE NEW KEY FOR RIGHT";
 						}
 					}
 				}
 				if (choice_event.key.code == sf::Keyboard::R)
 				{
-					//cout << "Space pressed";
+					////cout << "Space pressed";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						if (in_event.type == sf::Event::KeyPressed)
@@ -193,13 +193,13 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Reload"] = key;
-							//cout << "CHOSE NEW KEY FOR SPACE";
+							////cout << "CHOSE NEW KEY FOR SPACE";
 						}
 					}
 				}
 				if (choice_event.key.code == sf::Keyboard::Num1)
 				{
-					//cout << "Space pressed";
+					////cout << "Space pressed";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						if (in_event.type == sf::Event::KeyPressed)
@@ -207,13 +207,13 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Switch_Pistol"] = key;
-							//cout << "CHOSE NEW KEY FOR SPACE";
+							////cout << "CHOSE NEW KEY FOR SPACE";
 						}
 					}
 				}
 				if (choice_event.key.code == sf::Keyboard::Num2)
 				{
-					//cout << "Space pressed";
+					////cout << "Space pressed";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						if (in_event.type == sf::Event::KeyPressed)
@@ -221,13 +221,13 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Switch_Smg"] = key;
-							//cout << "CHOSE NEW KEY FOR SPACE";
+							////cout << "CHOSE NEW KEY FOR SPACE";
 						}
 					}
 				}
 				if (choice_event.key.code == sf::Keyboard::Num3)
 				{
-					//cout << "Space pressed";
+					////cout << "Space pressed";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						if (in_event.type == sf::Event::KeyPressed)
@@ -235,13 +235,13 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Switch_Shotgun"] = key;
-							//cout << "CHOSE NEW KEY FOR SPACE";
+							////cout << "CHOSE NEW KEY FOR SPACE";
 						}
 					}
 				}
 				if (choice_event.key.code == sf::Keyboard::Up)
 				{
-					//cout << "Space pressed";
+					////cout << "Space pressed";
 					if (Engine::GetWindow().waitEvent(in_event))
 					{
 						if (in_event.type == sf::Event::KeyPressed)
@@ -249,7 +249,7 @@ void ControlScene::Update(const double& dt) {
 							key.myEventType = Event::KeyPressed;
 							key.key_pressed = in_event.key.code;
 							m_keys["Jump"] = key;
-							//cout << "CHOSE NEW KEY FOR SPACE";
+							////cout << "CHOSE NEW KEY FOR SPACE";
 						}
 					}
 				}
@@ -258,7 +258,7 @@ void ControlScene::Update(const double& dt) {
 		}
 	}
 	
-	cout << "Not choosing";
+	//cout << "Not choosing";
 	Scene::Update(dt);
 	
 }

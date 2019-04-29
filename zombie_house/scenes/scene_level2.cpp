@@ -21,7 +21,7 @@ using namespace sf;
 static shared_ptr<Entity> player;
 
 void Level2Scene::Load() {
-  cout << "Scene 2 Load" << endl;
+  ////cout << "Scene 2 Load" << endl;
   ls::loadLevelFile("res/levels/level_2.txt", 40.0f);
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
@@ -30,7 +30,7 @@ void Level2Scene::Load() {
   auto load = makeEntity();
   auto l = load->addComponent<LoadFileComponent>();
   string levelData = l->LoadFile("Level2.dat");
-  //cout << "LOADING DATA: " << out;
+  //////cout << "LOADING DATA: " << out;
   if (levelData.size() <= 0)
   {
 	  zombieKillCount = 0;
@@ -206,7 +206,7 @@ void Level2Scene::Load() {
   dSprite->setTexure(spriteSheet);
   dSprite->getSprite().scale(2.0f, 2.0f);
 
-  cout << " Scene 2 Load Done" << endl;
+  ////cout << " Scene 2 Load Done" << endl;
   {
 
   }
@@ -214,7 +214,7 @@ void Level2Scene::Load() {
 }
 
 void Level2Scene::UnLoad() {
-  cout << "Scene 2 UnLoad" << endl;
+  ////cout << "Scene 2 UnLoad" << endl;
   player.reset();
   ls::unload();
   Scene::UnLoad();

@@ -23,7 +23,7 @@ static shared_ptr<Entity> player;
 
 void Level3Scene::Load() {
 
-  cout << "Scene 3 Load" << endl;
+  ////cout << "Scene 3 Load" << endl;
   ls::loadLevelFile("res/levels/level_3.txt", 40.0f);
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
   ls::setOffset(Vector2f(0, ho));
@@ -32,7 +32,7 @@ void Level3Scene::Load() {
   auto load = makeEntity();
   auto l = load->addComponent<LoadFileComponent>();
   string levelData = l->LoadFile("Level3.dat");
-  //cout << "LOADING DATA: " << out;
+  //////cout << "LOADING DATA: " << out;
   if (levelData.size() <= 0)
   {
 	  zombieKillCount = 0;
@@ -208,7 +208,7 @@ void Level3Scene::Load() {
   dSprite->setTexure(spriteSheet);
   dSprite->getSprite().scale(2.0f, 2.0f);
 
-  cout << " Scene 2 Load Done" << endl;
+  ////cout << " Scene 2 Load Done" << endl;
   {
 
   }
@@ -216,7 +216,7 @@ void Level3Scene::Load() {
 }
 
 void Level3Scene::UnLoad() {
-  cout << "Scene 3 UnLoad" << endl;
+  ////cout << "Scene 3 UnLoad" << endl;
   player.reset();
   ls::unload();
   Scene::UnLoad();

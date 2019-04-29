@@ -10,7 +10,7 @@ public:
   void update(double dt) override;
 
   void render() override;
-
+  void SetColour(const sf::Color colour);
   ~TextComponent() override = default;
 
   void SetText(const std::string& str);

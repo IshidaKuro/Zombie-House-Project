@@ -79,12 +79,12 @@ sf::FloatRect CalculateViewport(const sf::Vector2u& screensize,
 }
 
 void MenuScene::Load() {
-  cout << "Menu Load \n";
+  ////cout << "Menu Load \n";
   //load file - set game.h kill and ammo counts from file
   auto load = makeEntity();
   auto l = load->addComponent<LoadFileComponent>();
   string levelData = l->LoadFile("Menu.dat");
-  //cout << "LOADING DATA: " << out;
+  //////cout << "LOADING DATA: " << out;
   if (levelData.size() <= 0)
   {
 	  zombieKillCount = 0;
@@ -154,7 +154,7 @@ void MenuScene::Load() {
 
   }
 
-  cout << " Menu Scene Load" << endl;
+  ////cout << " Menu Scene Load" << endl;
   ls::loadLevelFile("res/levels/menu.txt", 40.0f);
 
   auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
@@ -225,7 +225,7 @@ void MenuScene::Load() {
 }
 
 void MenuScene::Update(const double& dt) {
-  // cout << "Menu Update "<<dt<<"\n";
+  // ////cout << "Menu Update "<<dt<<"\n";
 
 	if (ls::getTileAt(player->getPosition()) == ls::END && (Keyboard::isKeyPressed(m_keys["Interact"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Interact"].joyButton))) {
 		if (out_level != "")
@@ -306,7 +306,7 @@ void MenuScene::Update(const double& dt) {
 
 void MenuScene::UnLoad()
 {
-	cout << "Menu Scene Unload" << endl;
+	////cout << "Menu Scene Unload" << endl;
 	player.reset();
 	ls::unload();
 	Scene::UnLoad();

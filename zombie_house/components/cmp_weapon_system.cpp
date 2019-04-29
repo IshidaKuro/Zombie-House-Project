@@ -38,7 +38,7 @@ void WeaponSystemComponent::fire() const
 			if (shotgunMagazine > 0)
 			{
 				shotgunMagazine--;
-				cout<< "Shotgun ammo :" << shotgunMagazine <<" : "<< playerAmmo->getAmmo("shotgun") <<endl;
+				////cout<< "Shotgun ammo :" << shotgunMagazine <<" : "<< playerAmmo->getAmmo("shotgun") <<endl;
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -82,7 +82,7 @@ void WeaponSystemComponent::fire() const
 				//play sound
 				if (!buffer2.loadFromFile("res/sounds/shotgun.wav"))
 				{
-					cout << "Error loading zombie sound";
+					////cout << "Error loading zombie sound";
 				}
 				else
 				{
@@ -96,7 +96,7 @@ void WeaponSystemComponent::fire() const
 
 				if (!buffer2.loadFromFile("res/sounds/pistol_click.wav"))
 				{
-					cout << "Error loading zombie sound";
+					////cout << "Error loading zombie sound";
 				}
 				else
 				{
@@ -110,7 +110,7 @@ void WeaponSystemComponent::fire() const
 			if (pistolMagazine > 0)
 			{
 				pistolMagazine--;
-				cout << "Pistol ammo :" << pistolMagazine << " : " << playerAmmo->getAmmo("pistol") << endl;
+				////cout << "Pistol ammo :" << pistolMagazine << " : " << playerAmmo->getAmmo("pistol") << endl;
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -128,7 +128,7 @@ void WeaponSystemComponent::fire() const
 				//play sound
 				if (!buffer2.loadFromFile("res/sounds/pistol.wav"))
 				{
-					cout << "Error loading zombie sound";
+					////cout << "Error loading zombie sound";
 				}
 				else
 				{
@@ -143,7 +143,7 @@ void WeaponSystemComponent::fire() const
 				
 				if (!buffer2.loadFromFile("res/sounds/pistol_click.wav"))
 				{
-					cout << "Error loading zombie sound";
+					////cout << "Error loading zombie sound";
 				}
 				else
 				{
@@ -159,7 +159,7 @@ void WeaponSystemComponent::fire() const
 		if (smgMagazine > 0)
 		{
 			smgMagazine--;
-			cout << "SMG ammo :" << smgMagazine << " : " << playerAmmo->getAmmo("smg") << endl;
+			////cout << "SMG ammo :" << smgMagazine << " : " << playerAmmo->getAmmo("smg") << endl;
 				auto bullet = _parent->scene->makeEntity();
 				bullet->setPosition(_parent->getPosition());
 				bullet->addComponent<HurtEnemyComponent>();
@@ -177,7 +177,7 @@ void WeaponSystemComponent::fire() const
 				//play sound
 				if (!buffer2.loadFromFile("res/sounds/smg.wav"))
 				{
-					cout << "Error loading zombie sound";
+					////cout << "Error loading zombie sound";
 				}
 				else
 				{
@@ -192,7 +192,7 @@ void WeaponSystemComponent::fire() const
 
 			if (!buffer2.loadFromFile("res/sounds/pistol_click.wav"))
 			{
-				cout << "Error loading zombie sound";
+				////cout << "Error loading zombie sound";
 			}
 			else
 			{
@@ -218,7 +218,7 @@ void WeaponSystemComponent::reload()
 				{
 					if (!buffer2.loadFromFile("res/sounds/pistol_reload.wav"))
 					{
-						cout << "Error loading zombie sound";
+						////cout << "Error loading zombie sound";
 					}
 					else
 					{
@@ -246,7 +246,7 @@ void WeaponSystemComponent::reload()
 					pistolMagazine = magazineSize;
 					playerAmmo->setAmmo("pistol", playerAmmo->getAmmo("pistol") - magazineSize);
 				}
-				cout << "pistol ammo on reserve: " << playerAmmo->getAmmo("pistol") << endl;
+				////cout << "pistol ammo on reserve: " << playerAmmo->getAmmo("pistol") << endl;
 			}
 		}
 		else if (equippedWeapon == 2) // if the player has the smg equipped
@@ -258,7 +258,7 @@ void WeaponSystemComponent::reload()
 				{
 					if (!buffer2.loadFromFile("res/sounds/pistol_reload.wav"))
 					{
-						cout << "Error loading zombie sound";
+						////cout << "Error loading zombie sound";
 					}
 					else
 					{
@@ -288,7 +288,7 @@ void WeaponSystemComponent::reload()
 					smgMagazine = magazineSize;
 					playerAmmo->setAmmo("smg", playerAmmo->getAmmo("smg") - magazineSize);
 				}
-				cout << "smg ammo on reserve: " << playerAmmo->getAmmo("smg") << endl;
+				////cout << "smg ammo on reserve: " << playerAmmo->getAmmo("smg") << endl;
 			}
 		}
 		else if (equippedWeapon ==3) // if the player has the shotgun equipped
@@ -299,7 +299,7 @@ void WeaponSystemComponent::reload()
 				//play reload sound
 				if (!buffer2.loadFromFile("res/sounds/pistol_reload.wav"))
 				{
-					cout << "Error loading reload sound";
+					////cout << "Error loading reload sound";
 				}
 				else
 				{
@@ -329,7 +329,7 @@ void WeaponSystemComponent::reload()
 					playerAmmo->setAmmo("shotgun", playerAmmo->getAmmo("shotgun") - magazineSize);
 				}
 
-				cout << "shotgun ammo on reserve: " << playerAmmo->getAmmo("shotgun") << endl;
+				////cout << "shotgun ammo on reserve: " << playerAmmo->getAmmo("shotgun") << endl;
 			}
 		}
 		else
@@ -364,7 +364,7 @@ void WeaponSystemComponent::select_weapon()
 		weapon = 1;
 		fire_rate = 0.5f;
 		temp = fire_rate;
-		std::cout << "Weapon: 1";
+		//std:://cout << "Weapon: 1";
 	}
 	if ((Keyboard::isKeyPressed(m_keys["Switch_Smg"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Smg"].joyButton)) && has_smg == true)
 	{
@@ -374,7 +374,7 @@ void WeaponSystemComponent::select_weapon()
 		weapon = 2;
 		fire_rate = 0.05f;
 		temp = fire_rate;
-		std::cout << "Weapon: 2";
+		//std:://cout << "Weapon: 2";
 	}
 	if ((Keyboard::isKeyPressed(m_keys["Switch_Shotgun"].key_pressed) || Joystick::isButtonPressed(0, m_keys["Joy_Switch_Shotgun"].joyButton)) && has_shotgun == true)
 	{
@@ -384,7 +384,7 @@ void WeaponSystemComponent::select_weapon()
 		weapon = 3;
 		fire_rate = 1.0f;
 		temp = fire_rate;
-		std::cout << "Weapon: 3";
+		//std:://cout << "Weapon: 3";
 	}
 }
 
@@ -408,6 +408,28 @@ void WeaponSystemComponent::update(double dt)
 	}
 }
 
+/*
+std::string WeaponSystemComponent::getText()
+{
+	
+	string txt = "";
+	
+	if (weapon == 1)
+	{
+		txt = "Pistol ammo :" + pistolMagazine + ' : ' + _parent->GetCompatibleComponent<PickupAmmoComponent>()[0]->getAmmo("pistol");
+	}
+	if (weapon == 2)
+	{
+		txt = "SMG ammo :" + smgMagazine + ' : ' + _parent->GetCompatibleComponent<PickupAmmoComponent>()[0]->getAmmo("smg");
+	}
+	if (weapon == 3)
+	{
+		txt = "Shotgun ammo :" + shotgunMagazine + ' : ' + _parent->GetCompatibleComponent<PickupAmmoComponent>()[0]->getAmmo("shotgun");
+	}
+
+	return txt;
+}
+*/
 WeaponSystemComponent::WeaponSystemComponent(Entity* p) : Component(p), fire_rate(0.5f)
 {
 }

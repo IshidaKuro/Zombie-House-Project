@@ -30,7 +30,7 @@ string LoadFileComponent::LoadFile(string fileToRead)
 	}
 	else
 	{
-		cout << "No file";
+		//cout << "No file";
 	}
 
 	loadFile.close();
@@ -51,9 +51,9 @@ void SaveFileComponent::SaveFile(string level)
 	ofstream saveFile;
 
 	path1 = getenv("appdata");
-	//cout << "appdata=" << path << endl;
+	////cout << "appdata=" << path << endl;
 	path1 += "\\ZombieHouseSaveFile.txt";
-	//cout << "path=" << path << endl;
+	////cout << "path=" << path << endl;
 	saveFile.open(path1.c_str());
 	if (saveFile.is_open())
 	{

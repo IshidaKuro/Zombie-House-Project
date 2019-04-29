@@ -18,7 +18,7 @@ void EnemyAIComponent::update(double dt) {
 		//check if the player is close to the zombie
 		if (auto pl = _player.lock()) {
 			
-			if (length(pl->getPosition() - _parent->getPosition()) > 200.0) //if the player is outside the zombie's view
+			if (length(pl->getPosition() - _parent->getPosition()) > 600.0) //if the player is outside the zombie's view
 			{
 				_direction = Vector2f(0, 0); // make the zombie stand still
 				pathing = false; // set pathing to false again
@@ -39,7 +39,7 @@ void EnemyAIComponent::update(double dt) {
 						//play sound
 						if (!buffer.loadFromFile("res/sounds/zombie_moan.wav"))
 						{
-							cout << "Error loading zombie sound";
+							//cout << "Error loading zombie sound";
 						}
 						else
 						{
